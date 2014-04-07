@@ -6,9 +6,10 @@ d3.geomap.choropleth = ()->
     colorize = null
     column = null
     data = null
-    window.data_by_iso = {}
+    data_by_iso = {}
     path = null
     svg_countries = null
+    topojson_file = null
     world = null
 
     iso_val = (iso3)->
@@ -55,7 +56,7 @@ d3.geomap.choropleth = ()->
         path = d3.geo.path().projection(proj)
 
         # Load and render geo data.
-        d3.json './../data/countries.topo.json', (error, world)->
+        d3.json topojson_file, (error, world)->
             svg_countries = svg.append('g')
                 .attr('class', 'countries')
                 .selectAll('path')
@@ -105,6 +106,12 @@ d3.geomap.choropleth = ()->
         if not arguments.length
             return column
         column = _
+        geomap
+
+    geomap.topojson_file = (_)->
+        if not arguments.length
+            return topojson_file
+        topojson_file = _
         geomap
 
     geomap

@@ -5,7 +5,7 @@ colors = ['#ffffe0', '#fff2cf', '#ffe4be', '#ffd5ae', '#ffc7a0', '#ffb891', '#ff
 d3.geomap = {};
 
 d3.geomap.choropleth = function() {
-  var color_val, colorize, column, data, draw, geomap, height, iso_val, margin, path, projection, svg_countries, update, width, world;
+  var color_val, colorize, column, data, data_by_iso, draw, geomap, height, iso_val, margin, path, projection, svg_countries, topojson_file, update, width, world;
   margin = {
     top: 20,
     right: 20,
@@ -18,9 +18,10 @@ d3.geomap.choropleth = function() {
   colorize = null;
   column = null;
   data = null;
-  window.data_by_iso = {};
+  data_by_iso = {};
   path = null;
   svg_countries = null;
+  topojson_file = null;
   world = null;
   iso_val = function(iso3) {
     if (data_by_iso[iso3]) {
@@ -65,7 +66,7 @@ d3.geomap.choropleth = function() {
     svg = selection.append('svg').attr('width', width).attr('height', height);
     proj = projection().scale(width / height * 155).translate([width / 2.4, height / 2]).precision(.1);
     path = d3.geo.path().projection(proj);
-    return d3.json('./../data/countries.topo.json', function(error, world) {
+    return d3.json(topojson_file, function(error, world) {
       var mesh;
       svg_countries = svg.append('g').attr('class', 'countries').selectAll('path').data(topojson.feature(world, world.objects.subunits).features);
       mesh = topojson.mesh(world, world.objects.subunits, function(a, b) {
@@ -115,6 +116,13 @@ d3.geomap.choropleth = function() {
       return column;
     }
     column = _;
+    return geomap;
+  };
+  geomap.topojson_file = function(_) {
+    if (!arguments.length) {
+      return topojson_file;
+    }
+    topojson_file = _;
     return geomap;
   };
   return geomap;

@@ -26,6 +26,7 @@
 <script src="../dist/js/d3.geomap.js"></script>
 <script>
 var worldmap = d3.geomap.choropleth()
+    .topojson_file('../dist/data/countries.topo.json')
     .width(1200)
     .height(780)
     .column('Calculated Percentage');
