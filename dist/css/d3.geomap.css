@@ -1,0 +1,17 @@
+text {
+  fill: #444444;
+  font-size: 13px; }
+
+.country {
+  fill: #eeeeee;
+  stroke: #dddddd;
+  stroke-width: 0.5px; }
+
+.boundary {
+  fill: none;
+  stroke: #dddddd;
+  stroke-width: 0.5px; }
+
+rect {
+  stroke: #dddddd;
+  stroke-width: 0.1px; }

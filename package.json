@@ -1,0 +1,33 @@
+{
+  "name": "d3-geomap",
+  "version": "0.0.1",
+  "description": "A reusuable choropleth map for d3.js",
+  "keywords": [
+    "d3",
+    "visualization",
+    "map",
+    "svg"
+  ],
+  "author": {
+    "name": "Ramiro Gómez",
+    "url": "http://ramiro.org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yaph/d3-geomap.git"
+  },
+  "dependencies": {
+    "d3": "~3.4.4",
+    "d3-geo-projection": "~0.2.9",
+    "topojson": "~1.6.5"
+  },
+  "devDependencies": {
+    "gulp": "~3.6.0",
+    "gulp-coffee": "~1.4.1",
+    "gulp-concat": "~2.2.0",
+    "gulp-uglify": "~0.2.1",
+    "gulp-connect": "~2.0.4",
+    "gulp-ruby-sass": "~0.4.1"
+  }
+}
