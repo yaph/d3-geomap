@@ -1,15 +1,26 @@
 # d3-geomap
 
-`d3.geomap` is designed to be a
+`d3.geomap` is designed to become a
 [reusable](http://bost.ocks.org/mike/chart/) geographic map for D3.
 
-It is in an early development, currently consisting of a choropleth map
+It is in early development, currently consisting of a choropleth map
 `d3.geomap.choropleth()`.
 
 ## d3.geomap.choropleth
 
+### Data format
+
+A list of objects that have an iso3 and at least one other property. The property
+to be used to colorize the choropleth map is set in the `colum()` method.
+
+[
+    {iso3: 'ESP', column1: 'value1', column2: 'value2'},
+    {iso3: 'FRA', column1: 'value1', column2: 'value2'}
+]
+
 ## TODOs
 
+* not reusable with any topojson file, as long as world.objects.subunits is hard coded
 * example doc
 * number format
 * make value parsing (parseFloat right now) a setting

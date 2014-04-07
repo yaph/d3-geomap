@@ -26,12 +26,13 @@
 <script src="../dist/js/d3.geomap.js"></script>
 <script>
 var worldmap = d3.geomap.choropleth()
-    .topojson_file('../dist/data/countries.topo.json')
+    .geofile('../dist/data/countries.topo.json')
     .width(1200)
     .height(780)
     .column('Calculated Percentage');
 
 d3.csv("globalslaveryindex.csv", function(error, data) {
+    console.log(data);
     d3.select("#map")
         .datum(data)
         .call(worldmap);
