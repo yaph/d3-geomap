@@ -7,6 +7,7 @@ d3.geomap.choropleth = ()->
     column = null
     data = null
     data_by_iso = {}
+    format = d3.format('.02f')
     geofile = null
     path = null
     svg_countries = null
@@ -41,7 +42,7 @@ d3.geomap.choropleth = ()->
             .attr('d', path)
             .style('fill', (d)-> color_val(d.id))
             .append('title')
-                .text((d)-> d.properties.name + ': ' + iso_val(d.id))
+                .text((d)-> d.properties.name + ': ' + format(iso_val(d.id)))
 
     draw = (selection)->
         svg = selection.append('svg')
