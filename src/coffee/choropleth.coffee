@@ -5,6 +5,7 @@ d3.geomap.choropleth = ()->
     projection = d3.geo.naturalEarth
     colorize = null
     column = null
+    columns = []
     data = null
     data_by_iso = {}
     format = d3.format('.02f')
@@ -75,8 +76,16 @@ d3.geomap.choropleth = ()->
         data = selection.datum()
         draw(selection)
 
+        # Set columns based on properties of 1st object in data array.
+        columns = d3.keys(data[0]).filter(
+            (d)-> if d isnt '' and d isnt 'iso3' then d else null).sort()
+
     geomap.update = ()->
         update()
+
+    # Return array of data property names, i. e. column headings in a CSV.
+    geomap.columns = ()->
+        columns
 
     # Expose settings, tedious...
     geomap.margin = (_)->

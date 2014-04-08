@@ -5,7 +5,7 @@ colors = ['#ffffff', '#fffdf5', '#fffbf0', '#fff8ec', '#fff5e6', '#fff3e2', '#ff
 d3.geomap = {};
 
 d3.geomap.choropleth = function() {
-  var color_val, colorize, column, data, data_by_iso, draw, format, geofile, geomap, height, iso_val, margin, path, projection, svg_countries, update, width, world;
+  var color_val, colorize, column, columns, data, data_by_iso, draw, format, geofile, geomap, height, iso_val, margin, path, projection, svg_countries, update, width, world;
   margin = {
     top: 20,
     right: 20,
@@ -17,6 +17,7 @@ d3.geomap.choropleth = function() {
   projection = d3.geo.naturalEarth;
   colorize = null;
   column = null;
+  columns = [];
   data = null;
   data_by_iso = {};
   format = d3.format('.02f');
@@ -79,10 +80,20 @@ d3.geomap.choropleth = function() {
   };
   geomap = function(selection) {
     data = selection.datum();
-    return draw(selection);
+    draw(selection);
+    return columns = d3.keys(data[0]).filter(function(d) {
+      if (d !== '' && d !== 'iso3') {
+        return d;
+      } else {
+        return null;
+      }
+    }).sort();
   };
   geomap.update = function() {
     return update();
+  };
+  geomap.columns = function() {
+    return columns;
   };
   geomap.margin = function(_) {
     if (!arguments.length) {
