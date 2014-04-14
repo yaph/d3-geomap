@@ -69,12 +69,7 @@ d3.geomap.choropleth = function() {
     proj = projection().scale(width / height * 155).translate([width / 2.4, height / 2]).precision(.1);
     path = d3.geo.path().projection(proj);
     return d3.json(geofile, function(error, world) {
-      var mesh;
       svg_countries = svg.append('g').attr('class', 'countries').selectAll('path').data(topojson.feature(world, world.objects.subunits).features);
-      mesh = topojson.mesh(world, world.objects.subunits, function(a, b) {
-        return a !== b;
-      });
-      svg.insert('path').datum(mesh).attr('class', 'boundary').attr('d', path);
       return update();
     });
   };

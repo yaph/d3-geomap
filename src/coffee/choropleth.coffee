@@ -64,12 +64,6 @@ d3.geomap.choropleth = ()->
                 .selectAll('path')
                 .data(topojson.feature(world, world.objects.subunits).features)
 
-            mesh = topojson.mesh(world, world.objects.subunits, (a, b)-> a != b)
-            svg.insert('path')
-                .datum(mesh)
-                .attr('class', 'boundary')
-                .attr('d', path)
-
             update()
 
     geomap = (selection)->

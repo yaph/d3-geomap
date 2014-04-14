@@ -5,13 +5,4 @@ text {
 .country {
   fill: #eeeeee;
   stroke: #dddddd;
-  stroke-width: 0.5px; }
-
-.boundary {
-  fill: none;
-  stroke: #dddddd;
-  stroke-width: 0.5px; }
-
-rect {
-  stroke: #dddddd;
-  stroke-width: 0.1px; }
+  stroke-width: 1px; }
