@@ -16,7 +16,7 @@ It is in early development, currently consisting of a choropleth map
         .height(780)
         .column('Calculated Percentage');
 
-    d3.csv("globalslaveryindex.csv", function(error, data) {
+    d3.csv('globalslaveryindex.csv', function(error, data) {
         console.log(data);
         d3.select("#map")
             .datum(data)
@@ -38,7 +38,6 @@ to be used to colorize the choropleth map is set in the `colum()` method.
 * better docs
 * not reusable with any topojson file, as long as world.objects.subunits is hard coded
 * make value parsing (parseFloat right now) a setting
-* columns function that returns a sorted list of culumn headings except iso3
 
 ## References
 

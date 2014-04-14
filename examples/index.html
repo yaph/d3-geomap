@@ -31,8 +31,7 @@ var worldmap = d3.geomap.choropleth()
     .height(780)
     .column('Calculated Percentage');
 
-d3.csv("globalslaveryindex.csv", function(error, data) {
-    console.log(data);
+d3.csv('globalslaveryindex.csv', function(error, data) {
     d3.select("#map")
         .datum(data)
         .call(worldmap);
