@@ -33,7 +33,7 @@ d3.geomap.choropleth = ()->
             centroid = path.centroid(d)
             x = centroid[0]
             y = centroid[1]
-            k = 3
+            k = 4
             centered = d
         else
             x = width / 2
@@ -47,7 +47,6 @@ d3.geomap.choropleth = ()->
         g.transition()
             .duration(750)
             .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')')
-            .style('stroke-width', 1 / k + 'px')
 
     # Calculate data mapping, draw and colorize countries.
     update = ()->
@@ -104,10 +103,11 @@ d3.geomap.choropleth = ()->
 
         # Load and render geo data.
         d3.json geofile, (error, world)->
+            console.log world
             countries = g
                 .attr('class', 'countries')
                 .selectAll('path')
-                .data(topojson.feature(world, world.objects.subunits).features)
+                .data(topojson.feature(world, world.objects.countries).features)
 
             update()
 

@@ -7,7 +7,8 @@ var gulp = require('gulp'),
 
 var paths = {
     scripts: ['src/coffee/geomap.coffee','src/coffee/choropleth.coffee'],
-    styles: ['src/**/*.sass']
+    styles: ['src/**/*.sass'],
+    data: ['src/**/*.json']
 };
 
 // Run dev server
@@ -21,8 +22,8 @@ gulp.task('connect', function() {
 
 // Copy geo data
 gulp.task('data', function() {
-    gulp.src('src/data/countries.topo.json')
-        .pipe(gulp.dest('dist/data'));
+    gulp.src(paths.data)
+        .pipe(gulp.dest('dist'));
 });
 
 // Minify scripts and styles

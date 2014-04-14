@@ -50,7 +50,7 @@ d3.geomap.choropleth = function() {
       centroid = path.centroid(d);
       x = centroid[0];
       y = centroid[1];
-      k = 3;
+      k = 4;
       centered = d;
     } else {
       x = width / 2;
@@ -61,7 +61,7 @@ d3.geomap.choropleth = function() {
     g.selectAll('path').classed('active', centered && function(d) {
       return d === centered;
     });
-    return g.transition().duration(750).attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')').style('stroke-width', 1 / k + 'px');
+    return g.transition().duration(750).attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')');
   };
   update = function() {
     var d, max, min, val, _i, _len;
@@ -96,7 +96,8 @@ d3.geomap.choropleth = function() {
     proj = projection().scale(width / height * 155).translate([width / 2.4, height / 2]).precision(.1);
     path = d3.geo.path().projection(proj);
     return d3.json(geofile, function(error, world) {
-      countries = g.attr('class', 'countries').selectAll('path').data(topojson.feature(world, world.objects.subunits).features);
+      console.log(world);
+      countries = g.attr('class', 'countries').selectAll('path').data(topojson.feature(world, world.objects.countries).features);
       return update();
     });
   };

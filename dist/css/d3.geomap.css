@@ -1,5 +1,5 @@
 text {
-  fill: #444444;
+  fill: #666666;
   font-size: 13px; }
 
 .background {
@@ -9,5 +9,5 @@ text {
 .country {
   cursor: pointer;
   fill: #eeeeee;
-  stroke: #dddddd;
-  stroke-width: 1px; }
+  stroke: #666666;
+  stroke-width: 0.2px; }
