@@ -5,7 +5,7 @@ colors = ['#fffff0', '#fffce9', '#fffbe5', '#fff7e0', '#fff5dd', '#fff2d8', '#ff
 d3.geomap = {};
 
 d3.geomap.choropleth = function() {
-  var color_val, colorize, column, columns, data, data_by_iso, draw, format, geofile, geomap, height, iso_val, margin, path, projection, svg_countries, update, width, world;
+  var centered, clicked, color_val, colorize, column, columns, countries, data, data_by_iso, draw, format, g, geofile, geomap, height, iso_val, margin, path, projection, update, width, world;
   margin = {
     top: 20,
     right: 20,
@@ -15,15 +15,17 @@ d3.geomap.choropleth = function() {
   width = 960;
   height = 500;
   projection = d3.geo.naturalEarth;
+  centered = null;
   colorize = null;
   column = null;
   columns = [];
+  countries = null;
   data = null;
   data_by_iso = {};
   format = d3.format('.02f');
+  g = null;
   geofile = null;
   path = null;
-  svg_countries = null;
   world = null;
   iso_val = function(iso3) {
     if (data_by_iso[iso3]) {
@@ -38,6 +40,28 @@ d3.geomap.choropleth = function() {
     } else {
       return '#eeeeee';
     }
+  };
+  clicked = function(d) {
+    var centroid, k, x, y;
+    x = null;
+    y = null;
+    k = null;
+    if (d && centered !== d) {
+      centroid = path.centroid(d);
+      x = centroid[0];
+      y = centroid[1];
+      k = 3;
+      centered = d;
+    } else {
+      x = width / 2;
+      y = height / 2;
+      k = 1;
+      centered = null;
+    }
+    g.selectAll('path').classed('active', centered && function(d) {
+      return d === centered;
+    });
+    return g.transition().duration(750).attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')').style('stroke-width', 1 / k + 'px');
   };
   update = function() {
     var d, max, min, val, _i, _len;
@@ -57,19 +81,21 @@ d3.geomap.choropleth = function() {
     colorize = d3.scale.quantize().domain([min, max]).range(d3.range(colors.length).map(function(i) {
       return colors[i];
     }));
-    return svg_countries.enter().append('path').attr('class', 'country').attr('d', path).style('fill', function(d) {
+    return countries.enter().append('path').attr('class', 'country').attr('d', path).style('fill', function(d) {
       return color_val(d.id);
-    }).append('title').text(function(d) {
+    }).on('click', clicked).append('title').text(function(d) {
       return d.properties.name + ': ' + format(iso_val(d.id));
     });
   };
   draw = function(selection) {
     var proj, svg;
     svg = selection.append('svg').attr('width', width).attr('height', height);
+    svg.append('rect').attr('class', 'background').attr('width', width).attr('height', height).on('click', clicked);
+    g = svg.append('g');
     proj = projection().scale(width / height * 155).translate([width / 2.4, height / 2]).precision(.1);
     path = d3.geo.path().projection(proj);
     return d3.json(geofile, function(error, world) {
-      svg_countries = svg.append('g').attr('class', 'countries').selectAll('path').data(topojson.feature(world, world.objects.subunits).features);
+      countries = g.attr('class', 'countries').selectAll('path').data(topojson.feature(world, world.objects.subunits).features);
       return update();
     });
   };

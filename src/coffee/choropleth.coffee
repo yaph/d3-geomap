@@ -3,15 +3,17 @@ d3.geomap.choropleth = ()->
     width = 960
     height = 500
     projection = d3.geo.naturalEarth
+    centered = null
     colorize = null
     column = null
     columns = []
+    countries = null
     data = null
     data_by_iso = {}
     format = d3.format('.02f')
+    g = null
     geofile = null
     path = null
-    svg_countries = null
     world = null
 
     iso_val = (iso3)->
@@ -19,6 +21,31 @@ d3.geomap.choropleth = ()->
 
     color_val = (iso3)->
         if data_by_iso[iso3] then colorize(data_by_iso[iso3]) else '#eeeeee'
+
+    clicked = (d)->
+        x = null
+        y = null
+        k = null
+
+        if d and centered isnt d
+            centroid = path.centroid(d)
+            x = centroid[0]
+            y = centroid[1]
+            k = 3
+            centered = d
+        else
+            x = width / 2
+            y = height / 2
+            k = 1
+            centered = null
+
+        g.selectAll('path')
+           .classed('active', centered and (d)-> d is centered)
+
+        g.transition()
+            .duration(750)
+            .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')')
+            .style('stroke-width', 1 / k + 'px')
 
     update = ()->
         # Create mapping of iso3 to data selected value and set min and max.
@@ -38,10 +65,11 @@ d3.geomap.choropleth = ()->
             .domain([min, max])
             .range(d3.range(colors.length).map((i)-> colors[i]))
 
-        svg_countries.enter().append('path')
+        countries.enter().append('path')
             .attr('class', 'country')
             .attr('d', path)
             .style('fill', (d)-> color_val(d.id))
+            .on('click', clicked)
             .append('title')
                 .text((d)-> d.properties.name + ': ' + format(iso_val(d.id)))
 
@@ -49,6 +77,14 @@ d3.geomap.choropleth = ()->
         svg = selection.append('svg')
             .attr('width', width)
             .attr('height', height)
+
+        svg.append('rect')
+            .attr('class', 'background')
+            .attr('width', width)
+            .attr('height', height)
+            .on('click', clicked)
+
+        g = svg.append('g')
 
         # Set map projection and path.
         proj = projection()
@@ -59,7 +95,7 @@ d3.geomap.choropleth = ()->
 
         # Load and render geo data.
         d3.json geofile, (error, world)->
-            svg_countries = svg.append('g')
+            countries = g
                 .attr('class', 'countries')
                 .selectAll('path')
                 .data(topojson.feature(world, world.objects.subunits).features)

@@ -42,3 +42,4 @@ to be used to colorize the choropleth map is set in the `colum()` method.
 ## References
 
 * [bl.ocks.org Natural Earth](http://bl.ocks.org/mbostock/4479477)
+* [bl.ocks.org click-to-zoom via transform](http://bl.ocks.org/mbostock/2206590)
