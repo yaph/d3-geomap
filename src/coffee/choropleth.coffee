@@ -68,6 +68,9 @@ d3.geomap.choropleth = ()->
             .domain([min, max])
             .range(d3.range(colors.length).map((i)-> colors[i]))
 
+        # Don't draw more than one path element per country.
+        d3.selectAll('path.country').remove()
+
         countries.enter().append('path')
             .attr('class', 'country')
             .attr('d', path)

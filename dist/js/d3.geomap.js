@@ -81,6 +81,7 @@ d3.geomap.choropleth = function() {
     colorize = d3.scale.quantize().domain([min, max]).range(d3.range(colors.length).map(function(i) {
       return colors[i];
     }));
+    d3.selectAll('path.country').remove();
     return countries.enter().append('path').attr('class', 'country').attr('d', path).style('fill', function(d) {
       return color_val(d.id);
     }).on('click', clicked).append('title').text(function(d) {
