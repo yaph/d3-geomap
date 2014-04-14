@@ -17,7 +17,7 @@ d3.geomap.choropleth = ()->
     world = null
 
     iso_val = (iso3)->
-        if data_by_iso[iso3] then data_by_iso[iso3] else ''
+        if data_by_iso[iso3] then format(data_by_iso[iso3]) else 'No data'
 
     color_val = (iso3)->
         if data_by_iso[iso3] then colorize(data_by_iso[iso3]) else '#eeeeee'
@@ -68,7 +68,9 @@ d3.geomap.choropleth = ()->
             .domain([min, max])
             .range(d3.range(colors.length).map((i)-> colors[i]))
 
-        # Don't draw more than one path element per country.
+        # Remove country path elements to not draw more than one path per
+        # country and to avoid color artifacts that may occur when colorzing
+        # the same country path multiple times.
         d3.selectAll('path.country').remove()
 
         countries.enter().append('path')
@@ -77,7 +79,7 @@ d3.geomap.choropleth = ()->
             .style('fill', (d)-> color_val(d.id))
             .on('click', clicked)
             .append('title')
-                .text((d)-> d.properties.name + ': ' + format(iso_val(d.id)))
+                .text((d)-> d.properties.name + ': ' + iso_val(d.id))
 
     # Draw map base and load geo data once, and call update to draw countries.
     draw = (selection)->

@@ -29,9 +29,9 @@ d3.geomap.choropleth = function() {
   world = null;
   iso_val = function(iso3) {
     if (data_by_iso[iso3]) {
-      return data_by_iso[iso3];
+      return format(data_by_iso[iso3]);
     } else {
-      return '';
+      return 'No data';
     }
   };
   color_val = function(iso3) {
@@ -85,7 +85,7 @@ d3.geomap.choropleth = function() {
     return countries.enter().append('path').attr('class', 'country').attr('d', path).style('fill', function(d) {
       return color_val(d.id);
     }).on('click', clicked).append('title').text(function(d) {
-      return d.properties.name + ': ' + format(iso_val(d.id));
+      return d.properties.name + ': ' + iso_val(d.id);
     });
   };
   draw = function(selection) {
