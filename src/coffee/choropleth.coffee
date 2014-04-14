@@ -22,6 +22,8 @@ d3.geomap.choropleth = ()->
     color_val = (iso3)->
         if data_by_iso[iso3] then colorize(data_by_iso[iso3]) else '#eeeeee'
 
+    # Zoom map on mouse click. If clicked on country and not zoomed, zoom in,
+    # else zoom out and center map.
     clicked = (d)->
         x = null
         y = null
@@ -47,6 +49,7 @@ d3.geomap.choropleth = ()->
             .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')')
             .style('stroke-width', 1 / k + 'px')
 
+    # Calculate data mapping, draw and colorize countries.
     update = ()->
         # Create mapping of iso3 to data selected value and set min and max.
         min = null
@@ -73,6 +76,7 @@ d3.geomap.choropleth = ()->
             .append('title')
                 .text((d)-> d.properties.name + ': ' + format(iso_val(d.id)))
 
+    # Draw map base and load geo data once, and call update to draw countries.
     draw = (selection)->
         svg = selection.append('svg')
             .attr('width', width)
@@ -110,6 +114,7 @@ d3.geomap.choropleth = ()->
         columns = d3.keys(data[0]).filter(
             (d)-> if d isnt '' and d isnt 'iso3' then d else null).sort()
 
+    # Expose update method.
     geomap.update = ()->
         update()
 
