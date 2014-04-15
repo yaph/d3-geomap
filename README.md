@@ -44,6 +44,7 @@ topojson --simplify-proportion .1 --id-property SU_A3 -p name=NAME -o countries.
 * better docs
 * not reusable with any topojson file, as long as world.objects.countries is hard coded
 * make value parsing (parseFloat right now) a setting
+* add legend left of South America, make it otional
 
 ## References
 
