@@ -1,4 +1,5 @@
+dist
 node_modules
+shp
 .sass-cache
 npm-debug.log
-shp
