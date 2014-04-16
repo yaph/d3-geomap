@@ -1,7 +1,7 @@
 {
   "name": "d3-geomap",
   "version": "0.0.1",
-  "description": "A reusuable choropleth map for d3.js",
+  "description": "A reusuable geomap for d3.js",
   "keywords": [
     "d3",
     "visualization",

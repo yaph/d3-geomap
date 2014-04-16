@@ -103,7 +103,6 @@ d3.geomap.choropleth = ()->
 
         # Load and render geo data.
         d3.json geofile, (error, world)->
-            console.log world
             countries = g
                 .attr('class', 'countries')
                 .selectAll('path')

@@ -1,8 +1,86 @@
-# https://vis4.net/labs/multihue/#colors=ivory,lightyellow,orangered,deeppink,darkred|steps=100|bez=1|coL=1
-colors = ['#fffff0', '#fffce9', '#fffbe5', '#fff7e0', '#fff5dd', '#fff2d8', '#fff0d4', '#ffedd1', '#ffeacc', '#ffe8c9', '#ffe5c5', '#ffe2c1', '#ffe1be', '#ffdeba', '#ffdab6', '#ffd9b3', '#ffd6af', '#ffd2ab', '#ffd1a8', '#ffcea4', '#ffcba0', '#ffc89c', '#ffc59a', '#ffc396', '#ffc092', '#ffbc8e', '#ffba8a', '#ffb788', '#ffb484', '#ffb180', '#ffae7d', '#ffac79', '#ffa875', '#ffa572', '#ffa36e', '#ff9f6b', '#ff9c67', '#ff9964', '#ff9660', '#ff935c', '#ff9058', '#ff8d55', '#ff8951', '#ff864d', '#ff8249', '#ff7f45', '#ff7b42', '#ff773d', '#ff7439', '#ff6f35', '#ff6c30', '#ff682c', '#ff6328', '#ff6023', '#ff5b1e', '#ff5619', '#ff5113', '#ff4b0a', '#ff4702', '#ff3f29', '#fd393a', '#fb3541', '#f83147', '#f62f4a', '#f32c4d', '#f0294f', '#ee2650', '#ea2451', '#e72251', '#e52050', '#e21e50', '#de1c4f', '#dc1a4e', '#d9184c', '#d6164b', '#d31549', '#d01347', '#cd1146', '#ca1043', '#c70e41', '#c40d3f', '#c20b3d', '#be0a3a', '#bc0838', '#b90735', '#b60632', '#b2052f', '#b0042c', '#ac032a', '#aa0327', '#a70223', '#a30220', '#a1011d', '#9d011a', '#9a0116', '#980013', '#95000f', '#91000b', '#8e0006', '#8b0000']
+d3.geomap = ()->
+    margin = {top: 20, right: 20, bottom: 20, left: 20}
+    width = 960
+    height = 500
+    projection = d3.geo.naturalEarth
+    centered = null
+    countries = null
+    g = null
+    geofile = null
+    path = null
+    world = null
 
-#colors = ['rgb(247,251,255)','rgb(222,235,247)','rgb(198,219,239)','rgb(158,202,225)','rgb(107,174,214)','rgb(66,146,198)','rgb(33,113,181)','rgb(8,81,156)','rgb(8,48,107)']
-#colors = ['rgb(255,255,204)','rgb(255,237,160)','rgb(254,217,118)','rgb(254,178,76)','rgb(253,141,60)','rgb(252,78,42)','rgb(227,26,28)','rgb(189,0,38)','rgb(128,0,38)']
-#colors = colorbrewer.Reds[9]
+    # Draw map base and load geo data once, and call update to draw countries.
+    draw = (selection)->
+        svg = selection.append('svg')
+            .attr('width', width)
+            .attr('height', height)
 
-d3.geomap = {}
+        svg.append('rect')
+            .attr('class', 'background')
+            .attr('width', width)
+            .attr('height', height)
+
+        g = svg.append('g')
+
+        # Set map projection and path.
+        proj = projection()
+            .scale(width / height * 155)
+            .translate([width / 2.4, height / 2])
+            .precision(.1)
+        path = d3.geo.path().projection(proj)
+
+        # Load and render geo data.
+        d3.json geofile, (error, world)->
+            countries = g
+                .attr('class', 'countries')
+                .selectAll('path')
+                .data(topojson.feature(world, world.objects.countries).features)
+
+            countries.enter().append('path')
+                .attr('class', 'country')
+                .attr('d', path)
+                .append('title')
+                    .text((d)-> d.properties.name)
+
+    geomap = (selection)->
+        draw(selection)
+
+    # Expose settings, tedious...
+    geomap.margin = (_)->
+        if not arguments.length
+            return margin
+        margin = _
+        geomap
+
+    geomap.width = (_)->
+        if not arguments.length
+            return width
+        width = _
+        geomap
+
+    geomap.height = (_)->
+        if not arguments.length
+            return height
+        height = _
+        geomap
+
+    geomap.projection = (_)->
+        if not arguments.length
+            return projection
+        projection = _
+        geomap
+
+    geomap.column = (_)->
+        if not arguments.length
+            return column
+        column = _
+        geomap
+
+    geomap.geofile = (_)->
+        if not arguments.length
+            return geofile
+        geofile = _
+        geomap
+
+    geomap

@@ -6,7 +6,11 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify');
 
 var paths = {
-    scripts: ['src/coffee/geomap.coffee','src/coffee/choropleth.coffee'],
+    scripts: [
+        'src/coffee/color.coffee',
+        'src/coffee/geomap.coffee',
+        'src/coffee/choropleth.coffee'
+    ],
     styles: ['src/**/*.sass'],
     data: ['src/**/*.json']
 };
