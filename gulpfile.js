@@ -11,6 +11,10 @@ var paths = {
         'src/coffee/geomap.coffee',
         'src/coffee/choropleth.coffee'
     ],
+    exp: [
+        'src/coffee/color.coffee',
+        'src/coffee/exp.coffee'
+    ],
     styles: ['src/**/*.sass'],
     data: ['src/**/*.json']
 };
@@ -46,6 +50,14 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('dist/js'));
 });
 
+// Minify and copy exp
+gulp.task('exp', function() {
+    return gulp.src(paths.exp)
+        .pipe(coffee({bare: true}))
+        .pipe(concat('d3.exp.js'))
+        .pipe(gulp.dest('dist/js'));
+});
+
 // Compile and copy sass
 gulp.task('styles', function () {
     return gulp.src(paths.styles)
@@ -58,6 +70,7 @@ gulp.task('styles', function () {
 gulp.task('watch', function() {
     gulp.watch(paths.scripts, ['scripts']);
     gulp.watch(paths.styles, ['styles']);
+    gulp.watch(paths.exp, ['exp']);
 });
 
 // Build the JavaScript and CSS files

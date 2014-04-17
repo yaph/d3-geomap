@@ -1,8 +1,12 @@
 d3.geomap.choropleth = ()->
+    # Defaults are optimized for naturalEarth projection.
     margin = {top: 20, right: 20, bottom: 20, left: 20}
     width = 960
     height = 500
     projection = d3.geo.naturalEarth
+    scale = width / height * 155
+    translate = [width / 2.4, height / 2]
+
     centered = null
     colorize = null
     column = null
@@ -96,8 +100,8 @@ d3.geomap.choropleth = ()->
 
         # Set map projection and path.
         proj = projection()
-            .scale(width / height * 155)
-            .translate([width / 2.4, height / 2])
+            .scale(scale)
+            .translate(translate)
             .precision(.1)
         path = d3.geo.path().projection(proj)
 
@@ -161,6 +165,18 @@ d3.geomap.choropleth = ()->
         if not arguments.length
             return geofile
         geofile = _
+        geomap
+
+    geomap.scale = (_)->
+        if not arguments.length
+            return scale
+        scale = _
+        geomap
+
+    geomap.translate = (_)->
+        if not arguments.length
+            return translate
+        translate = _
         geomap
 
     geomap
