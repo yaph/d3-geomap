@@ -1,63 +1,55 @@
-add_accessor = (obj, name, value)->
-    obj[name] = (_)->
-        if not arguments.length
-            return value
-        obj.properties[name] = _
-        obj
-
-
 class Geomap
 
     constructor: ->
+        # Set default properties optimized for naturalEarth projection.
         @properties =
             margin: {top: 20, right: 20, bottom: 20, left: 20}
             width: 960
             height: 500
             projection: d3.geo.naturalEarth
+            title: (d)-> d.properties.name
             centered: null
             geofile: null
-            world: null
+
+        # Dependant properties must be set after initialization.
+        @properties.scale = @properties.width / @properties.height * 155
+        @properties.translate = [@properties.width / 2.4, @properties.height / 2]
 
         # Setup methods to access properties.
-        add_accessor(this, name, value) for name, value of @properties
-
-    test: (selection, geomap)->
-        console.log selection
-        window.geomap = geomap
-
+        addAccessor(this, name, value) for name, value of @properties
 
     # Draw map base and load geo data once, and call update to draw countries.
-    #draw: (selection, geomap)->
-        #svg = selection.append('svg')
-            #.attr('width', geomap.width)
-            #.attr('height', geomap.height)
+    draw: (selection, geomap)->
+        svg = selection.append('svg')
+            .attr('width', geomap.properties.width)
+            .attr('height', geomap.properties.height)
 
-        #svg.append('rect')
-            #.attr('class', 'background')
-            #.attr('width', geomap.width)
-            #.attr('height', geomap.height)
+        svg.append('rect')
+            .attr('class', 'background')
+            .attr('width', geomap.properties.width)
+            .attr('height', geomap.properties.height)
 
-        #g = svg.append('g')
+        g = svg.append('g')
 
-        ## Set map projection and path.
-        #proj = Geomap.projection()
-            #.scale(geomap.width / geomap.height * 155)
-            #.translate([geomap.width / 2.4, geomap.height / 2])
-            #.precision(.1)
-        #path = d3.geo.path().projection(proj)
+        # Set map projection and path.
+        proj = geomap.properties.projection()
+            .scale(geomap.properties.scale)
+            .translate(geomap.properties.translate)
+            .precision(.1)
+        path = d3.geo.path().projection(proj)
 
-        ## Load and render geo data.
-        #d3.json '../dist/data/countries.topo.json', (error, world)->
-            #countries = svg.append('g')
-                #.attr('class', 'countries')
-                #.selectAll('path')
-                #.data(topojson.feature(world, world.objects.countries).features)
+        # Load and render geo data.
+        d3.json geomap.properties.geofile, (error, geo)->
+            countries = svg.append('g')
+                .attr('class', 'countries')
+                .selectAll('path')
+                .data(topojson.feature(geo, geo.objects.countries).features)
 
-            #countries.enter().append('path')
-                #.attr('class', 'country')
-                #.attr('d', path)
-                #.append('title')
-                    #.text((d)-> d.properties.name)
+            countries.enter().append('path')
+                .attr('class', 'country')
+                .attr('d', path)
+                .append('title')
+                    .text(geomap.properties.title)
 
 d3.geomap = ()->
     new Geomap()

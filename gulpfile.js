@@ -7,11 +7,13 @@ var gulp = require('gulp'),
 
 var paths = {
     scripts: [
+        'src/coffee/utils.coffee',
         'src/coffee/color.coffee',
         'src/coffee/geomap.coffee',
         'src/coffee/choropleth.coffee'
     ],
     exp: [
+        'src/coffee/utils.coffee',
         'src/coffee/color.coffee',
         'src/coffee/exp.coffee'
     ],
