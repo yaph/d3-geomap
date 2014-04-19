@@ -1,65 +1,32 @@
-d3.geomap.choropleth = ()->
-    # Defaults are optimized for naturalEarth projection.
-    margin = {top: 20, right: 20, bottom: 20, left: 20}
-    width = 960
-    height = 500
-    projection = d3.geo.naturalEarth
-    scale = width / height * 155
-    translate = [width / 2.4, height / 2]
+class Choropleth extends Geomap
 
-    centered = null
-    colorize = null
-    column = null
-    columns = []
-    countries = null
-    data = null
-    data_by_iso = {}
-    format = d3.format('.02f')
-    g = null
-    geofile = null
-    path = null
-    world = null
+    constructor: ->
+        super()
 
-    iso_val = (iso3)->
-        if data_by_iso[iso3] then format(data_by_iso[iso3]) else 'No data'
+        add_properties =
+            column: null
+            format: d3.format('.02f')
 
-    color_val = (iso3)->
-        if data_by_iso[iso3] then colorize(data_by_iso[iso3]) else '#eeeeee'
+        for name, value of add_properties
+            @properties[name] = value
+            addAccessor(this, name, value)
 
-    # Zoom map on mouse click. If clicked on country and not zoomed, zoom in,
-    # else zoom out and center map.
-    clicked = (d)->
-        x = null
-        y = null
-        k = null
+    draw: (selection, geomap)->
+        geomap.private.data = selection.datum()
+        super(selection, geomap)
 
-        if d and centered isnt d
-            centroid = path.centroid(d)
-            x = centroid[0]
-            y = centroid[1]
-            k = 4
-            centered = d
-        else
-            x = width / 2
-            y = height / 2
-            k = 1
-            centered = null
+    update: ()->
+        geomap = this
+        data_by_iso = {}
 
-        g.selectAll('path')
-           .classed('active', centered and (d)-> d is centered)
+        d3.selectAll('path.country').remove()
 
-        g.transition()
-            .duration(750)
-            .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')')
-
-    # Calculate data mapping, draw and colorize countries.
-    update = ()->
         # Create mapping of iso3 to data selected value and set min and max.
         min = null
         max = null
-        for d in data
+        for d in this.private.data
             # Try to parse value as float.
-            val = parseFloat(d[column])
+            val = parseFloat(d[geomap.properties.column])
             if val < min
                 min = val
             if val > max
@@ -71,112 +38,19 @@ d3.geomap.choropleth = ()->
             .domain([min, max])
             .range(d3.range(colors.length).map((i)-> colors[i]))
 
-        # Remove country path elements to not draw more than one path per
-        # country and to avoid color artifacts that may occur when colorzing
-        # the same country path multiple times.
-        d3.selectAll('path.country').remove()
+        iso_val = (iso3)->
+            if data_by_iso[iso3] then geomap.properties.format(data_by_iso[iso3]) else 'No data'
 
-        countries.enter().append('path')
-            .attr('class', 'country')
-            .attr('d', path)
+        color_val = (iso3)->
+            if data_by_iso[iso3] then colorize(data_by_iso[iso3]) else '#eeeeee'
+
+        geomap.private.units.enter().append('path')
+            .attr('class', 'unit')
+            .attr('d', geomap.private.path)
             .style('fill', (d)-> color_val(d.id))
-            .on('click', clicked)
+            .on('click', geomap.clicked.bind(geomap))
             .append('title')
                 .text((d)-> d.properties.name + ': ' + iso_val(d.id))
 
-    # Draw map base and load geo data once, and call update to draw countries.
-    draw = (selection)->
-        svg = selection.append('svg')
-            .attr('width', width)
-            .attr('height', height)
-
-        svg.append('rect')
-            .attr('class', 'background')
-            .attr('width', width)
-            .attr('height', height)
-            .on('click', clicked)
-
-        g = svg.append('g')
-
-        # Set map projection and path.
-        proj = projection()
-            .scale(scale)
-            .translate(translate)
-            .precision(.1)
-        path = d3.geo.path().projection(proj)
-
-        # Load and render geo data.
-        d3.json geofile, (error, world)->
-            countries = g
-                .attr('class', 'countries')
-                .selectAll('path')
-                .data(topojson.feature(world, world.objects.countries).features)
-
-            update()
-
-    geomap = (selection)->
-        data = selection.datum()
-        draw(selection)
-
-        # Set columns based on properties of 1st object in data array.
-        columns = d3.keys(data[0]).filter(
-            (d)-> if d isnt '' and d isnt 'iso3' then d else null).sort()
-
-    # Expose update method.
-    geomap.update = ()->
-        update()
-
-    # Return array of data property names, i. e. column headings in a CSV.
-    geomap.columns = ()->
-        columns
-
-    # Expose settings, tedious...
-    geomap.margin = (_)->
-        if not arguments.length
-            return margin
-        margin = _
-        geomap
-
-    geomap.width = (_)->
-        if not arguments.length
-            return width
-        width = _
-        geomap
-
-    geomap.height = (_)->
-        if not arguments.length
-            return height
-        height = _
-        geomap
-
-    geomap.projection = (_)->
-        if not arguments.length
-            return projection
-        projection = _
-        geomap
-
-    geomap.column = (_)->
-        if not arguments.length
-            return column
-        column = _
-        geomap
-
-    geomap.geofile = (_)->
-        if not arguments.length
-            return geofile
-        geofile = _
-        geomap
-
-    geomap.scale = (_)->
-        if not arguments.length
-            return scale
-        scale = _
-        geomap
-
-    geomap.translate = (_)->
-        if not arguments.length
-            return translate
-        translate = _
-        geomap
-
-    geomap
+d3.geomap.choropleth = ()->
+    new Choropleth()

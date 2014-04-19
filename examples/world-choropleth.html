@@ -42,7 +42,7 @@ var worldmap = d3.geomap.choropleth()
 d3.csv('globalslaveryindex.csv', function(error, data) {
     d3.select("#map")
         .datum(data)
-        .call(worldmap);
+        .call(worldmap.draw, worldmap);
 });
 
 d3.select('#map-select')

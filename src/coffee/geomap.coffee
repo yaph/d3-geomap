@@ -1,86 +1,92 @@
-d3.geomap = ()->
-    margin = {top: 20, right: 20, bottom: 20, left: 20}
-    width = 960
-    height = 500
-    projection = d3.geo.naturalEarth
-    centered = null
-    countries = null
-    g = null
-    geofile = null
-    path = null
-    world = null
+class Geomap
 
-    # Draw map base and load geo data once, and call update to draw countries.
-    draw = (selection)->
+    constructor: ->
+        # Set default properties optimized for naturalEarth projection.
+        @properties =
+            margin: {top: 20, right: 20, bottom: 20, left: 20}
+            width: 960
+            height: 500
+            projection: d3.geo.naturalEarth
+            title: (d)-> d.properties.name
+            geofile: null
+
+        # Dependant properties must be set after initialization.
+        @properties.scale = @properties.width / @properties.height * 155
+        @properties.translate = [@properties.width / 2.4, @properties.height / 2]
+
+        # Setup methods to access properties.
+        addAccessor(this, name, value) for name, value of @properties
+
+        # Variables without accessors get stored in private.
+        @private = {}
+
+    clicked: (d)->
+        geomap = this
+
+        x = null
+        y = null
+        k = null
+
+        if d and geomap.private.centered isnt d
+            centroid = geomap.private.path.centroid(d)
+            x = centroid[0]
+            y = centroid[1]
+            k = 4
+            geomap.private.centered = d
+        else
+            x = geomap.properties.width / 2
+            y = geomap.properties.height / 2
+            k = 1
+            geomap.private.centered = null
+
+        geomap.private.g.selectAll('path')
+           .classed('active', geomap.private.centered and (d)-> d is geomap.private.centered)
+
+        x0 = geomap.properties.width / 2
+        y0 = geomap.properties.height / 2
+        geomap.private.g.transition()
+            .duration(750)
+            .attr('transform', 'translate(' +  x0 + ',' + y0 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')')
+
+    update: ()->
+        geomap = this
+
+        geomap.private.units.enter().append('path')
+            .attr('class', 'unit')
+            .attr('d', geomap.private.path)
+            .on('click', geomap.clicked.bind(geomap))
+            .append('title')
+                .text(geomap.properties.title)
+
+    # Draw map base and load geo data once, and call update to draw units.
+    draw: (selection, geomap)->
         svg = selection.append('svg')
-            .attr('width', width)
-            .attr('height', height)
+            .attr('width', geomap.properties.width)
+            .attr('height', geomap.properties.height)
 
         svg.append('rect')
             .attr('class', 'background')
-            .attr('width', width)
-            .attr('height', height)
+            .attr('width', geomap.properties.width)
+            .attr('height', geomap.properties.height)
+            .on('click', geomap.clicked.bind(geomap))
 
-        g = svg.append('g')
+        geomap.private.g = svg.append('g')
+            .attr('class', 'units')
 
         # Set map projection and path.
-        proj = projection()
-            .scale(width / height * 155)
-            .translate([width / 2.4, height / 2])
+        proj = geomap.properties.projection()
+            .scale(geomap.properties.scale)
+            .translate(geomap.properties.translate)
             .precision(.1)
-        path = d3.geo.path().projection(proj)
+        geomap.private.path = d3.geo.path().projection(proj)
 
         # Load and render geo data.
-        d3.json geofile, (error, world)->
-            countries = g
-                .attr('class', 'countries')
+        d3.json geomap.properties.geofile, (error, geo)->
+            geomap.private.units = geomap.private.g
                 .selectAll('path')
-                .data(topojson.feature(world, world.objects.countries).features)
+                .data(topojson.feature(geo, geo.objects.countries).features)
 
-            countries.enter().append('path')
-                .attr('class', 'country')
-                .attr('d', path)
-                .append('title')
-                    .text((d)-> d.properties.name)
+            geomap.update()
 
-    geomap = (selection)->
-        draw(selection)
-
-    # Expose settings, tedious...
-    geomap.margin = (_)->
-        if not arguments.length
-            return margin
-        margin = _
-        geomap
-
-    geomap.width = (_)->
-        if not arguments.length
-            return width
-        width = _
-        geomap
-
-    geomap.height = (_)->
-        if not arguments.length
-            return height
-        height = _
-        geomap
-
-    geomap.projection = (_)->
-        if not arguments.length
-            return projection
-        projection = _
-        geomap
-
-    geomap.column = (_)->
-        if not arguments.length
-            return column
-        column = _
-        geomap
-
-    geomap.geofile = (_)->
-        if not arguments.length
-            return geofile
-        geofile = _
-        geomap
-
-    geomap
+d3.geomap = ()->
+    new Geomap()
