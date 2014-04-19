@@ -8,7 +8,6 @@ class Geomap
             height: 500
             projection: d3.geo.naturalEarth
             title: (d)-> d.properties.name
-            centered: null
             geofile: null
 
         # Dependant properties must be set after initialization.
@@ -17,6 +16,40 @@ class Geomap
 
         # Setup methods to access properties.
         addAccessor(this, name, value) for name, value of @properties
+
+        # Variables without accessors.
+        @private =
+            g: null
+            centered: null
+            path: null
+
+    clicked: (d)->
+        x = null
+        y = null
+        k = null
+        geomap = this
+
+        if d and geomap.private.centered isnt d
+            centroid = this.private.path.centroid(d)
+            x = centroid[0]
+            y = centroid[1]
+            k = 4
+            this.private.centered = d
+        else
+            x = geomap.properties.width / 2
+            y = geomap.properties.height / 2
+            k = 1
+            geomap.private.centered = null
+
+        this.private.g.selectAll('path')
+           .classed('active', geomap.private.centered and (d)-> d is geomap.private.centered)
+
+        x0 = geomap.properties.width / 2
+        y0 = geomap.properties.height / 2
+        this.private.g.transition()
+            .duration(750)
+            .attr('transform', 'translate(' +  x0 + ',' + y0 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')')
+
 
     # Draw map base and load geo data once, and call update to draw countries.
     draw: (selection, geomap)->
@@ -28,26 +61,28 @@ class Geomap
             .attr('class', 'background')
             .attr('width', geomap.properties.width)
             .attr('height', geomap.properties.height)
+            .on('click', geomap.clicked.bind(geomap))
 
-        g = svg.append('g')
+        geomap.private.g = svg.append('g')
+            .attr('class', 'countries')
 
         # Set map projection and path.
         proj = geomap.properties.projection()
             .scale(geomap.properties.scale)
             .translate(geomap.properties.translate)
             .precision(.1)
-        path = d3.geo.path().projection(proj)
+        geomap.private.path = d3.geo.path().projection(proj)
 
         # Load and render geo data.
         d3.json geomap.properties.geofile, (error, geo)->
-            countries = svg.append('g')
-                .attr('class', 'countries')
+            countries = geomap.private.g
                 .selectAll('path')
                 .data(topojson.feature(geo, geo.objects.countries).features)
 
             countries.enter().append('path')
                 .attr('class', 'country')
-                .attr('d', path)
+                .attr('d', geomap.private.path)
+                .on('click', geomap.clicked.bind(geomap))
                 .append('title')
                     .text(geomap.properties.title)
 

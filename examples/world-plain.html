@@ -22,6 +22,7 @@ var worldmap = d3.geomap.choropleth()
     .geofile('../dist/data/countries.topo.json')
     .width(1200)
     .height(780)
+    .scale(160)
     .projection(d3.geo.mercator);
 
 d3.select("#map")
