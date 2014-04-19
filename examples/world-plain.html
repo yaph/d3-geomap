@@ -23,10 +23,16 @@ var worldmap = d3.geomap.choropleth()
     .width(1200)
     .height(780)
     .scale(160)
+    .column('Calculated Percentage')
     .projection(d3.geo.mercator);
 
-d3.select("#map")
-    .call(worldmap.draw, worldmap);
+d3.csv('globalslaveryindex.csv', function(error, data) {
+    d3.select("#map")
+        .datum(data)
+        .call(worldmap.draw, worldmap);
+});
+//d3.select("#map")
+//    .call(worldmap.draw, worldmap);
 </script>
 </body>
 </html>

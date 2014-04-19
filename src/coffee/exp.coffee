@@ -17,41 +17,48 @@ class Geomap
         # Setup methods to access properties.
         addAccessor(this, name, value) for name, value of @properties
 
-        # Variables without accessors.
-        @private =
-            g: null
-            centered: null
-            path: null
+        # Variables without accessors get stored in private.
+        @private = {}
 
     clicked: (d)->
+        geomap = this
+
         x = null
         y = null
         k = null
-        geomap = this
 
         if d and geomap.private.centered isnt d
-            centroid = this.private.path.centroid(d)
+            centroid = geomap.private.path.centroid(d)
             x = centroid[0]
             y = centroid[1]
             k = 4
-            this.private.centered = d
+            geomap.private.centered = d
         else
             x = geomap.properties.width / 2
             y = geomap.properties.height / 2
             k = 1
             geomap.private.centered = null
 
-        this.private.g.selectAll('path')
+        geomap.private.g.selectAll('path')
            .classed('active', geomap.private.centered and (d)-> d is geomap.private.centered)
 
         x0 = geomap.properties.width / 2
         y0 = geomap.properties.height / 2
-        this.private.g.transition()
+        geomap.private.g.transition()
             .duration(750)
             .attr('transform', 'translate(' +  x0 + ',' + y0 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')')
 
+    update: ()->
+        geomap = this
 
-    # Draw map base and load geo data once, and call update to draw countries.
+        geomap.private.units.enter().append('path')
+            .attr('class', 'unit')
+            .attr('d', geomap.private.path)
+            .on('click', geomap.clicked.bind(geomap))
+            .append('title')
+                .text(geomap.properties.title)
+
+    # Draw map base and load geo data once, and call update to draw units.
     draw: (selection, geomap)->
         svg = selection.append('svg')
             .attr('width', geomap.properties.width)
@@ -64,7 +71,7 @@ class Geomap
             .on('click', geomap.clicked.bind(geomap))
 
         geomap.private.g = svg.append('g')
-            .attr('class', 'countries')
+            .attr('class', 'units')
 
         # Set map projection and path.
         proj = geomap.properties.projection()
@@ -75,16 +82,11 @@ class Geomap
 
         # Load and render geo data.
         d3.json geomap.properties.geofile, (error, geo)->
-            countries = geomap.private.g
+            geomap.private.units = geomap.private.g
                 .selectAll('path')
                 .data(topojson.feature(geo, geo.objects.countries).features)
 
-            countries.enter().append('path')
-                .attr('class', 'country')
-                .attr('d', geomap.private.path)
-                .on('click', geomap.clicked.bind(geomap))
-                .append('title')
-                    .text(geomap.properties.title)
+            geomap.update()
 
 d3.geomap = ()->
     new Geomap()
@@ -92,17 +94,57 @@ d3.geomap = ()->
 
 class Choropleth extends Geomap
 
+    constructor: ->
+        super()
+
+        add_properties =
+            column: null
+            format: d3.format('.02f')
+
+        for name, value of add_properties
+            @properties[name] = value
+            addAccessor(this, name, value)
+
     draw: (selection, geomap)->
+        geomap.private.data = selection.datum()
         super(selection, geomap)
 
-        console.log('##########')
+    update: ()->
+        geomap = this
+        data_by_iso = {}
 
         d3.selectAll('path.country').remove()
 
-        #d3.select('g.countries').data(selection.data).enter().append('path')
-            #.attr('class', 'country')
-            #.attr('d', geomap.path)
-            #.style('fill', '#ff0000')
+        # Create mapping of iso3 to data selected value and set min and max.
+        min = null
+        max = null
+        for d in this.private.data
+            # Try to parse value as float.
+            val = parseFloat(d[geomap.properties.column])
+            if val < min
+                min = val
+            if val > max
+                max = val
+            data_by_iso[d.iso3] = val
+
+        # Set the coloring function.
+        colorize = d3.scale.quantize()
+            .domain([min, max])
+            .range(d3.range(colors.length).map((i)-> colors[i]))
+
+        iso_val = (iso3)->
+            if data_by_iso[iso3] then geomap.properties.format(data_by_iso[iso3]) else 'No data'
+
+        color_val = (iso3)->
+            if data_by_iso[iso3] then colorize(data_by_iso[iso3]) else '#eeeeee'
+
+        geomap.private.units.enter().append('path')
+            .attr('class', 'unit')
+            .attr('d', geomap.private.path)
+            .style('fill', (d)-> color_val(d.id))
+            .on('click', geomap.clicked.bind(geomap))
+            .append('title')
+                .text((d)-> d.properties.name + ': ' + iso_val(d.id))
 
 d3.geomap.choropleth = ()->
     new Choropleth()
