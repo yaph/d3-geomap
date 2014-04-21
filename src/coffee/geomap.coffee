@@ -11,8 +11,8 @@ class Geomap
             geofile: null
 
         # Dependant properties must be set after initialization.
-        @properties.scale = @properties.width / @properties.height * 155
-        @properties.translate = [@properties.width / 2.4, @properties.height / 2]
+        @properties.scale = @properties.width / @properties.height * 90
+        @properties.translate = [@properties.width / 2, @properties.height / 2]
 
         # Setup methods to access properties.
         addAccessor(this, name, value) for name, value of @properties
@@ -88,5 +88,7 @@ class Geomap
 
             geomap.update()
 
-d3.geomap = ()->
+root = (exports? or this)
+root.Geomap = Geomap
+root.d3.geomap = ()->
     new Geomap()

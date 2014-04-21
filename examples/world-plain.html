@@ -20,8 +20,6 @@
 <script>
 var worldmap = d3.geomap()
     .geofile('../dist/data/countries.topo.json')
-    .width(1200)
-    .height(780);
 
 d3.select("#map")
     .call(worldmap.draw, worldmap);

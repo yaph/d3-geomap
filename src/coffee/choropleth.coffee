@@ -52,5 +52,5 @@ class Choropleth extends Geomap
             .append('title')
                 .text((d)-> d.properties.name + ': ' + iso_val(d.id))
 
-d3.geomap.choropleth = ()->
+(exports? or this).d3.geomap.choropleth = ()->
     new Choropleth()

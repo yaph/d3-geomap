@@ -42,7 +42,7 @@ gulp.task('minify', ['scripts'], function() {
 // Minify and copy scripts
 gulp.task('scripts', function() {
     return gulp.src(paths.scripts)
-        .pipe(coffee({bare: true}))
+        .pipe(coffee())
         .pipe(concat('d3.geomap.js'))
         .pipe(gulp.dest('dist/js'));
 });

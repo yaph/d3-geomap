@@ -4,3 +4,6 @@ addAccessor = (obj, name, value)->
             return value
         obj.properties[name] = _
         obj
+
+root = (exports? or this)
+root.addAccessor = addAccessor
