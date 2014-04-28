@@ -1,4 +1,11 @@
-# https://vis4.net/labs/multihue/#colors=ivory,lightyellow,orangered,deeppink,darkred|steps=20|bez=1|coL=1
-colors = ['#fffff0', '#fff2d8', '#ffe4c4', '#ffd6b0', '#ffc89e', '#ffba8a', '#ffab78', '#ff9a65', '#ff8a52', '#ff783d', '#ff6328', '#ff4a07', '#f83049', '#e82251', '#da184d', '#c90f43', '#ba0836', '#aa0328', '#9a0116', '#8b0000']
+colors =
+    # https://vis4.net/labs/multihue/#colors=ivory,orangered,maroon|steps=40|bez=1|coL=1
+    reds: ['#fffff0', '#fff8e7', '#fff1dd', '#ffead4', '#ffe3ca', '#ffdcc1', '#ffd6b8', '#ffceaf', '#ffc7a6', '#ffbf9c', '#ffb994', '#ffb18a', '#ffa982', '#ffa279', '#ff9970', '#fc9368', '#f98b61', '#f6855a', '#f37e53', '#ef774d', '#eb7247', '#e76b40', '#e3643b', '#df5e36', '#d95830', '#d5522b', '#d04c26', '#ca4621', '#c5401d', '#c03a19', '#ba3315', '#b42e11', '#ae280e', '#a8230b', '#a21d08', '#9b1706', '#941105', '#8d0a03', '#870501', '#800000']
+    # https://vis4.net/labs/multihue/#colors=aliceblue,blue,midnightblue|steps=40|bez=1|coL=1
+    blues: ['#f0f8ff', '#ecf0ff', '#e8eaff', '#e4e3ff', '#e0dbff', '#dcd4ff', '#d8cdff', '#d3c6ff', '#cebeff', '#cab7fe', '#c5b1fd', '#c0aafc', '#bba4fb', '#b69dfa', '#b196f9', '#ac8ff7', '#a688f5', '#a182f3', '#9b7cf1', '#9576ef', '#906fec', '#8a69ea', '#8463e7', '#7d5de4', '#7757e0', '#7151dd', '#6a4bd8', '#6346d4', '#5c40cf', '#563bcb', '#4e36c5', '#4731bf', '#402db8', '#3a29b1', '#3324aa', '#2c21a0', '#251e97', '#201b8c', '#1b1a7f', '#191970']
+    # https://vis4.net/labs/multihue/#colors=whitesmoke,black|steps=40|bez=1|coL=1
+    bw: ['#f5f5f5', '#ededed', '#e7e7e7', '#dfdfdf', '#d9d9d9', '#d2d2d2', '#cbcbcb', '#c4c4c4', '#bdbdbd', '#b7b7b7', '#afafaf', '#a9a9a9', '#a2a2a2', '#9c9c9c', '#959595', '#8f8f8f', '#898989', '#828282', '#7b7b7b', '#767676', '#6f6f6f', '#696969', '#636363', '#5d5d5d', '#575757', '#525252', '#4c4c4c', '#454645', '#414141', '#3a3a3a', '#363636', '#2f3030', '#2a2a2a', '#262626', '#212121', '#1c1c1c', '#171717', '#111111', '#090909', '#000000']
+    # https://vis4.net/labs/multihue/#colors=honeydew,darkgreen|steps=40|bez=1|coL=1
+    greens: ['#f0fff0', '#eafbe9', '#e4f7e3', '#dff2dd', '#d9eed7', '#d4ebd1', '#cfe6ca', '#c8e2c4', '#c3debd', '#bddab7', '#b7d6b1', '#b2d2ab', '#adcea5', '#a7ca9f', '#a2c599', '#9cc193', '#97bd8d', '#91b987', '#8cb681', '#86b17b', '#81ae75', '#7baa6f', '#76a66a', '#70a264', '#6a9e5e', '#659a58', '#5f9653', '#5a924e', '#558f48', '#4f8b42', '#49873c', '#438336', '#3d7f30', '#367b2a', '#317725', '#2a741f', '#226f18', '#196b11', '#0e6708', '#006400']
 
 (exports? or this).colors = colors

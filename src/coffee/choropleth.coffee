@@ -7,6 +7,7 @@ class Choropleth extends Geomap
             column: null
             format: d3.format('.02f')
             legend: false
+            colors: colors.reds
 
         for name, value of add_properties
             @properties[name] = value
@@ -39,7 +40,7 @@ class Choropleth extends Geomap
         # Set the coloring function.
         colorize = d3.scale.quantize()
             .domain([min, max])
-            .range(d3.range(colors.length).map((i)-> colors[i]))
+            .range(d3.range(geomap.properties.colors.length).map((i)-> geomap.properties.colors[i]))
 
         iso_val = (iso3)->
             if data_by_iso[iso3] then geomap.properties.format(data_by_iso[iso3]) else 'No data'
@@ -63,10 +64,10 @@ class Choropleth extends Geomap
         geomap = this
         rw = 15
         lh = 120
-        offset_y = geomap.properties.height - lh - 150
+        offset_y = geomap.properties.height - lh - 45
         # reverse a copy to not alter colors array
-        cdata = colors.slice().reverse()
-        rh = lh / cdata.length
+        colorlist = geomap.properties.colors.slice().reverse()
+        rh = lh / colorlist.length
 
         geomap.private.svg.select('g#legend').remove()
 
@@ -95,10 +96,10 @@ class Choropleth extends Geomap
 
         # draw color scale
         sg.selectAll('rect')
-            .data(cdata)
+            .data(colorlist)
             .enter().append('rect')
             .attr('y', (d, i)-> i * rh)
-            .attr('fill', (d, i)-> cdata[i])
+            .attr('fill', (d, i)-> colorlist[i])
             .attr('width', rw)
             .attr('height', rh)
 
