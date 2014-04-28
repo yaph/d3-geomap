@@ -61,9 +61,12 @@ class Choropleth extends Geomap
 
     drawLegend: (min_val, max_val)->
         geomap = this
-        rw = 10
-        lh = 200
+        rw = 15
+        lh = 120
         offset_y = geomap.properties.height - lh - 150
+        # reverse a copy to not alter colors array
+        cdata = colors.slice().reverse()
+        rh = lh / cdata.length
 
         geomap.private.svg.select('g#legend').remove()
 
@@ -90,17 +93,14 @@ class Choropleth extends Geomap
             .attr('x', 0)
             .attr('y', lh + 2 * rw)
 
-        # reverse a copy to not alter colors array
-        cdata = colors.slice().reverse()
-
         # draw color scale
         sg.selectAll('rect')
             .data(cdata)
             .enter().append('rect')
-            .attr('y', (d, i)-> i * rw)
+            .attr('y', (d, i)-> i * rh)
             .attr('fill', (d, i)-> cdata[i])
             .attr('width', rw)
-            .attr('height', rw)
+            .attr('height', rh)
 
 
 (exports? or this).d3.geomap.choropleth = ()->
