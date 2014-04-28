@@ -22,7 +22,7 @@ class Choropleth extends Geomap
         geomap = this
         data_by_iso = {}
 
-        d3.selectAll('path.country').remove()
+        d3.selectAll('path.unit').remove()
 
         # Create mapping of iso3 to data selected value and set min and max.
         min = null

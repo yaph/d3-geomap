@@ -36,8 +36,8 @@ to be used to colorize the choropleth map is set in the `colum()` method.
 # Create topojson
 
     wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip
-    ogr2ogr -f GeoJSON -lco COORDINATE_PRECISION=2 countries.json ne_10m_admin_0_countries.shp
-    topojson --simplify-proportion .1 --id-property SU_A3 -p name=NAME -o countries.topo.json countries.json
+    ogr2ogr -f GeoJSON units.json ne_10m_admin_0_countries.shp
+    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property SU_A3 -p name=NAME -o worldcountries.topojson  units.json
 
 ## References
 

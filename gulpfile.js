@@ -13,7 +13,7 @@ var paths = {
         'src/coffee/choropleth.coffee'
     ],
     styles: ['src/**/*.sass'],
-    data: ['src/**/*.json']
+    data: ['src/**/*.topojson']
 };
 
 // Run dev server

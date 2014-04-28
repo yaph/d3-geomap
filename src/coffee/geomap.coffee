@@ -87,7 +87,7 @@ class Geomap
         d3.json geomap.properties.geofile, (error, geo)->
             geomap.private.units = geomap.private.g
                 .selectAll('path')
-                .data(topojson.feature(geo, geo.objects.countries).features)
+                .data(topojson.feature(geo, geo.objects.units).features)
 
             geomap.update()
 
