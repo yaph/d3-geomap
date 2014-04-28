@@ -37,6 +37,7 @@ var worldmap = d3.geomap.choropleth()
     .column('Calculated Percentage')
     .scale([width / height * 100])
     .translate([width / 2, height / 1.8])
+    .legend(true)
     .projection(d3.geo.mercator);
 
 d3.csv('globalslaveryindex.csv', function(error, data) {

@@ -20,6 +20,7 @@ class Geomap
         # Variables without accessors get stored in private.
         @private = {}
 
+
     clicked: (d)->
         geomap = this
 
@@ -48,6 +49,7 @@ class Geomap
             .duration(750)
             .attr('transform', 'translate(' +  x0 + ',' + y0 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')')
 
+
     update: ()->
         geomap = this
 
@@ -58,19 +60,20 @@ class Geomap
             .append('title')
                 .text(geomap.properties.title)
 
+
     # Draw map base and load geo data once, and call update to draw units.
     draw: (selection, geomap)->
-        svg = selection.append('svg')
+        geomap.private.svg = selection.append('svg')
             .attr('width', geomap.properties.width)
             .attr('height', geomap.properties.height)
 
-        svg.append('rect')
+        geomap.private.svg.append('rect')
             .attr('class', 'background')
             .attr('width', geomap.properties.width)
             .attr('height', geomap.properties.height)
             .on('click', geomap.clicked.bind(geomap))
 
-        geomap.private.g = svg.append('g')
+        geomap.private.g = geomap.private.svg.append('g')
             .attr('class', 'units')
 
         # Set map projection and path.
@@ -87,6 +90,7 @@ class Geomap
                 .data(topojson.feature(geo, geo.objects.countries).features)
 
             geomap.update()
+
 
 root = (exports? or this)
 root.Geomap = Geomap
