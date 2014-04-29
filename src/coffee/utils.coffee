@@ -1,7 +1,7 @@
 addAccessor = (obj, name, value)->
     obj[name] = (_)->
         if not arguments.length
-            return value
+            return obj.properties[name] || value
         obj.properties[name] = _
         obj
 

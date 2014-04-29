@@ -44,6 +44,18 @@ d3.csv('globalslaveryindex.csv', function(error, data) {
     d3.select("#map")
         .datum(data)
         .call(worldmap.draw, worldmap);
+
+    rh = 60;
+    worldmap.svg()
+        .append('rect')
+        .attr('width', '80%')
+        .attr('height', rh)
+        .attr('x', '10%')
+        .attr('y', height - rh)
+        .style('fill-opacity', .8)
+        .style('fill', '#fff')
+
+    console.log(worldmap.width());
 });
 
 d3.select('#map-select')

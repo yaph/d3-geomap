@@ -9,6 +9,7 @@ class Geomap
             projection: d3.geo.naturalEarth
             title: (d)-> d.properties.name
             geofile: null
+            svg: null
 
         # Dependant properties must be set after initialization.
         @properties.scale = @properties.width / @properties.height * 90
@@ -63,17 +64,17 @@ class Geomap
 
     # Draw map base and load geo data once, and call update to draw units.
     draw: (selection, geomap)->
-        geomap.private.svg = selection.append('svg')
+        geomap.properties.svg = selection.append('svg')
             .attr('width', geomap.properties.width)
             .attr('height', geomap.properties.height)
 
-        geomap.private.svg.append('rect')
+        geomap.properties.svg.append('rect')
             .attr('class', 'background')
             .attr('width', geomap.properties.width)
             .attr('height', geomap.properties.height)
             .on('click', geomap.clicked.bind(geomap))
 
-        geomap.private.g = geomap.private.svg.append('g')
+        geomap.private.g = geomap.properties.svg.append('g')
             .attr('class', 'units')
 
         # Set map projection and path.

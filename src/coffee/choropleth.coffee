@@ -69,9 +69,9 @@ class Choropleth extends Geomap
         colorlist = geomap.properties.colors.slice().reverse()
         rh = lh / colorlist.length
 
-        geomap.private.svg.select('g#legend').remove()
+        geomap.properties.svg.select('g#legend').remove()
 
-        lg = geomap.private.svg.append('g')
+        lg = geomap.properties.svg.append('g')
             .attr('id', 'legend')
             .attr('width', rw)
             .attr('height', lh)
