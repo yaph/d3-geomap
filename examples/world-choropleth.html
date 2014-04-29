@@ -55,20 +55,30 @@ d3.csv('globalslaveryindex.csv', function(error, data) {
     fg.append('rect')
         .attr('width', '100%')
         .attr('height', rh)
-        .style('fill-opacity', 1)
-        .style('fill', '#aaa')
+        .style('fill-opacity', .8)
+        .style('fill', '#fff')
 
     fg.append('text')
-        .attr('x', 10)
-        .attr('y', 10)
-        .style('fill', '#fff')
-        .text('dsdsdsd')
+        .attr('width', '80%')
+        .attr('x', '10%')
+        .attr('y', 22)
+        .style('color', '#444')
+        .style('font-size', '18px')
+        .text('World Wide Prevalence of Slavery in 2013')
+
+    fg.append('text')
+        .attr('width', '80%')
+        .attr('x', '10%')
+        .attr('y', 45)
+        .style('color', '#444')
+        .style('font-size', '12px')
+        .text('Data source: globalslaveryindex.org | Author: Ramiro Gómez - ramiro.org')
+
 });
 
-d3.select('#map-select')
-    .on('change', function() {
-        worldmap.column(this.value).update()
-    });
+d3.select('#map-select').on('change', function() {
+    worldmap.column(this.value).update()
+});
 </script>
 </body>
 </html>
