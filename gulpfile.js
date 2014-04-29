@@ -13,14 +13,19 @@ var paths = {
         'src/coffee/choropleth.coffee'
     ],
     styles: ['src/**/*.sass'],
-    data: ['src/**/*.topojson']
+    data: ['src/**/*.topojson'],
+    vendor: [
+        'node_modules/d3/d3.min.js',
+        'node_modules/d3-geo-projection/d3.geo.projection.min.js',
+        'node_modules/topojson/topojson.min.js'
+    ],
 };
 
 // Run dev server
 gulp.task('connect', function() {
     connect.server({
         root: __dirname,
-        port: 8080,
+        port: 8000,
         livereload: true
     });
 });
@@ -53,6 +58,13 @@ gulp.task('styles', function () {
         .pipe(sass())
         .pipe(concat('d3.geomap.css'))
         .pipe(gulp.dest('dist/css'));
+});
+
+// Concatenate and copy vendor scripts
+gulp.task('vendor', function() {
+    return gulp.src(paths.vendor)
+        .pipe(concat('d3.geomap.dependencies.min.js'))
+        .pipe(gulp.dest('dist/vendor'));
 });
 
 // Rerun task when a file changes
