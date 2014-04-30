@@ -28,7 +28,8 @@ class Choropleth extends Geomap
         # Create mapping of iso3 to data selected value and set min and max.
         min = null
         max = null
-        for d in this.private.data
+
+        for d in geomap.private.data
             # Try to parse value as float.
             val = parseFloat(d[geomap.properties.column])
             if val < min
