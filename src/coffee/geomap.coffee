@@ -12,7 +12,7 @@ class Geomap
             svg: null
 
         # Dependant properties must be set after initialization.
-        @properties.scale = @properties.width / @properties.height * 90
+        @properties.scale = @properties.width / 5.8
         @properties.translate = [@properties.width / 2, @properties.height / 2]
 
         # Setup methods to access properties.
