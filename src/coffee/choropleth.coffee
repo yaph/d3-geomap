@@ -65,7 +65,7 @@ class Choropleth extends Geomap
         geomap = this
         rw = 15
         lh = 120
-        offset_y = geomap.properties.height - lh - 45
+        offset_y = geomap.properties.height - lh - 30
         # reverse a copy to not alter colors array
         colorlist = geomap.properties.colors.slice().reverse()
         rh = lh / colorlist.length
@@ -93,7 +93,7 @@ class Choropleth extends Geomap
         sg.append('text')
             .text(geomap.properties.format(min_val))
             .attr('x', 0)
-            .attr('y', lh + 2 * rw)
+            .attr('y', lh + rw + 8)
 
         # draw color scale
         sg.selectAll('rect')
