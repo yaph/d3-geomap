@@ -7,6 +7,17 @@ It is in early development, currently consisting of a plain map `d3.geomap()`
 and choropleth map `d3.geomap.choropleth()`. See a [demo choropleth map](http://maps.ramiro.org/global-slavery-index/)
 created with d3.geomap.
 
+## d3.geomap
+
+### Usage
+
+    var worldmap = d3.geomap()
+        .geofile('/data/worldcountries.topojson');
+
+    d3.select("#map")
+        .call(worldmap.draw, worldmap);
+
+
 ## d3.geomap.choropleth
 
 ### Usage
@@ -32,6 +43,19 @@ to be used to colorize the choropleth map is set in the `colum()` method.
         {iso3: 'ESP', column1: 'value1', column2: 'value2'},
         {iso3: 'FRA', column1: 'value1', column2: 'value2'}
     ]
+
+## Installing from source
+
+    $ git clone https://github.com/yaph/d3-geomap.git
+    $ cd d3.geomap
+    $ npm install
+
+Start the development server
+
+    $ npm install
+
+Open `http://localhost:8000/examples/` in a browser and choose to view one of
+the example maps.
 
 ## Creating a topojson file
 
