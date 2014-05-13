@@ -3,24 +3,24 @@
 `d3.geomap` is designed to become a
 [reusable](http://bost.ocks.org/mike/chart/) geographic map for D3.
 
-It is in early development, currently consisting of a choropleth map
-`d3.geomap.choropleth()`.
+It is in early development, currently consisting of a plain map `d3.geomap()`
+and choropleth map `d3.geomap.choropleth()`. See a [demo choropleth map](http://maps.ramiro.org/global-slavery-index/)
+created with d3.geomap.
 
 ## d3.geomap.choropleth
 
 ### Usage
 
     var worldmap = d3.geomap.choropleth()
-        .geofile('/data/countries.topo.json')
+        .geofile('/data/worldcountries.topojson')
         .width(1200)
         .height(780)
         .column('Calculated Percentage');
 
-    d3.csv('globalslaveryindex.csv', function(error, data) {
-        console.log(data);
+    d3.csv('data.csv', function(error, data) {
         d3.select("#map")
             .datum(data)
-            .call(worldmap);
+            .call(worldmap.draw, worldmap);
     });
 
 ### Data format
@@ -33,10 +33,19 @@ to be used to colorize the choropleth map is set in the `colum()` method.
         {iso3: 'FRA', column1: 'value1', column2: 'value2'}
     ]
 
-# Create topojson
+## Creating a topojson file
+
+First download a shapefile with administrative boundaries from [naturalearthdata.com](http//www.naturalearthdata.com/).
 
     wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip
+
+Convert the shapefile to GeoJSON.
+
     ogr2ogr -f GeoJSON units.json ne_10m_admin_0_countries.shp
+
+Convert GeoJSON to Topojson using simplification to reduce file size. The SU_A3
+(ISO3 country code) is used as the ID and the name as a property.
+
     ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property SU_A3 -p name=NAME -o worldcountries.topojson  units.json
 
 ## References

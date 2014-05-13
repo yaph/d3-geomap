@@ -19,7 +19,7 @@
 <script src="../dist/js/d3.geomap.js"></script>
 <script>
 var worldmap = d3.geomap()
-    .geofile('../dist/data/worldcountries.topojson')
+    .geofile('../dist/data/worldcountries.topojson');
 
 d3.select("#map")
     .call(worldmap.draw, worldmap);
