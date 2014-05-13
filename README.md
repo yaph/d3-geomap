@@ -52,7 +52,7 @@ to be used to colorize the choropleth map is set in the `colum()` method.
 
 Start the development server
 
-    $ npm install
+    $ gulp
 
 Open `http://localhost:8000/examples/` in a browser and choose to view one of
 the example maps.
