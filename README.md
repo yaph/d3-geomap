@@ -76,3 +76,4 @@ Convert GeoJSON to Topojson using simplification to reduce file size. The SU_A3
 
 * [bl.ocks.org Natural Earth](http://bl.ocks.org/mbostock/4479477)
 * [bl.ocks.org click-to-zoom via transform](http://bl.ocks.org/mbostock/2206590)
+* [bl.ocks.org Every ColorBrewer Scale](http://bl.ocks.org/mbostock/5577023)
