@@ -18,7 +18,7 @@
     "url": "https://github.com/yaph/d3-geomap.git"
   },
   "dependencies": {
-    "d3": "~3.4.4",
+    "d3": "^3.4.6",
     "d3-geo-projection": "~0.2.9",
     "topojson": "~1.6.5"
   },

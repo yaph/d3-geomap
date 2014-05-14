@@ -7,7 +7,7 @@ class Choropleth extends Geomap
             column: null
             format: d3.format('.02f')
             legend: false
-            colors: colors.reds
+            colors: colorbrewer.OrRd[9]
 
         for name, value of add_properties
             @properties[name] = value
