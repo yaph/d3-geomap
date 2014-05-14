@@ -32,9 +32,9 @@ class Choropleth extends Geomap
         for d in geomap.private.data
             # Try to parse value as float.
             val = parseFloat(d[geomap.properties.column])
-            if val < min
+            if min is null or val < min
                 min = val
-            if val > max
+            if max is null or val > max
                 max = val
             data_by_iso[d.iso3] = val
 
