@@ -67,7 +67,7 @@ class Choropleth extends Geomap
         box_h = 240
         rect_w = 16
         legend_h = 210
-        offset_t = 5
+        offset_t = 4
         offset_y = geomap.properties.height - box_h
         # reverse a copy to not alter colors array
         colorlist = geomap.properties.colors.slice().reverse()
@@ -79,22 +79,24 @@ class Choropleth extends Geomap
             .attr('id', 'legend')
             .attr('width', box_w)
             .attr('height', box_h)
-            .attr('transform', 'translate(' + offset_t + ',' + offset_y + ')')
+            .attr('transform', 'translate(0,' + offset_y + ')')
 
         lg.append('rect')
             .attr('class', 'legend-bg')
             .attr('width', box_w)
             .attr('height', box_h)
-            .attr('transform', 'translate(' + (-offset_t) + ',' + (-offset_t * 2) + ')')
+            .attr('transform', 'translate(0, 0')
+
+        l_tr = 'translate(' + offset_t + ',' + offset_t * 3 + ')'
 
         lg.append('rect')
             .attr('class', 'legend-bar')
             .attr('width', rect_w)
             .attr('height', legend_h)
-            .attr('transform', 'translate(' + offset_t + ',' + offset_t + ')')
+            .attr('transform', l_tr)
 
         sg = lg.append('g')
-            .attr('transform', 'translate(' + offset_t + ',' + offset_t + ')')
+            .attr('transform', l_tr)
 
         sg.append('text')
             .text(geomap.properties.format(max_val))

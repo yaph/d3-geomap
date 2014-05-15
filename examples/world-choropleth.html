@@ -54,13 +54,13 @@ d3.csv('globalslaveryindex.csv', function(error, data) {
         .attr('transform', 'translate(0,' + (height - rh) + ')')
 
     fg.append('rect')
-        .attr('width', '100%')
+        .attr('x', 120)
+        .attr('width', width - 120)
         .attr('height', rh)
         .style('fill-opacity', .8)
-        .style('fill', '#fff')
+        .style('fill', '#fff');
 
     fg.append('text')
-        .attr('width', width - 120)
         .attr('x', 120)
         .attr('y', 22)
         .style('color', '#444')
