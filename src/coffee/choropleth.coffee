@@ -5,7 +5,7 @@ class Choropleth extends Geomap
 
         add_properties =
             column: null
-            format: d3.format('.02f')
+            format: d3.format(',.02f')
             legend: false
             colors: colorbrewer.OrRd[9]
 
@@ -64,9 +64,9 @@ class Choropleth extends Geomap
     drawLegend: (min_val, max_val)->
         geomap = this
         box_w = 120
-        box_h = 250
-        rect_w = 18
-        legend_h = 220
+        box_h = 240
+        rect_w = 16
+        legend_h = 210
         offset_t = 5
         offset_y = geomap.properties.height - box_h
         # reverse a copy to not alter colors array

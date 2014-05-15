@@ -36,6 +36,7 @@ var worldmap = d3.geomap.choropleth()
     .height(height)
     .colors(colorbrewer.YlOrRd[9])
     .column('Calculated Percentage')
+    .format(d3.format(',.02f'))
     .scale([width / 5.8])
     .translate([width / 2, height / 2])
     .legend(true);
