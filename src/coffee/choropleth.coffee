@@ -41,7 +41,7 @@ class Choropleth extends Geomap
         # Set the coloring function.
         colorize = d3.scale.quantize()
             .domain([min, max])
-            .range(d3.range(geomap.properties.colors.length).map((i)-> geomap.properties.colors[i]))
+            .range(geomap.properties.colors)
 
         iso_val = (iso3)->
             if data_by_iso[iso3] then geomap.properties.format(data_by_iso[iso3]) else 'No data'
