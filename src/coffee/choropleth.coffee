@@ -63,46 +63,57 @@ class Choropleth extends Geomap
 
     drawLegend: (min_val, max_val)->
         geomap = this
-        rw = 15
-        lh = 120
-        offset_y = geomap.properties.height - lh - 30
+        box_w = 120
+        box_h = 250
+        rect_w = 18
+        legend_h = 220
+        offset_t = 5
+        offset_y = geomap.properties.height - box_h
         # reverse a copy to not alter colors array
         colorlist = geomap.properties.colors.slice().reverse()
-        rh = lh / colorlist.length
+        rect_h = legend_h / colorlist.length
 
         geomap.properties.svg.select('g#legend').remove()
 
         lg = geomap.properties.svg.append('g')
             .attr('id', 'legend')
-            .attr('width', rw)
-            .attr('height', lh)
-            .attr('transform', 'translate(10,' + offset_y + ')')
+            .attr('width', box_w)
+            .attr('height', box_h)
+            .attr('transform', 'translate(' + offset_t + ',' + offset_y + ')')
 
         lg.append('rect')
-            .attr('class', 'legend-box')
-            .attr('width', rw)
-            .attr('height', lh)
+            .attr('class', 'legend-bg')
+            .attr('width', box_w)
+            .attr('height', box_h)
+            .attr('transform', 'translate(' + (-offset_t) + ',' + (-offset_t * 2) + ')')
+
+        lg.append('rect')
+            .attr('class', 'legend-bar')
+            .attr('width', rect_w)
+            .attr('height', legend_h)
+            .attr('transform', 'translate(' + offset_t + ',' + offset_t + ')')
 
         sg = lg.append('g')
+            .attr('transform', 'translate(' + offset_t + ',' + offset_t + ')')
 
         sg.append('text')
             .text(geomap.properties.format(max_val))
-            .attr('x', 0)
-            .attr('y', -rw)
+            .attr('x', rect_w + offset_t)
+            .attr('y', offset_t)
 
         sg.append('text')
             .text(geomap.properties.format(min_val))
-            .attr('x', 0)
-            .attr('y', lh + rw + 8)
+            .attr('x', rect_w + offset_t)
+            .attr('y', legend_h + offset_t)
 
         # draw color scale
         sg.selectAll('rect')
             .data(colorlist)
             .enter().append('rect')
-            .attr('y', (d, i)-> i * rh)
+            .attr('y', (d, i)-> i * rect_h)
             .attr('fill', (d, i)-> colorlist[i])
-            .attr('width', rw)
-            .attr('height', rh)
+            .attr('width', rect_w)
+            .attr('height', rect_h)
 
 
 (exports? or this).d3.geomap.choropleth = ()->
