@@ -117,6 +117,8 @@ class Choropleth extends Geomap
             .attr('width', rect_w)
             .attr('height', rect_h)
 
+        # TODO use colorize.invertExtent(colorval) to label each bin
+
 
 (exports? or this).d3.geomap.choropleth = ()->
     new Choropleth()
