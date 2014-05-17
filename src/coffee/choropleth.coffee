@@ -39,7 +39,7 @@ class Choropleth extends Geomap
             data_by_iso[d.iso3] = val
 
         # Set the coloring function.
-        colorize = d3.scale.quantize()
+        geomap.colorize = d3.scale.quantize()
             .domain([min, max])
             .range(geomap.properties.colors)
 
@@ -47,7 +47,7 @@ class Choropleth extends Geomap
             if data_by_iso[iso3] then geomap.properties.format(data_by_iso[iso3]) else 'No data'
 
         color_val = (iso3)->
-            if data_by_iso[iso3] then colorize(data_by_iso[iso3]) else '#eeeeee'
+            if data_by_iso[iso3] then geomap.colorize(data_by_iso[iso3]) else '#eeeeee'
 
         geomap.private.units.enter().append('path')
             .attr('class', 'unit')
@@ -98,16 +98,6 @@ class Choropleth extends Geomap
         sg = lg.append('g')
             .attr('transform', l_tr)
 
-        sg.append('text')
-            .text(geomap.properties.format(max_val))
-            .attr('x', rect_w + offset_t)
-            .attr('y', offset_t)
-
-        sg.append('text')
-            .text(geomap.properties.format(min_val))
-            .attr('x', rect_w + offset_t)
-            .attr('y', legend_h + offset_t)
-
         # draw color scale
         sg.selectAll('rect')
             .data(colorlist)
@@ -117,8 +107,18 @@ class Choropleth extends Geomap
             .attr('width', rect_w)
             .attr('height', rect_h)
 
-        # TODO use colorize.invertExtent(colorval) to label each bin
+        # draw color scale labels
+        sg.selectAll('text')
+            .data(colorlist)
+            .enter().append('text')
+            .text((d)-> geomap.properties.format geomap.colorize.invertExtent(d)[0])
+            .attr('x', rect_w + offset_t)
+            .attr('y', (d, i)-> i * rect_h + rect_h + offset_t)
 
+        sg.append('text')
+            .text(geomap.properties.format(max_val))
+            .attr('x', rect_w + offset_t)
+            .attr('y', offset_t)
 
 (exports? or this).d3.geomap.choropleth = ()->
     new Choropleth()
