@@ -57,7 +57,9 @@ Start the development server
 Open `http://localhost:8000/examples/` in a browser and choose to view one of
 the example maps.
 
-## Creating a topojson file
+## Creating topojson files
+
+### World Countries
 
 First download a shapefile with administrative boundaries from [naturalearthdata.com](http//www.naturalearthdata.com/).
 
@@ -70,7 +72,15 @@ Convert the shapefile to GeoJSON.
 Convert GeoJSON to Topojson using simplification to reduce file size. The SU_A3
 (ISO3 country code) is used as the ID and the name as a property.
 
-    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property SU_A3 -p name=NAME -o worldcountries.topojson  units.json
+    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property SU_A3 -p name=NAME -o worldcountries.topojson units.json
+
+### US States
+
+    wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_1_states_provinces.zip
+
+    ogr2ogr -f GeoJSON -where "ADM0_A3 IN ('USA')" units.json ne_10m_admin_1_states_provinces.shp
+
+    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property SU_A3 -p name=NAME -o usa.json units.json
 
 ## References
 

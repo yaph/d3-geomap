@@ -9,6 +9,7 @@ class Geomap
             projection: d3.geo.naturalEarth
             title: (d)-> d.properties.name
             geofile: null
+            units: 'units'
             svg: null
 
         # Dependant properties must be set after initialization.
@@ -88,7 +89,7 @@ class Geomap
         d3.json geomap.properties.geofile, (error, geo)->
             geomap.private.units = geomap.private.g
                 .selectAll('path')
-                .data(topojson.feature(geo, geo.objects.units).features)
+                .data(topojson.feature(geo, geo.objects[geomap.properties.units]).features)
 
             geomap.update()
 
