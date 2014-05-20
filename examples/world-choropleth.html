@@ -32,7 +32,6 @@ var width = 1200,
 
 var worldmap = d3.geomap.choropleth()
     .geofile('../dist/data/worldcountries.topojson')
-    .domain([0, 1.5])
     .width(width)
     .height(height)
     .colors(colorbrewer.YlOrRd[9])

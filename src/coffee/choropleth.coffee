@@ -131,10 +131,11 @@ class Choropleth extends Geomap
             .attr('y', offset_t)
 
         # Hacky way to add less than sign if domain min is lower than min value.
-        last_text = sg.selectAll('text.text-' + (colorlist.length - 1))
-        last_text_val = last_text.text()
-        if min_val < last_text_val
-            last_text.text('< ' + last_text_val)
+        last_idx = colorlist.length - 1
+        last_val = geomap.colorize.invertExtent(colorlist[last_idx])[0]
+        last_text = sg.selectAll('text.text-' + (last_idx))
+        if min_val < last_val
+            last_text.text('< ' + last_val)
 
 
 (exports? or this).d3.geomap.choropleth = ()->
