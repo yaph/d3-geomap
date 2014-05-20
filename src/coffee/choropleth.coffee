@@ -39,12 +39,13 @@ class Choropleth extends Geomap
                 max = val
             data_by_iso[d.iso3] = val
 
-        # Set domain property to min, max if not provided
-        geomap.properties.domain = geomap.properties.domain or [min, max]
+        # Set private domain property to given domain or min, max, Must be set
+        # on every update so data changes are reflected.
+        geomap.private.domain = geomap.properties.domain or [min, max]
 
         # Set the coloring function.
         geomap.colorize = d3.scale.quantize()
-            .domain(geomap.properties.domain)
+            .domain(geomap.private.domain)
             .range(geomap.properties.colors)
 
         iso_val = (iso3)->
@@ -120,7 +121,7 @@ class Choropleth extends Geomap
             .attr('x', rect_w + offset_t)
             .attr('y', (d, i)-> i * rect_h + rect_h + offset_t)
 
-        domain_max = geomap.properties.domain[geomap.properties.domain.length - 1]
+        domain_max = geomap.private.domain[geomap.private.domain.length - 1]
         max_text = geomap.properties.format(domain_max)
         if domain_max < max_val
             max_text = '> ' + max_text

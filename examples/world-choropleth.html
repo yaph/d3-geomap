@@ -2,8 +2,6 @@
 <head>
 <meta charset="utf-8">
 <title>Present Day Slavery in the World</title>
-<meta name="description" content="Sample map created from brunch-choropleth.">
-<meta name="viewport" content="width=device-width">
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 <link href="../dist/css/d3.geomap.css" rel="stylesheet">
@@ -31,7 +29,7 @@ var width = 1200,
     height = 780;
 
 var worldmap = d3.geomap.choropleth()
-    .geofile('../dist/data/worldcountries.topojson')
+    .geofile('../dist/topojson/world/countries.json')
     .width(width)
     .height(height)
     .colors(colorbrewer.YlOrRd[9])

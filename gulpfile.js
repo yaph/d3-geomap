@@ -13,7 +13,7 @@ var paths = {
         'src/coffee/choropleth.coffee'
     ],
     styles: ['src/**/*.sass'],
-    data: ['src/**/*.topojson'],
+    data: ['src/**/*.json'],
     vendor: [
         'node_modules/d3/d3.min.js',
         'node_modules/d3-geo-projection/d3.geo.projection.min.js',

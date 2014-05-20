@@ -12,7 +12,7 @@ created with d3.geomap.
 ### Usage
 
     var worldmap = d3.geomap()
-        .geofile('/data/worldcountries.topojson');
+        .geofile('/topojson/world/countries.json');
 
     d3.select("#map")
         .call(worldmap.draw, worldmap);
@@ -23,7 +23,7 @@ created with d3.geomap.
 ### Usage
 
     var worldmap = d3.geomap.choropleth()
-        .geofile('/data/worldcountries.topojson')
+        .geofile('/topojson/world/countries.json')
         .width(1200)
         .height(780)
         .column('Calculated Percentage');
