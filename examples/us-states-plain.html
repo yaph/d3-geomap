@@ -16,12 +16,13 @@
 <script src="../node_modules/topojson/topojson.js"></script>
 <script src="../dist/js/d3.geomap.js"></script>
 <script>
-var map = d3.geomap()
+var map = d3.geomap.choropleth()
     .geofile('../dist/topojson/countries/usa.json')
     .projection(d3.geo.albersUsa)
     .scale(1000);
 
 d3.select("#map")
+    .datum([])
     .call(map.draw, map);
 </script>
 </body>

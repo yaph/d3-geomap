@@ -22,11 +22,12 @@ class Choropleth extends Geomap
 
     update: ()->
         geomap = this
-        data_by_iso = {}
+        data_by_id = {}
+        unitId = geomap.properties.unitId
 
         d3.selectAll('path.unit').remove()
 
-        # Create mapping of iso3 to data selected value and set min and max.
+        # Create mapping of unitId to data selected value and set min and max.
         min = null
         max = null
 
@@ -37,7 +38,7 @@ class Choropleth extends Geomap
                 min = val
             if max is null or val > max
                 max = val
-            data_by_iso[d.iso3] = val
+            data_by_id[d[unitId]] = val
 
         # Set private domain property to given domain or min, max, Must be set
         # on every update so data changes are reflected.
@@ -48,16 +49,16 @@ class Choropleth extends Geomap
             .domain(geomap.private.domain)
             .range(geomap.properties.colors)
 
-        iso_val = (iso3)->
-            if data_by_iso[iso3] then geomap.properties.format(data_by_iso[iso3]) else 'No data'
+        iso_val = (id)->
+            if data_by_id[id] then geomap.properties.format(data_by_id[id]) else 'No data'
 
-        color_val = (iso3)->
-            if data_by_iso[iso3] then geomap.colorize(data_by_iso[iso3]) else '#eeeeee'
+        color_val = (id)->
+            if data_by_id[id] then geomap.colorize(data_by_id[id]) else '#eeeeee'
 
         geomap.private.units.enter().append('path')
             .attr('class', 'unit')
             .attr('d', geomap.private.path)
-            .style('fill', (d)-> color_val(d.id))
+            .style('fill', (d)-> console.log d.id; color_val(d.id))
             .on('click', geomap.clicked.bind(geomap))
             .append('title')
                 .text((d)-> d.properties.name + ': ' + iso_val(d.id))

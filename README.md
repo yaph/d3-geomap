@@ -76,11 +76,13 @@ Convert GeoJSON to Topojson using simplification to reduce file size. The SU_A3
 
 ### US States
 
+Note that geo properties are lowercase in the admin_1 data.
+
     wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_1_states_provinces.zip
 
     ogr2ogr -f GeoJSON -where "ADM0_A3 IN ('USA')" units.json ne_10m_admin_1_states_provinces.shp
 
-    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property SU_A3 -p name=NAME -o usa.json units.json
+    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property fips -p name=name -o usa.json units.json
 
 ## References
 
