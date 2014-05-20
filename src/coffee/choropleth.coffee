@@ -5,6 +5,7 @@ class Choropleth extends Geomap
 
         add_properties =
             column: null
+            domain: null
             format: d3.format(',.02f')
             legend: false
             colors: colorbrewer.OrRd[9]
@@ -38,9 +39,12 @@ class Choropleth extends Geomap
                 max = val
             data_by_iso[d.iso3] = val
 
+        # Set domain property to min, max if not provided
+        geomap.properties.domain = geomap.properties.domain or [min, max]
+
         # Set the coloring function.
         geomap.colorize = d3.scale.quantize()
-            .domain([min, max])
+            .domain(geomap.properties.domain)
             .range(geomap.properties.colors)
 
         iso_val = (iso3)->
@@ -112,13 +116,26 @@ class Choropleth extends Geomap
             .data(colorlist)
             .enter().append('text')
             .text((d)-> geomap.properties.format geomap.colorize.invertExtent(d)[0])
+            .attr('class', (d, i)-> 'text-' + i)
             .attr('x', rect_w + offset_t)
             .attr('y', (d, i)-> i * rect_h + rect_h + offset_t)
 
+        domain_max = geomap.properties.domain[geomap.properties.domain.length - 1]
+        max_text = geomap.properties.format(domain_max)
+        if domain_max < max_val
+            max_text = '> ' + max_text
+
         sg.append('text')
-            .text(geomap.properties.format(max_val))
+            .text(max_text)
             .attr('x', rect_w + offset_t)
             .attr('y', offset_t)
+
+        # Hacky way to add less than sign if domain min is lower than min value.
+        last_text = sg.selectAll('text.text-' + (colorlist.length - 1))
+        last_text_val = last_text.text()
+        if min_val < last_text_val
+            last_text.text('< ' + last_text_val)
+
 
 (exports? or this).d3.geomap.choropleth = ()->
     new Choropleth()
