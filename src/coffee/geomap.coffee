@@ -10,6 +10,7 @@ class Geomap
             title: (d)-> d.properties.name
             geofile: null
             units: 'units'
+            unitId: 'iso3'
             svg: null
 
         # Dependant properties must be set after initialization.
