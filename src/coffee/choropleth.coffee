@@ -58,7 +58,7 @@ class Choropleth extends Geomap
         geomap.private.units.enter().append('path')
             .attr('class', 'unit')
             .attr('d', geomap.private.path)
-            .style('fill', (d)-> console.log d.id; color_val(d.id))
+            .style('fill', (d)-> color_val(d.id))
             .on('click', geomap.clicked.bind(geomap))
             .append('title')
                 .text((d)-> d.properties.name + ': ' + iso_val(d.id))
