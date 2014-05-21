@@ -50,10 +50,10 @@ class Choropleth extends Geomap
             .range(geomap.properties.colors)
 
         iso_val = (id)->
-            if data_by_id[id] then geomap.properties.format(data_by_id[id]) else 'No data'
+            if data_by_id[id] is null then 'No data' else geomap.properties.format(data_by_id[id])
 
         color_val = (id)->
-            if data_by_id[id] then geomap.colorize(data_by_id[id]) else '#eeeeee'
+            if data_by_id[id] is null then '#eeeeee' else geomap.colorize(data_by_id[id])
 
         geomap.private.units.enter().append('path')
             .attr('class', 'unit')

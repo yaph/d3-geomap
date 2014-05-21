@@ -19,11 +19,16 @@
 var map = d3.geomap.choropleth()
     .geofile('../dist/topojson/countries/usa.json')
     .projection(d3.geo.albersUsa)
-    .scale(1000);
+    .column('2012')
+    .unitId('fips')
+    .scale(1000)
+    .legend(true);
 
-d3.select("#map")
-    .datum([])
-    .call(map.draw, map);
+d3.csv('venture-capital.csv', function(error, data) {
+    d3.select("#map")
+        .datum(data)
+        .call(map.draw, map);
+});
 </script>
 </body>
 </html>
