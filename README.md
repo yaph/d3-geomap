@@ -4,7 +4,7 @@
 [reusable](http://bost.ocks.org/mike/chart/) geographic map for D3.
 
 It is in early development, currently consisting of a plain map `d3.geomap()`
-and choropleth map `d3.geomap.choropleth()`. See a [demo choropleth map](http://maps.ramiro.org/global-slavery-index/)
+and choropleth map `d3.geomap.choropleth()`. See a [demo choropleth map](http://maps.ramiro.org/murder-rates-gender/)
 created with d3.geomap.
 
 ## d3.geomap
