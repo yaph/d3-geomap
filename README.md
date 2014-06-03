@@ -69,10 +69,13 @@ Convert the shapefile to GeoJSON.
 
     ogr2ogr -f GeoJSON units.json ne_10m_admin_0_countries.shp
 
-Convert GeoJSON to Topojson using simplification to reduce file size. The SU_A3
-(ISO3 country code) is used as the ID and the name as a property.
+Convert GeoJSON to Topojson using simplification to reduce file size. The SU_A3 is used as the ID and the name as a property.
 
-    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property SU_A3 -p name=NAME -o worldcountries.topojson units.json
+    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property SU_A3 -p name=NAME -o countries.json units.json
+
+Workaround for Issue #12
+
+     sed -i 's/\bPSX\b/PSE/' countries.json
 
 ### US States
 
