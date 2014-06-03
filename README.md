@@ -73,9 +73,9 @@ Convert GeoJSON to Topojson using simplification to reduce file size. The SU_A3 
 
     ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property SU_A3 -p name=NAME -o countries.json units.json
 
-Workaround for Issue #12
+Workaround for Issue #12 run from scripts directory
 
-     sed -i 's/\bPSX\b/PSE/' countries.json
+     ./fixids.py
 
 ### US States
 
