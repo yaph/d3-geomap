@@ -73,8 +73,8 @@ gulp.task('watch', function() {
     gulp.watch(paths.styles, ['styles']);
 });
 
-// Build the JavaScript and CSS files
-gulp.task('build', ['data', 'scripts', 'styles', 'minify']);
+// Build files needed for distribution
+gulp.task('dist', ['data', 'scripts', 'styles', 'minify']);
 
 // The default task (called when you run `gulp` from cli)
-gulp.task('default', ['build', 'connect', 'watch']);
+gulp.task('default', ['dist', 'connect', 'watch']);
