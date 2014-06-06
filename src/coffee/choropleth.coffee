@@ -15,9 +15,9 @@ class Choropleth extends Geomap
             addAccessor(this, name, value)
 
 
-    draw: (selection, geomap)->
+    draw: (selection, geomap, callback)->
         geomap.private.data = selection.datum()
-        super(selection, geomap)
+        super(selection, geomap, callback)
 
 
     update: ()->
