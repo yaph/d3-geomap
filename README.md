@@ -89,11 +89,13 @@ Note that geo properties keys are lowercase in the admin_1 data.
 
     ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property fips -p name=name -o usa.json units.json
 
-#### Provinces of China
+#### Other countries
 
-    ogr2ogr -f GeoJSON -where "ADM0_A3 IN ('CHN')" units.json ne_10m_admin_1_states_provinces.shp
+Codes:
 
-    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property fips -p name=name -o china.json units.json
+* China: CHN
+* Indonesia: IDN
+* Spain: ESP
 
 ## References
 
