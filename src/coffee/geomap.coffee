@@ -23,6 +23,9 @@ class Geomap
         # Variables without accessors get stored in private.
         @private = {}
 
+        # Accessible map selection
+        @selection = {}
+
 
     clicked: (d)->
         geomap = this
@@ -32,7 +35,7 @@ class Geomap
         k = null
 
         if d and geomap.private.centered isnt d
-            centroid = geomap.private.path.centroid(d)
+            centroid = geomap.properties.path.centroid(d)
             x = centroid[0]
             y = centroid[1]
             k = 4
@@ -56,16 +59,16 @@ class Geomap
     update: ()->
         geomap = this
 
-        geomap.private.units.enter().append('path')
+        geomap.selection.units.enter().append('path')
             .attr('class', 'unit')
-            .attr('d', geomap.private.path)
+            .attr('d', geomap.properties.path)
             .on('click', geomap.clicked.bind(geomap))
             .append('title')
                 .text(geomap.properties.title)
 
 
     # Draw map base and load geo data once, and call update to draw units.
-    draw: (selection, geomap)->
+    draw: (selection, geomap, callback)->
         geomap.properties.svg = selection.append('svg')
             .attr('width', geomap.properties.width)
             .attr('height', geomap.properties.height)
@@ -84,15 +87,18 @@ class Geomap
             .scale(geomap.properties.scale)
             .translate(geomap.properties.translate)
             .precision(.1)
-        geomap.private.path = d3.geo.path().projection(proj)
+        geomap.properties.path = d3.geo.path().projection(proj)
 
         # Load and render geo data.
         d3.json geomap.properties.geofile, (error, geo)->
-            geomap.private.units = geomap.private.g
+            geomap.selection.units = geomap.private.g
                 .selectAll('path')
                 .data(topojson.feature(geo, geo.objects[geomap.properties.units]).features)
 
             geomap.update()
+
+            if callback
+                callback()
 
 
 root = (exports? or this)

@@ -55,9 +55,9 @@ class Choropleth extends Geomap
         color_val = (id)->
             if data_by_id[id] is null then '#eeeeee' else geomap.colorize(data_by_id[id])
 
-        geomap.private.units.enter().append('path')
+        geomap.selection.units.enter().append('path')
             .attr('class', 'unit')
-            .attr('d', geomap.private.path)
+            .attr('d', geomap.properties.path)
             .style('fill', (d)-> color_val(d.id))
             .on('click', geomap.clicked.bind(geomap))
             .append('title')
