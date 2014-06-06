@@ -83,19 +83,12 @@ Note that geo properties keys are lowercase in the admin_1 data.
 
     wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_1_states_provinces.zip
 
-#### US States
+To create a topojson file with US States run:
 
     ogr2ogr -f GeoJSON -where "ADM0_A3 IN ('USA')" units.json ne_10m_admin_1_states_provinces.shp
-
     ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property fips -p name=name -o usa.json units.json
 
-#### Other countries
-
-Codes:
-
-* China: CHN
-* Indonesia: IDN
-* Spain: ESP
+To create topojson files for all countries run topo_countries.py in scripts.
 
 ## References
 
