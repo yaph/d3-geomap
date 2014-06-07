@@ -12,6 +12,7 @@ class Geomap
             units: 'units'
             unitId: 'iso3'
             svg: null
+            postUpdate: null # function to run when update process is completed
 
         # Dependant properties must be set after initialization.
         @properties.scale = @properties.width / 5.8
@@ -66,9 +67,12 @@ class Geomap
             .append('title')
                 .text(geomap.properties.title)
 
+        if geomap.postUpdate()
+            geomap.properties.postUpdate()
+
 
     # Draw map base and load geo data once, and call update to draw units.
-    draw: (selection, geomap, callback)->
+    draw: (selection, geomap)->
         geomap.properties.svg = selection.append('svg')
             .attr('width', geomap.properties.width)
             .attr('height', geomap.properties.height)
@@ -96,9 +100,6 @@ class Geomap
                 .data(topojson.feature(geo, geo.objects[geomap.properties.units]).features)
 
             geomap.update()
-
-            if callback
-                callback()
 
 
 root = (exports? or this)

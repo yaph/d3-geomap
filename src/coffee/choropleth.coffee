@@ -15,9 +15,9 @@ class Choropleth extends Geomap
             addAccessor(this, name, value)
 
 
-    draw: (selection, geomap, callback)->
+    draw: (selection, geomap)->
         geomap.private.data = selection.datum()
-        super(selection, geomap, callback)
+        super(selection, geomap)
 
 
     update: ()->
@@ -65,6 +65,9 @@ class Choropleth extends Geomap
 
         if geomap.properties.legend
             geomap.drawLegend(min, max)
+
+        if geomap.postUpdate()
+            geomap.properties.postUpdate()
 
 
     drawLegend: (min_val, max_val)->
