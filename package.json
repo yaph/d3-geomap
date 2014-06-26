@@ -18,16 +18,16 @@
     "url": "https://github.com/yaph/d3-geomap.git"
   },
   "dependencies": {
-    "d3": "^3.4.6",
+    "d3": "^3.4.8",
     "d3-geo-projection": "~0.2.9",
-    "topojson": "~1.6.5"
+    "topojson": "^1.6.14"
   },
   "devDependencies": {
-    "gulp": "~3.6.0",
-    "gulp-coffee": "~1.4.1",
+    "gulp": "^3.6.2",
+    "gulp-coffee": "^1.4.3",
     "gulp-concat": "~2.2.0",
-    "gulp-uglify": "~0.2.1",
-    "gulp-connect": "~2.0.4",
-    "gulp-ruby-sass": "~0.4.1"
+    "gulp-connect": "^2.0.5",
+    "gulp-ruby-sass": "^0.4.3",
+    "gulp-uglify": "^0.2.1"
   }
 }

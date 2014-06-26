@@ -52,7 +52,9 @@ class Geomap
 
         x0 = geomap.properties.width / 2
         y0 = geomap.properties.height / 2
-        geomap.private.g.transition()
+
+        geomap.properties.svg.selectAll('g.zoom')
+            .transition()
             .duration(750)
             .attr('transform', 'translate(' +  x0 + ',' + y0 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')')
 
@@ -84,7 +86,7 @@ class Geomap
             .on('click', geomap.clicked.bind(geomap))
 
         geomap.private.g = geomap.properties.svg.append('g')
-            .attr('class', 'units')
+            .attr('class', 'units zoom')
 
         # Set map projection and path.
         proj = geomap.properties.projection()
