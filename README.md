@@ -3,46 +3,8 @@
 `d3.geomap` is designed to become a
 [reusable](http://bost.ocks.org/mike/chart/) geographic map for D3.
 
-It is in early development, currently consisting of a plain map `d3.geomap()`
-and choropleth map `d3.geomap.choropleth()`. See a [demo choropleth map](http://maps.ramiro.org/murder-rates-gender/)
-created with d3.geomap.
-
-## d3.geomap
-
-### Usage
-
-    var worldmap = d3.geomap()
-        .geofile('/topojson/world/countries.json');
-
-    d3.select("#map")
-        .call(worldmap.draw, worldmap);
-
-
-## d3.geomap.choropleth
-
-### Usage
-
-    var worldmap = d3.geomap.choropleth()
-        .geofile('/topojson/world/countries.json')
-        .width(1200)
-        .height(780)
-        .column('Calculated Percentage');
-
-    d3.csv('data.csv', function(error, data) {
-        d3.select("#map")
-            .datum(data)
-            .call(worldmap.draw, worldmap);
-    });
-
-### Data format
-
-A list of objects that have an iso3 and at least one other property. The property
-to be used to colorize the choropleth map is set in the `colum()` method.
-
-    [
-        {iso3: 'ESP', column1: 'value1', column2: 'value2'},
-        {iso3: 'FRA', column1: 'value1', column2: 'value2'}
-    ]
+In its current stage it consists of a class to create plain maps `d3.geomap()`
+and one for choropleth maps `d3.geomap.choropleth()`. See the [documentation on how to use d3.geomap](http://d3-geomap.github.io/).
 
 ## Installing from source
 
