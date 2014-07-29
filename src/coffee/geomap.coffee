@@ -13,6 +13,7 @@ class Geomap
             unitId: 'iso3'
             svg: null
             postUpdate: null # function to run when update process is completed
+            zoomMax: 4
 
         # Dependant properties must be set after initialization.
         @properties.scale = @properties.width / 5.8
@@ -39,7 +40,7 @@ class Geomap
             centroid = geomap.properties.path.centroid(d)
             x = centroid[0]
             y = centroid[1]
-            k = 4
+            k = geomap.properties.zoomMax
             geomap.private.centered = d
         else
             x = geomap.properties.width / 2
