@@ -41,6 +41,15 @@ Workaround for Issue #12 run from scripts directory
 
 ### Countries with admin regions
 
+Merge admin regions and lakes shapefiles.
+
+    ogr2ogr ne_10m_admin_lakes.shp ne_10m_admin_1_states_provinces.shp
+    ogr2ogr -update -append ne_10m_admin_lakes.shp ne_10m_lakes.shp -nln ne_10m_admin_lakes
+
+    ogr2ogr -f GeoJSON -where "ADM0_A3 IN ('USA')" units.json ne_10m_admin_lakes.shp
+
+
+
 Note that geo properties keys are lowercase in the admin_1 data.
 
     wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_1_states_provinces.zip

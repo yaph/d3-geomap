@@ -6,13 +6,15 @@ class Geomap
             margin: {top: 20, right: 20, bottom: 20, left: 20}
             width: 960
             height: 500
-            projection: d3.geo.naturalEarth
-            title: (d)-> d.properties.name
+
             geofile: null
-            units: 'units'
-            unitId: 'iso3'
-            svg: null
             postUpdate: null # function to run when update process is completed
+            projection: d3.geo.naturalEarth
+            rotate: [0, 0, 0]
+            svg: null
+            title: (d)-> d.properties.name
+            unitId: 'iso3'
+            units: 'units'
             zoomMax: 4
 
         # Dependant properties must be set after initialization.
@@ -91,9 +93,11 @@ class Geomap
 
         # Set map projection and path.
         proj = geomap.properties.projection()
+            .rotate(geomap.properties.rotate)
             .scale(geomap.properties.scale)
             .translate(geomap.properties.translate)
             .precision(.1)
+
         geomap.properties.path = d3.geo.path().projection(proj)
 
         # Load and render geo data.
