@@ -23,7 +23,7 @@ the example maps.
 
 ### World Countries
 
-First download a shapefile with administrative boundaries from [naturalearthdata.com](http//www.naturalearthdata.com/).
+First download a shapefile with administrative boundaries from [naturalearthdata.com](http://www.naturalearthdata.com/).
 
     wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip
 
