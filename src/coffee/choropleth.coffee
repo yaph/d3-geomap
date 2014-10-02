@@ -143,11 +143,16 @@ class Choropleth extends Geomap
             .attr('x', rect_w + offset_t)
             .attr('y', offset_t)
 
-        # Determine text to display for min val.
+        # Determine text to display for min val by default use domain_min.
         domain_min = geomap.private.domain[0]
         min_text = geomap.properties.format(domain_min)
         if min_val < domain_min
-            min_text = '< ' + min_text
+            # When a threshold scale is used domain_min is the upper bound of
+            # the lowest bin thus display min_val
+            if geomap.private.domain.length > 2
+                min_text = geomap.properties.format(min_val)
+            else
+                min_text = '< ' + min_text
 
         # Hacky way to update already existing legend text element with min val.
         min_val_idx = colorlist.length - 1
