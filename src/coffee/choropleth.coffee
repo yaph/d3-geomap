@@ -132,6 +132,7 @@ class Choropleth extends Geomap
             .attr('x', rect_w + offset_t)
             .attr('y', (d, i)-> i * rect_h + rect_h + offset_t)
 
+        # Add text element for maximum value.
         domain_max = geomap.private.domain[geomap.private.domain.length - 1]
         max_text = geomap.properties.format(domain_max)
         if domain_max < max_val
@@ -142,12 +143,15 @@ class Choropleth extends Geomap
             .attr('x', rect_w + offset_t)
             .attr('y', offset_t)
 
-        # Hacky way to add less than sign if domain min is lower than min value.
-        last_idx = colorlist.length - 1
-        last_val = geomap.colorize.invertExtent(colorlist[last_idx])[0]
-        last_text = sg.selectAll('text.text-' + (last_idx))
-        if min_val < last_val
-            last_text.text('< ' + last_val)
+        # Determine text to display for min val.
+        domain_min = geomap.private.domain[0]
+        min_text = geomap.properties.format(domain_min)
+        if min_val < domain_min
+            min_text = '< ' + min_text
+
+        # Hacky way to update already existing legend text element with min val.
+        min_val_idx = colorlist.length - 1
+        sg.selectAll('text.text-' + (min_val_idx)).text(min_text)
 
 
 (exports? or this).d3.geomap.choropleth = ()->
