@@ -93,10 +93,13 @@ class Geomap
 
         # Set map projection and path.
         proj = geomap.properties.projection()
-            .rotate(geomap.properties.rotate)
             .scale(geomap.properties.scale)
             .translate(geomap.properties.translate)
             .precision(.1)
+
+        # Not every projection supports rotation, e. g. albersUsa does not.
+        if proj.hasOwnProperty('rotate') and geomap.properties.rotate
+            proj.rotate(geomap.properties.rotate)
 
         geomap.properties.path = d3.geo.path().projection(proj)
 

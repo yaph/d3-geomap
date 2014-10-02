@@ -44,8 +44,15 @@ class Choropleth extends Geomap
         # on every update so data changes are reflected.
         geomap.private.domain = geomap.properties.domain or [min, max]
 
+        # Use threshold scale if domain array contains more than 2 items
+        # otherwise use quantize.
+        if geomap.private.domain.length > 2
+            scaleFunc = d3.scale.threshold
+        else
+            scaleFunc = d3.scale.quantize
+
         # Set the coloring function.
-        geomap.colorize = d3.scale.quantize()
+        geomap.colorize = scaleFunc()
             .domain(geomap.private.domain)
             .range(geomap.properties.colors)
 
