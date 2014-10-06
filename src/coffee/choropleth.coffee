@@ -148,7 +148,7 @@ class Choropleth extends Geomap
         min_text = geomap.properties.format(domain_min)
         if min_val < domain_min
             # When a threshold scale is used domain_min is the upper bound of
-            # the lowest bin thus display min_val
+            # the lowest bin, thus display min_val.
             if geomap.private.domain.length > 2
                 min_text = geomap.properties.format(min_val)
             else
