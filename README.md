@@ -23,13 +23,13 @@ the example maps.
 
 ### World Countries
 
-First download a shapefile with administrative boundaries from [naturalearthdata.com](http://www.naturalearthdata.com/).
+First download a shapefile with administrative boundaries without boundary lakes from [naturalearthdata.com](http://www.naturalearthdata.com/).
 
-    wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip
+    wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries_lakes.zip
 
 Convert the shapefile to GeoJSON.
 
-    ogr2ogr -f GeoJSON units.json ne_10m_admin_0_countries.shp
+    ogr2ogr -f GeoJSON units.json ne_10m_admin_0_countries_lakes.shp
 
 Convert GeoJSON to Topojson using simplification to reduce file size. The SU_A3 is used as the ID and the name as a property.
 
@@ -41,23 +41,14 @@ Workaround for Issue #12 run from scripts directory
 
 ### Countries with admin regions
 
-Merge admin regions and lakes shapefiles.
-
-    ogr2ogr ne_10m_admin_lakes.shp ne_10m_admin_1_states_provinces.shp
-    ogr2ogr -update -append ne_10m_admin_lakes.shp ne_10m_lakes.shp -nln ne_10m_admin_lakes
-
-    ogr2ogr -f GeoJSON -where "ADM0_A3 IN ('USA')" units.json ne_10m_admin_lakes.shp
-
-
-
 Note that geo properties keys are lowercase in the admin_1 data.
 
-    wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_1_states_provinces.zip
+    wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_1_states_provinces_lakes.zip
 
 To create a topojson file with US States run:
 
-    ogr2ogr -f GeoJSON -where "ADM0_A3 IN ('USA')" units.json ne_10m_admin_1_states_provinces.shp
-    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property fips -p name=name -o usa.json units.json
+    ogr2ogr -f GeoJSON -where "ADM0_A3 IN ('USA')" units.json ne_10m_admin_1_states_provinces_lakes.shp
+    ../node_modules/topojson/bin/topojson --simplify-proportion .08 --id-property fips -p name=name -o USA.json units.json
 
 To create topojson files for all countries run topo_countries.py in scripts.
 

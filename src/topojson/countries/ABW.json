@@ -1,1 +1,1 @@
-{"type":"Topology","objects":{"units":{"type":"GeometryCollection","geometries":[{"type":"Polygon","properties":{"name":"Aruba"},"arcs":[[0]]}]}},"arcs":[[[3526,7455],[6290,-5782],[-425,-1673],[-9391,6021],[3526,1434]]],"transform":{"scale":[0.000018560612561249607,0.00002144989888989474],"translate":[-70.06240800699987,12.417669989000046]}}
+{"type":"Topology","objects":{"units":{"type":null}},"arcs":[],"transform":{"scale":[0.000018560612561249607,0.00002144989888989474],"translate":[-70.06240800699987,12.417669989000046]}}

@@ -1,1 +1,1 @@
-{"type":"Topology","objects":{"units":{"type":"GeometryCollection","geometries":[{"type":"MultiPolygon","properties":{"name":"Sark"},"arcs":[[[0]]]}]}},"arcs":[[[2613,604],[-2531,0],[253,892],[2749,1753],[329,-277],[-800,-2368]]],"transform":{"scale":[0.00005031834563455866,0.00003198562046203741],"translate":[-2.673451300999886,49.41156647300012]}}
+{"type":"Topology","objects":{"units":{"type":null}},"arcs":[],"transform":{"scale":[0.00005031834563455866,0.00003198562046203741],"translate":[-2.673451300999886,49.411566473000164]}}
