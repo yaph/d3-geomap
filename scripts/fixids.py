@@ -3,11 +3,11 @@
 import json
 
 replacements = {
-    'KOS': 'XKX', #Kosovo
-    'PN1': 'PNG', #Papua New Guniea
-    'PR1': 'PRT', #Portugal
-    'SDS': 'SSD', #S. Sudan
-    'SAH': 'ESH', #W. Sahara
+    'KOS': 'XKX',  # Kosovo
+    'PN1': 'PNG',  # Papua New Guniea
+    'PR1': 'PRT',  # Portugal
+    'SDS': 'SSD',  # S. Sudan
+    'SAH': 'ESH',  # W. Sahara
 }
 
 with open('../src/topojson/world/countries.json', 'r') as f:
@@ -19,4 +19,4 @@ for country in countries:
         country['id'] = replacements[country['id']]
 
 with open('../src/topojson/world/countries.json', 'w') as f:
-    json.dump(topo, f, separators=(',', ':')) # save bytes to keep file small
+    json.dump(topo, f, separators=(',', ':'))  # save bytes to keep file small
