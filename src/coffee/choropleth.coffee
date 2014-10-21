@@ -85,10 +85,16 @@ class Choropleth extends Geomap
         legend_h = 210
         offset_t = 4
         offset_y = geomap.properties.height - box_h
-        # reverse a copy to not alter colors array
+
+        # Reverse a copy to not alter colors array.
         colorlist = geomap.properties.colors.slice().reverse()
         rect_h = legend_h / colorlist.length
 
+        # Determine minimum and maximum values of data domain.
+        domain_min = geomap.private.domain[0]
+        domain_max = geomap.private.domain[geomap.private.domain.length - 1]
+
+        # Remove possibly existing legend, before drawing.
         geomap.properties.svg.select('g#legend').remove()
 
         lg = geomap.properties.svg.append('g')
@@ -133,10 +139,12 @@ class Choropleth extends Geomap
             .attr('y', (d, i)-> i * rect_h + rect_h + offset_t)
 
         # Add text element for maximum value.
-        domain_max = geomap.private.domain[geomap.private.domain.length - 1]
         max_text = geomap.properties.format(domain_max)
         if domain_max < max_val
-            max_text = '> ' + max_text
+            if domain_max > domain_min
+                max_text = '> ' + max_text
+            else
+                max_text = '< ' + max_text
 
         sg.append('text')
             .text(max_text)
@@ -144,7 +152,6 @@ class Choropleth extends Geomap
             .attr('y', offset_t)
 
         # Determine text to display for min val by default use domain_min.
-        domain_min = geomap.private.domain[0]
         min_text = geomap.properties.format(domain_min)
         if min_val < domain_min
             # When a threshold scale is used domain_min is the upper bound of
@@ -152,7 +159,10 @@ class Choropleth extends Geomap
             if geomap.private.domain.length > 2
                 min_text = geomap.properties.format(min_val)
             else
-                min_text = '< ' + min_text
+                if domain_max > domain_min
+                    min_text = '< ' + min_text
+                else
+                    min_text = '> ' + min_text
 
         # Hacky way to update already existing legend text element with min val.
         min_val_idx = colorlist.length - 1
