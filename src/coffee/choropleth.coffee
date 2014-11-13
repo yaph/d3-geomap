@@ -14,6 +14,25 @@ class Choropleth extends Geomap
             @properties[name] = value
             addAccessor(this, name, value)
 
+        # Public data access by id
+        this.data_by_id = {}
+
+
+    columnVal: (id, col)->
+        geomap = this
+        if geomap.data_by_id[id]
+            geomap.properties.format(geomap.data_by_id[id][col])
+        else
+            'No data'
+
+
+    colorVal: (id, col)->
+        geomap = this
+        if geomap.data_by_id[id]
+            geomap.colorize(geomap.data_by_id[id][col])
+        else
+            '#eeeeee'
+
 
     draw: (selection, geomap)->
         geomap.private.data = selection.datum()
@@ -22,7 +41,6 @@ class Choropleth extends Geomap
 
     update: ()->
         geomap = this
-        data_by_id = {}
         unitId = geomap.properties.unitId
 
         d3.selectAll('path.unit').remove()
@@ -38,7 +56,7 @@ class Choropleth extends Geomap
                 min = val
             if max is null or val > max
                 max = val
-            data_by_id[d[unitId]] = val
+            geomap.data_by_id[d[unitId]] = d
 
         # Set private domain property to given domain or min, max, Must be set
         # on every update so data changes are reflected.
@@ -56,19 +74,15 @@ class Choropleth extends Geomap
             .domain(geomap.private.domain)
             .range(geomap.properties.colors)
 
-        columnVal = (id)->
-            if data_by_id[id] is null then 'No data' else geomap.properties.format(data_by_id[id])
-
-        colorVal = (id)->
-            if data_by_id[id] is null then '#eeeeee' else geomap.colorize(data_by_id[id])
-
         geomap.selection.units.enter().append('path')
             .attr('class', 'unit')
             .attr('d', geomap.properties.path)
-            .style('fill', (d)-> colorVal(d.id))
+            .style('fill', (d)->
+                geomap.colorVal(d.id, geomap.properties.column))
             .on('click', geomap.clicked.bind(geomap))
             .append('title')
-                .text((d)-> d.properties.name + ': ' + columnVal(d.id))
+                .text((d)->
+                    d.properties.name + ': ' + geomap.columnVal(d.id, geomap.properties.column))
 
         if geomap.properties.legend
             geomap.drawLegend(min, max)
