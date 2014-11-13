@@ -56,19 +56,19 @@ class Choropleth extends Geomap
             .domain(geomap.private.domain)
             .range(geomap.properties.colors)
 
-        column_val = (id)->
+        columnVal = (id)->
             if data_by_id[id] is null then 'No data' else geomap.properties.format(data_by_id[id])
 
-        color_val = (id)->
+        colorVal = (id)->
             if data_by_id[id] is null then '#eeeeee' else geomap.colorize(data_by_id[id])
 
         geomap.selection.units.enter().append('path')
             .attr('class', 'unit')
             .attr('d', geomap.properties.path)
-            .style('fill', (d)-> color_val(d.id))
+            .style('fill', (d)-> colorVal(d.id))
             .on('click', geomap.clicked.bind(geomap))
             .append('title')
-                .text((d)-> d.properties.name + ': ' + column_val(d.id))
+                .text((d)-> d.properties.name + ': ' + columnVal(d.id))
 
         if geomap.properties.legend
             geomap.drawLegend(min, max)
