@@ -56,7 +56,7 @@ class Choropleth extends Geomap
             .domain(geomap.private.domain)
             .range(geomap.properties.colors)
 
-        iso_val = (id)->
+        column_val = (id)->
             if data_by_id[id] is null then 'No data' else geomap.properties.format(data_by_id[id])
 
         color_val = (id)->
@@ -68,7 +68,7 @@ class Choropleth extends Geomap
             .style('fill', (d)-> color_val(d.id))
             .on('click', geomap.clicked.bind(geomap))
             .append('title')
-                .text((d)-> d.properties.name + ': ' + iso_val(d.id))
+                .text((d)-> d.properties.name + ': ' + column_val(d.id))
 
         if geomap.properties.legend
             geomap.drawLegend(min, max)
