@@ -21,7 +21,7 @@ class Choropleth extends Geomap
     columnVal: (id, col)->
         geomap = this
         if geomap.data_by_id[id]
-            geomap.properties.format(geomap.data_by_id[id][col])
+            geomap.data_by_id[id][col]
         else
             'No data'
 
@@ -32,6 +32,17 @@ class Choropleth extends Geomap
             geomap.colorize(geomap.data_by_id[id][col])
         else
             '#eeeeee'
+
+
+    tooltip: (d)->
+        geomap = this
+        text = d.properties.name + '\n\n'
+        text += geomap.properties.column + ': ' + geomap.properties.format(geomap.columnVal(d.id, geomap.properties.column)) + '\n\n'
+        cols = d3.keys(geomap.data_by_id[d.id])
+        for col in cols
+            if col and col not in [geomap.properties.column, geomap.unitId()]
+                text += col + ': ' + geomap.columnVal(d.id, col) + '\n'
+        text
 
 
     draw: (selection, geomap)->
@@ -81,8 +92,7 @@ class Choropleth extends Geomap
                 geomap.colorVal(d.id, geomap.properties.column))
             .on('click', geomap.clicked.bind(geomap))
             .append('title')
-                .text((d)->
-                    d.properties.name + ': ' + geomap.columnVal(d.id, geomap.properties.column))
+                .text((d)-> geomap.tooltip(d))
 
         if geomap.properties.legend
             geomap.drawLegend(min, max)
