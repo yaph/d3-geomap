@@ -30,6 +30,9 @@ class Geomap
         # Accessible map selection
         @selection = {}
 
+        # Accessible geo data
+        @geo = {}
+
 
     clicked: (d)->
         geomap = this
@@ -105,6 +108,7 @@ class Geomap
 
         # Load and render geo data.
         d3.json geomap.properties.geofile, (error, geo)->
+            geomap.geo = geo
             geomap.selection.units = geomap.private.g
                 .selectAll('path')
                 .data(topojson.feature(geo, geo.objects[geomap.properties.units]).features)
