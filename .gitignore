@@ -1,4 +1,5 @@
 dist
+bundle
 node_modules
 shp
 .sass-cache

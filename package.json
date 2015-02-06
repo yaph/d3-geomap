@@ -1,6 +1,6 @@
 {
   "name": "d3-geomap",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A reusuable geomap for d3.js",
   "keywords": [
     "d3",
@@ -18,16 +18,18 @@
     "url": "https://github.com/yaph/d3-geomap.git"
   },
   "dependencies": {
-    "d3": "^3.4.11",
-    "d3-geo-projection": "^0.2.10",
+    "d3": "^3.5.3",
+    "d3-geo-projection": "^0.2.12",
     "topojson": "^1.6.18"
   },
   "devDependencies": {
-    "gulp": "^3.8.8",
+    "del": "^1.1.1",
+    "gulp": "^3.8.10",
     "gulp-coffee": "^1.4.3",
-    "gulp-concat": "^2.2.0",
-    "gulp-connect": "^2.0.6",
+    "gulp-concat": "^2.4.3",
+    "gulp-connect": "^2.2.0",
     "gulp-ruby-sass": "^0.4.3",
-    "gulp-uglify": "^0.2.1"
+    "gulp-uglify": "^0.2.1",
+    "gulp-zip": "^2.0.2"
   }
 }

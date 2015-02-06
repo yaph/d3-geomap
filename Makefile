@@ -2,6 +2,10 @@ help:
 	@echo "topo-world - create topojson files for world"
 	@echo "topo-countries - create topojson files for countries"
 
+topo-clean:
+	rm -f src/topojson/countries/*.json
+	rm -f src/topojson/world/*.json
+
 
 topo-world:
 	ogr2ogr -f GeoJSON shp/units.json shp/ne_10m_admin_0_countries_lakes.shp
@@ -11,9 +15,9 @@ topo-world:
 	mv shp/countries.json src/topojson/world/
 
 
-# does not work without geonamescache globally installed
+# geonamescache must be installed
 topo-countries:
 	cd scripts && python topo_countries.py
 
 
-topo: topo-world topo-countries
+topo: topo-clean topo-world topo-countries

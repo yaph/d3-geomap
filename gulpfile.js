@@ -3,7 +3,11 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     connect = require('gulp-connect'),
     sass = require('gulp-ruby-sass'),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+    zip = require('gulp-zip'),
+    del = require('del'),
+    pkg = require('./package.json');
+
 
 var paths = {
     scripts: [
@@ -21,7 +25,25 @@ var paths = {
     ],
 };
 
-// Run dev server
+// Bundle resources in dist so they can be downloaded.
+gulp.task('bundle', function() {
+    gulp.src('LICENSE')
+        .pipe(gulp.dest('dist'));
+    gulp.src('node_modules/d3/LICENSE')
+        .pipe(gulp.dest('dist/vendor'));
+
+    var target = 'd3-geomap-' + pkg.version + '.zip';
+    gulp.src('dist/**/*', {base: 'dist'})
+        .pipe(zip(target))
+        .pipe(gulp.dest('bundle'));
+});
+
+
+gulp.task('clean', function() {
+    del(['dist']);
+});
+
+// Run dev server.
 gulp.task('connect', function() {
     connect.server({
         root: __dirname,
@@ -30,13 +52,13 @@ gulp.task('connect', function() {
     });
 });
 
-// Copy geo data
+// Copy geo data.
 gulp.task('data', function() {
     gulp.src(paths.data)
         .pipe(gulp.dest('dist'));
 });
 
-// Minify scripts and styles
+// Minify scripts and styles.
 gulp.task('minify', ['scripts'], function() {
     gulp.src('dist/js/d3.geomap.js')
         .pipe(uglify())
@@ -44,7 +66,7 @@ gulp.task('minify', ['scripts'], function() {
         .pipe(gulp.dest('dist/js'));
 });
 
-// Minify and copy scripts
+// Minify and copy scripts.
 gulp.task('scripts', function() {
     return gulp.src(paths.scripts)
         .pipe(coffee())
@@ -52,7 +74,7 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('dist/js'));
 });
 
-// Compile and copy sass
+// Compile and copy sass.
 gulp.task('styles', function () {
     return gulp.src(paths.styles)
         .pipe(sass())
@@ -60,21 +82,21 @@ gulp.task('styles', function () {
         .pipe(gulp.dest('dist/css'));
 });
 
-// Concatenate and copy vendor scripts
+// Concatenate and copy vendor scripts.
 gulp.task('vendor', function() {
     return gulp.src(paths.vendor)
         .pipe(concat('d3.geomap.dependencies.min.js'))
         .pipe(gulp.dest('dist/vendor'));
 });
 
-// Rerun task when a file changes
+// Rerun task when a file changes.
 gulp.task('watch', function() {
     gulp.watch(paths.scripts, ['scripts']);
     gulp.watch(paths.styles, ['styles']);
 });
 
-// Build files needed for distribution
-gulp.task('dist', ['data', 'scripts', 'styles', 'minify']);
+// Build files needed for distribution.
+gulp.task('dist', ['clean', 'data', 'scripts', 'styles', 'minify', 'vendor']);
 
-// The default task (called when you run `gulp` from cli)
+// The default task (called when you run `gulp` from cli).
 gulp.task('default', ['dist', 'connect', 'watch']);
