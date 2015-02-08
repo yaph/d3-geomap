@@ -1,5 +1,8 @@
 # d3.geomap
 
+![npm package version](http://img.shields.io/npm/v/d3-geomap.svg)
+![npm package license](http://img.shields.io/npm/l/d3-geomap.svg)
+
 **d3.geomap** is designed to be a
 [reusable](http://bost.ocks.org/mike/chart/) geographic map for D3. In its current stage it consists of a class to create plain maps `d3.geomap()`
 and one for choropleth maps `d3.geomap.choropleth()`.
