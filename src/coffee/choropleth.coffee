@@ -131,7 +131,6 @@ class Choropleth extends Geomap
             .attr('class', 'legend-bg')
             .attr('width', box_w)
             .attr('height', box_h)
-            .attr('transform', 'translate(0, 0)')
 
         l_tr = 'translate(' + offset_t + ',' + offset_t * 3 + ')'
 
