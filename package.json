@@ -1,6 +1,6 @@
 {
   "name": "d3-geomap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A reusuable geomap for d3.js",
   "keywords": [
     "d3",
