@@ -97,7 +97,7 @@ gulp.task('watch', function() {
 });
 
 // Build files needed for distribution.
-gulp.task('dist', ['clean', 'data', 'babel', 'styles', 'minify', 'vendor']);
+gulp.task('dist', ['data', 'babel', 'styles', 'minify', 'vendor']);
 
 // The default task (called when you run `gulp` from cli).
 gulp.task('default', ['dist', 'connect', 'watch']);
