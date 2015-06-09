@@ -59,7 +59,7 @@ class Geomap {
     }
 
 
-    // Draw map base and load geo data once, and call update to draw units.
+    // Draw base map and load geo data once. Call update to draw units.
     draw(selection, geomap) {
 
         geomap.svg = selection.append('svg')
