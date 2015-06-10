@@ -10,7 +10,6 @@ var gulp = require('gulp'),
 
 
 var paths = {
-    babel: ['src/js/*.js'],
     scripts: [
         'src/js/utils.js',
         'src/js/colorbrewer.js',
@@ -92,7 +91,7 @@ gulp.task('vendor', function() {
 
 // Rerun task when a file changes.
 gulp.task('watch', function() {
-    gulp.watch(paths.babel, ['babel']);
+    gulp.watch(paths.scripts, ['babel']);
     gulp.watch(paths.styles, ['styles']);
 });
 

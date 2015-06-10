@@ -46,7 +46,7 @@ d3.csv('globalslaveryindex.csv', function(error, data) {
 
     rh = 60;
 
-    fg = worldmap.svg().append('g')
+    fg = worldmap.svg.append('g')
         .attr('width', '100%')
         .attr('height', rh)
         .attr('transform', 'translate(0,' + (height - rh) + ')')
@@ -72,7 +72,6 @@ d3.csv('globalslaveryindex.csv', function(error, data) {
         .style('color', '#444')
         .style('font-size', '12px')
         .text('Data source: globalslaveryindex.org | Author: Ramiro Gómez - ramiro.org')
-
 });
 
 d3.select('#map-select').on('change', function() {
