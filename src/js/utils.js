@@ -1,7 +1,8 @@
 function addAccessor(obj, name, value) {
     obj[name] = (_) => {
-        if (!arguments.length)
+        if (typeof _ === 'undefined') {
             return obj.properties[name] || value;
+        }
         obj.properties[name] = _;
         return obj;
     };

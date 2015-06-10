@@ -51,6 +51,8 @@ class Choropleth extends Geomap {
             title.text(`${title.text()}: ${val}`);
         }
 
+debugger;
+
         // Make sure postUpdate function is run if set.
         super.update();
     }
