@@ -39,7 +39,7 @@ class Geomap {
             x = x0,
             y = y0;
 
-        if (d && this._.centered !== d) {
+        if (d && d.hasOwnProperty('geometry') && this._.centered !== d) {
             let centroid = this.path.centroid(d);
             x = centroid[0];
             y = centroid[1];
@@ -48,7 +48,6 @@ class Geomap {
         } else {
             this._.centered = null;
         }
-
         this.svg.selectAll('path.unit')
            .classed('active', this._.centered && ((d) => d === this._.centered));
 

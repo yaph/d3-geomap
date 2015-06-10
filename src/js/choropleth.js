@@ -51,8 +51,6 @@ class Choropleth extends Geomap {
             unit.select('title').text(`${text}\n\n${self.properties.column}: ${val}`);
         }
 
-
-
         // Make sure postUpdate function is run if set.
         super.update();
     }
