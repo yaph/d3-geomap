@@ -4,6 +4,7 @@ class Geomap {
         this.properties = {
             geofile: null,
             height: 500,
+            idPrefix: 'geounit-',
             margin: {
                 top: 20,
                 right: 20,
@@ -60,52 +61,46 @@ class Geomap {
 
 
     // Draw base map and load geo data once. Call update to draw units.
-    draw(selection, geomap) {
+    draw(selection, self) {
+        self.svg = selection.append('svg')
+            .attr('width', self.properties.width)
+            .attr('height', self.properties.height);
 
-        geomap.svg = selection.append('svg')
-            .attr('width', geomap.properties.width)
-            .attr('height', geomap.properties.height);
-
-        geomap.svg.append('rect')
+        self.svg.append('rect')
             .attr('class', 'background')
-            .attr('width', geomap.properties.width)
-            .attr('height', geomap.properties.height)
-            .on('click', geomap.clicked.bind(geomap));
-
-        geomap.svg.g = geomap.svg.append('g')
-            .attr('class', 'units zoom');
+            .attr('width', self.properties.width)
+            .attr('height', self.properties.height)
+            .on('click', self.clicked.bind(self));
 
         // Set map projection and path.
-        let proj = geomap.properties.projection()
-            .scale(geomap.properties.scale)
-            .translate(geomap.properties.translate)
+        let proj = self.properties.projection()
+            .scale(self.properties.scale)
+            .translate(self.properties.translate)
             .precision(.1);
 
         // Not every projection supports rotation, e. g. albersUsa does not.
-        if (proj.hasOwnProperty('rotate') && geomap.properties.rotate)
-            proj.rotate(geomap.properties.rotate);
+        if (proj.hasOwnProperty('rotate') && self.properties.rotate)
+            proj.rotate(self.properties.rotate);
 
-        geomap.path = d3.geo.path().projection(proj);
+        self.path = d3.geo.path().projection(proj);
 
         // Load and render geo data.
-        d3.json(geomap.properties.geofile, (error, geo) => {
-            geomap.geo = geo;
-            geomap.svg.units = geomap.svg.append('g').attr('class', 'units zoom')
+        d3.json(self.properties.geofile, (error, geo) => {
+            self.svg.append('g').attr('class', 'units zoom')
                 .selectAll('path')
-                .data(topojson.feature(geo, geo.objects[geomap.properties.units]).features);
-            geomap.update();
+                .data(topojson.feature(geo, geo.objects[self.properties.units]).features)
+                .enter().append('path')
+                    .attr('class', 'unit')
+                    .attr('id', (d) => `${self.properties.idPrefix}${d.id}`)
+                    .attr('d', self.path)
+                    .on('click', self.clicked.bind(self))
+                    .append('title')
+                        .text(self.properties.title);
+            self.update();
         });
     }
 
     update() {
-        this.svg.units.enter().append('path')
-            .attr('class', 'unit')
-            .attr('id', (d) => d.id)
-            .attr('d', this.path)
-            .on('click', this.clicked.bind(this))
-            .append('title')
-                .text(this.properties.title);
-
         if (this.properties.postUpdate)
             this.properties.postUpdate();
     }

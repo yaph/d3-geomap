@@ -3,11 +3,11 @@ class Choropleth extends Geomap {
         super();
 
         let properties = {
+            colors: colorbrewer.OrRd[9],
             column: null,
             domain: null,
             format: d3.format(',.02f'),
-            legend: false,
-            colors: colorbrewer.OrRd[9]
+            legend: false
         };
 
         for (let prop of d3.entries(properties)) {
@@ -16,33 +16,40 @@ class Choropleth extends Geomap {
         }
     }
 
-    draw(selection, geomap) {
-        geomap.data = selection.datum();
-        super.draw(selection, geomap);
+    draw(selection, self) {
+        self.data = selection.datum();
+        super.draw(selection, self);
     }
 
     update() {
-        // FIXME Avoid removal.
-        //d3.selectAll('path.unit').remove();
-        super.update();
-
-        let geomap = this,
-            extent = d3.extent(geomap.data, (d) => parseFloat(d[geomap.properties.column]));
+        let self = this,
+            extent = d3.extent(self.data, (d) => parseFloat(d[self.properties.column]));
 
         // Set the coloring function.
         let colorize = d3.scale.quantize()
             .domain(extent)
-            .range(geomap.properties.colors);
+            .range(self.properties.colors);
 
+        // Remove fill styles that may have been set previously.
+        self.svg.selectAll('path.unit').style('fill', null);
 
+        // Add new fill styles based on data values.
+        for (let d of this.data) {
+            let uid = d[self.properties.unitId],
+                val = d[self.properties.column],
+                fill = colorize(val);
+//debugger;
+            let unit = self.svg.select(`#${self.properties.idPrefix}${uid}`)
+                .style('fill', fill);
 
-        // geomap.svg.units.enter().append('path')
-        //     .attr('class', 'unit')
-        //     .attr('d', geomap.path)
-        //     .style('fill', (d) => {
-        //         colorize(d[geomap.properties.column]);
-        //     })
-        //     .on('click', geomap.clicked.bind(geomap));
+            // FIXME with multiple updates title gets longer and longer...
+            // Add value to existing title
+            let title = unit.select('title');
+            title.text(`${title.text()}: ${val}`);
+        }
+
+        // Make sure postUpdate function is run if set.
+        super.update();
     }
 }
 
