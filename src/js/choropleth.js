@@ -24,6 +24,7 @@ class Choropleth extends Geomap {
     update() {
         // FIXME Avoid removal.
         //d3.selectAll('path.unit').remove();
+        super.update();
 
         let geomap = this,
             extent = d3.extent(geomap.data, (d) => parseFloat(d[geomap.properties.column]));
@@ -33,14 +34,15 @@ class Choropleth extends Geomap {
             .domain(extent)
             .range(geomap.properties.colors);
 
-        geomap.svg.units.enter().append('path')
-            .attr('class', 'unit')
-            .attr('d', geomap.path)
-            .style('fill', (d) => {
-                colorize(d[geomap.properties.column]);
-            })
-            .on('click', geomap.clicked.bind(geomap));
-debugger;
+
+
+        // geomap.svg.units.enter().append('path')
+        //     .attr('class', 'unit')
+        //     .attr('d', geomap.path)
+        //     .style('fill', (d) => {
+        //         colorize(d[geomap.properties.column]);
+        //     })
+        //     .on('click', geomap.clicked.bind(geomap));
     }
 }
 

@@ -100,6 +100,7 @@ class Geomap {
     update() {
         this.svg.units.enter().append('path')
             .attr('class', 'unit')
+            .attr('id', (d) => d.id)
             .attr('d', this.path)
             .on('click', this.clicked.bind(this))
             .append('title')
