@@ -16,34 +16,37 @@ class Choropleth extends Geomap {
         }
     }
 
+    columnVal(d) {
+        return parseFloat(d[this.properties.column]);
+    }
+
     draw(selection, self) {
         self.data = selection.datum();
         super.draw(selection, self);
     }
 
     update() {
-        let self = this,
-            extent = d3.extent(self.data, (d) => parseFloat(d[self.properties.column]));
-
-        // Set the coloring function.
-        let colorize = d3.scale.quantize()
-            .domain(extent)
+        let self = this;
+        self.extent = d3.extent(self.data, self.columnVal.bind(self));
+        self.scale = d3.scale.quantize()
+            .domain(self.extent)
             .range(self.properties.colors);
 
         // Remove fill styles that may have been set previously.
         self.svg.selectAll('path.unit').style('fill', null);
 
         // Add new fill styles based on data values.
-        for (let d of this.data) {
+        for (let d of self.data) {
             let uid = d[self.properties.unitId],
                 val = d[self.properties.column],
-                fill = colorize(val);
-//debugger;
+                fill = self.scale(val);
+
             let unit = self.svg.select(`#${self.properties.idPrefix}${uid}`)
                 .style('fill', fill);
 
             // FIXME with multiple updates title gets longer and longer...
             // Add value to existing title
+
             let title = unit.select('title');
             title.text(`${title.text()}: ${val}`);
         }
