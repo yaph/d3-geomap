@@ -41,17 +41,17 @@ class Choropleth extends Geomap {
                 val = d[self.properties.column],
                 fill = self.scale(val);
 
-            let unit = self.svg.select(`#${self.properties.idPrefix}${uid}`)
-                .style('fill', fill);
+            // selectAll must be called and not just select, otherwise the data
+            // attribute of the selected path object is overwritten with self.data.
+            let unit = self.svg.selectAll(`.${uid}`).style('fill', fill);
 
-            // FIXME with multiple updates title gets longer and longer...
-            // Add value to existing title
-
-            let title = unit.select('title');
-            title.text(`${title.text()}: ${val}`);
+            // New title with column and value.
+            let text = self.properties.title(unit.datum());
+            val = self.properties.format(val);
+            unit.select('title').text(`${text}\n\n${self.properties.column}: ${val}`);
         }
 
-debugger;
+
 
         // Make sure postUpdate function is run if set.
         super.update();

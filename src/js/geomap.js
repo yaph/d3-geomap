@@ -4,7 +4,6 @@ class Geomap {
         this.properties = {
             geofile: null,
             height: 500,
-            idPrefix: 'geounit-',
             margin: {
                 top: 20,
                 right: 20,
@@ -50,7 +49,7 @@ class Geomap {
             this._.centered = null;
         }
 
-        this.svg.units.selectAll('path')
+        this.svg.selectAll('path.unit')
            .classed('active', this._.centered && ((d) => d === this._.centered));
 
         this.svg.selectAll('g.zoom')
@@ -90,8 +89,7 @@ class Geomap {
                 .selectAll('path')
                 .data(topojson.feature(geo, geo.objects[self.properties.units]).features)
                 .enter().append('path')
-                    .attr('class', 'unit')
-                    .attr('id', (d) => `${self.properties.idPrefix}${d.id}`)
+                    .attr('class', (d) => `unit ${d.id}`)
                     .attr('d', self.path)
                     .on('click', self.clicked.bind(self))
                     .append('title')
