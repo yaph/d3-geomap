@@ -3,26 +3,18 @@ class Geomap {
         // Set default properties optimized for naturalEarth projection.
         this.properties = {
             geofile: null,
-            height: 500,
-            margin: {
-                top: 20,
-                right: 20,
-                bottom: 20,
-                left: 20
-            },
+            height: null,
             postUpdate: null,
             projection: d3.geo.naturalEarth,
             rotate: [0, 0, 0],
+            scale: null,
             title: (d) => d.properties.name,
+            translate: null,
             unitId: 'iso3',
             units: 'units',
-            width: 960,
+            width: null,
             zoomFactor: 4
         };
-
-        // Dependant properties must be set after initialization.
-        this.properties.scale = this.properties.width / 5.8;
-        this.properties.translate = [this.properties.width / 2, this.properties.height / 2];
 
         // Setup methods to access properties.
         for (let prop of d3.entries(this.properties))
@@ -58,8 +50,26 @@ class Geomap {
     }
 
 
-    // Draw base map and load geo data once. Call update to draw units.
+    /**
+     * Load geo data once here and draw map. Call update at the end.
+     *
+     * By default map dimensions are calculated based on the width of the
+     * selection container element so they are responsive. Properties set before
+     * will be kept.
+     */
     draw(selection, self) {
+        if (!self.properties.width)
+            self.properties.width = selection.node().getBoundingClientRect().width;
+
+        if (!self.properties.height)
+            self.properties.height = self.properties.width / 1.92;
+
+        if (!self.properties.scale)
+            self.properties.scale = self.properties.width / 5.8;
+
+        if (!self.properties.translate)
+            self.properties.translate = [self.properties.width / 2, self.properties.height / 2];
+
         self.svg = selection.append('svg')
             .attr('width', self.properties.width)
             .attr('height', self.properties.height);

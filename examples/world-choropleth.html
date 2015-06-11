@@ -23,41 +23,40 @@
 <script src="../node_modules/topojson/topojson.js"></script>
 <script src="../dist/js/d3.geomap.js"></script>
 <script>
-var width = 1200,
-    height = 780;
-
 var worldmap = d3.geomap.choropleth()
     .geofile('../dist/topojson/world/countries.json')
-    .width(width)
-    .height(height)
     .colors(colorbrewer.YlOrRd[9])
     .column('Calculated Percentage')
     .format(d3.format(',.02f'))
-    .scale([width / 5.8])
-    .translate([width / 2, height / 2])
-    .legend(true);
+    .legend(true)
+    .postUpdate(annotation);
 
 d3.csv('globalslaveryindex.csv', function(error, data) {
     d3.select("#map")
         .datum(data)
         .call(worldmap.draw, worldmap);
+});
 
+d3.select('#map-select').on('change', function() {
+    worldmap.column(this.value).update()
+});
+
+function annotation() {
     rh = 60;
 
     fg = worldmap.svg.append('g')
         .attr('width', '100%')
         .attr('height', rh)
-        .attr('transform', 'translate(0,' + (height - rh) + ')')
+        .attr('transform', 'translate(0,' + (worldmap.height() - rh) + ')')
 
     fg.append('rect')
-        .attr('x', 120)
-        .attr('width', width - 120)
+        .attr('width', worldmap.width())
         .attr('height', rh)
         .style('fill-opacity', .8)
         .style('fill', '#fff');
 
     fg.append('text')
-        .attr('x', 120)
+        .attr('x', '10%')
         .attr('y', 22)
         .style('color', '#444')
         .style('font-size', '18px')
@@ -70,11 +69,8 @@ d3.csv('globalslaveryindex.csv', function(error, data) {
         .style('color', '#444')
         .style('font-size', '12px')
         .text('Data source: globalslaveryindex.org | Author: Ramiro Gómez - ramiro.org')
-});
+}
 
-d3.select('#map-select').on('change', function() {
-    worldmap.column(this.value).update()
-});
 </script>
 </body>
 </html>
