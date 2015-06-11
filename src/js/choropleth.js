@@ -7,7 +7,8 @@ class Choropleth extends Geomap {
             column: null,
             domain: null,
             format: d3.format(',.02f'),
-            legend: false
+            legend: false,
+            valueScale: d3.scale.quantize
         };
 
         for (let prop of d3.entries(properties)) {
@@ -28,7 +29,7 @@ class Choropleth extends Geomap {
     update() {
         let self = this;
         self.extent = d3.extent(self.data, self.columnVal.bind(self));
-        self.scale = d3.scale.quantize()
+        self.colorScale = self.properties.valueScale()
             .domain(self.extent)
             .range(self.properties.colors);
 
@@ -39,7 +40,7 @@ class Choropleth extends Geomap {
         for (let d of self.data) {
             let uid = d[self.properties.unitId],
                 val = d[self.properties.column],
-                fill = self.scale(val);
+                fill = self.colorScale(val);
 
             // selectAll must be called and not just select, otherwise the data
             // attribute of the selected path object is overwritten with self.data.

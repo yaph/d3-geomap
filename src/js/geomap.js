@@ -17,7 +17,7 @@ class Geomap {
             unitId: 'iso3',
             units: 'units',
             width: 960,
-            zoomMax: 4
+            zoomFactor: 4
         };
 
         // Dependant properties must be set after initialization.
@@ -43,7 +43,7 @@ class Geomap {
             let centroid = this.path.centroid(d);
             x = centroid[0];
             y = centroid[1];
-            k = this.properties.zoomMax;
+            k = this.properties.zoomFactor;
             this._.centered = d;
         } else {
             this._.centered = null;
