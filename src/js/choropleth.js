@@ -58,8 +58,87 @@ class Choropleth extends Geomap {
             unit.select('title').text(`${text}\n\n${self.properties.column}: ${val}`);
         }
 
+        if (self.properties.legend)
+            self.drawLegend(self.properties.legend);
+
         // Make sure postUpdate function is run if set.
         super.update();
+    }
+
+    drawLegend(bounds=null) {
+        let self = this,
+            wBox,
+            hBox;
+
+        const wFactor = 10,
+            hFactor = 3;
+
+        if (bounds === true) {
+            wBox = self.properties.width / wFactor;
+            hBox = self.properties.height / hFactor;
+        } else {
+            wBox = bounds[0];
+            hBox = bounds[1];
+        }
+
+        const wRect = wBox / (wFactor * .75),
+            hLegend = hBox - (hBox / (hFactor * 1.8)),
+            offsetText = wRect / 2,
+            offsetY = self.properties.height - hBox,
+            offsetFactor = .15,
+            tr = 'translate(' + offsetText + ',' + offsetText * 3 + ')';
+
+        // Remove possibly existing legend, before drawing.
+        self.svg.select('g.legend').remove();
+
+        // Reverse a copy to not alter colors array.
+        const colors = self.properties.colors.slice().reverse(),
+            hRect = hLegend / colors.length;
+
+        let legend = self.svg.append('g')
+            .attr('class', 'legend')
+            .attr('width', wBox)
+            .attr('height', hBox)
+            .attr('transform', 'translate(0,' + offsetY + ')');
+
+        legend.append('rect')
+            .style('fill', '#fff')
+            .attr('class', 'legend-bg')
+            .attr('width', wBox)
+            .attr('height', hBox);
+
+        legend.append('rect')
+            .attr('class', 'legend-bar')
+            .attr('width', wRect)
+            .attr('height', hLegend)
+            .attr('transform', tr);
+
+        let sg = legend.append('g')
+            .attr('transform', tr);
+
+        // Draw color scale.
+        sg.selectAll('rect')
+            .data(colors)
+            .enter().append('rect')
+            .attr('y', (d, i) => i * hRect)
+            .attr('fill', (d, i) => colors[i])
+            .attr('width', wRect)
+            .attr('height', hRect);
+
+        // Draw color scale labels.
+        sg.selectAll('text')
+            .data(colors)
+            .enter().append('text')
+            .text((d) => self.properties.format(self.colorScale.invertExtent(d)[0]))
+            .attr('class', (d, i) => 'text-' + i)
+            .attr('x', wRect + offsetText)
+            .attr('y', (d, i) => i * hRect + hRect + (wRect * offsetFactor));
+
+        // Draw label for end of extent.
+        sg.append('text')
+            .text(self.properties.format(self.extent[1]))
+            .attr('x', wRect + offsetText)
+            .attr('y', offsetText * offsetFactor);
     }
 }
 

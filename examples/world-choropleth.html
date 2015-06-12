@@ -54,7 +54,8 @@ function annotation() {
         .attr('transform', 'translate(0,' + (worldmap.height() - anno_height) + ')')
 
     fg.append('rect')
-        .attr('width', worldmap.width())
+        .attr('x', '10%')
+        .attr('width', '80%')
         .attr('height', anno_height)
         .style('fill-opacity', .8)
         .style('fill', '#fff');
