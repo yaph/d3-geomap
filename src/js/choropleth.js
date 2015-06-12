@@ -18,7 +18,7 @@ class Choropleth extends Geomap {
     }
 
     columnVal(d) {
-        return parseFloat(d[this.properties.column]);
+        return +d[this.properties.column];
     }
 
     draw(selection, self) {
