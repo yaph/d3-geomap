@@ -22,7 +22,7 @@ var paths = {
         'node_modules/d3/d3.min.js',
         'node_modules/d3-geo-projection/d3.geo.projection.min.js',
         'node_modules/topojson/topojson.min.js'
-    ],
+    ]
 };
 
 // Bundle resources in dist so they can be downloaded.
