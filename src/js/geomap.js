@@ -8,10 +8,10 @@ class Geomap {
             projection: d3.geo.naturalEarth,
             rotate: [0, 0, 0],
             scale: null,
-            title: (d) => d.properties.name,
             translate: null,
             unitId: 'iso3',
             units: 'units',
+            unitTitle: (d) => d.properties.name,
             width: null,
             zoomFactor: 4
         };
@@ -102,7 +102,7 @@ class Geomap {
                     .attr('d', self.path)
                     .on('click', self.clicked.bind(self))
                     .append('title')
-                        .text(self.properties.title);
+                        .text(self.properties.unitTitle);
             self.update();
         });
     }

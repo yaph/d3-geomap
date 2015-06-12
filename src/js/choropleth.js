@@ -53,7 +53,7 @@ class Choropleth extends Geomap {
             unit.style('fill', fill);
 
             // New title with column and value.
-            let text = self.properties.title(unit.datum());
+            let text = self.properties.unitTitle(unit.datum());
             val = self.properties.format(val);
             unit.select('title').text(`${text}\n\n${self.properties.column}: ${val}`);
         }
