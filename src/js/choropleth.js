@@ -65,27 +65,34 @@ class Choropleth extends Geomap {
         super.update();
     }
 
+    /**
+     * Draw legend including color scale and labels.
+     *
+     * If bounds is set to true, legend dimensions will be calculated based on
+     * the map dimensions. Otherwise bounds must be an object with width and
+     * height attributes.
+     */
     drawLegend(bounds=null) {
         let self = this,
             wBox,
             hBox;
 
         const wFactor = 10,
-            hFactor = 3;
+            hFactor = 3,
+            offsetFactor = .15;
 
         if (bounds === true) {
             wBox = self.properties.width / wFactor;
             hBox = self.properties.height / hFactor;
         } else {
-            wBox = bounds[0];
-            hBox = bounds[1];
+            wBox = bounds.width;
+            hBox = bounds.height;
         }
 
         const wRect = wBox / (wFactor * .75),
             hLegend = hBox - (hBox / (hFactor * 1.8)),
             offsetText = wRect / 2,
             offsetY = self.properties.height - hBox,
-            offsetFactor = .15,
             tr = 'translate(' + offsetText + ',' + offsetText * 3 + ')';
 
         // Remove possibly existing legend, before drawing.
