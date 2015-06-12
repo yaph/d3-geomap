@@ -29,9 +29,9 @@ class Choropleth extends Geomap {
 
     update() {
         let self = this;
-        self.extent = self.properties.domain || d3.extent(self.data, self.columnVal.bind(self));
+        self.extent = d3.extent(self.data, self.columnVal.bind(self));
         self.colorScale = self.properties.valueScale()
-            .domain(self.extent)
+            .domain(self.properties.domain || self.extent)
             .range(self.properties.colors);
 
         // Remove fill styles that may have been set previously.
@@ -78,6 +78,7 @@ class Choropleth extends Geomap {
      */
     drawLegend(bounds=null) {
         let self = this,
+            steps = self.properties.colors.length,
             wBox,
             hBox;
 
@@ -104,7 +105,7 @@ class Choropleth extends Geomap {
 
         // Reverse a copy to not alter colors array.
         const colors = self.properties.colors.slice().reverse(),
-            hRect = hLegend / colors.length;
+            hRect = hLegend / steps;
 
         let legend = self.svg.append('g')
             .attr('class', 'legend')
@@ -118,6 +119,7 @@ class Choropleth extends Geomap {
             .attr('width', wBox)
             .attr('height', hBox);
 
+        // Draw a rectangle around the color scale to add a border.
         legend.append('rect')
             .attr('class', 'legend-bar')
             .attr('width', wRect)
@@ -136,18 +138,52 @@ class Choropleth extends Geomap {
             .attr('width', wRect)
             .attr('height', hRect);
 
+
+        // Determine display values for lower and upper thresholds. If the
+        // minimum data value is lower than the first element in the domain
+        // draw a less than sign. If the maximum data value is larger than the
+        // second domain element, draw a greater than sign.
+        let minDisplay = self.extent[0],
+            maxDisplay = self.extent[1],
+            addLower = false,
+            addGreater = false;
+
+        if (self.properties.domain) {
+            if (self.properties.domain[1] < maxDisplay)
+                addGreater = true;
+            maxDisplay = self.properties.domain[1];
+
+            if (self.properties.domain[0] > minDisplay)
+                addLower = true;
+            minDisplay = self.properties.domain[0];
+        }
+
         // Draw color scale labels.
         sg.selectAll('text')
             .data(colors)
             .enter().append('text')
-            .text((d) => self.properties.format(self.colorScale.invertExtent(d)[0]))
+            .text((d, i) => {
+                // The last element in the colors list corresponds to the lower threshold.
+                if (i === steps - 1) {
+                    let text = self.properties.format(minDisplay);
+                    if (addLower)
+                        text = `< ${text}`;
+                    return text;
+                }
+                return self.properties.format(self.colorScale.invertExtent(d)[0]);
+            })
             .attr('class', (d, i) => 'text-' + i)
             .attr('x', wRect + offsetText)
             .attr('y', (d, i) => i * hRect + hRect + (wRect * offsetFactor));
 
         // Draw label for end of extent.
         sg.append('text')
-            .text(self.properties.format(self.extent[1]))
+            .text(() => {
+                let text = self.properties.format(maxDisplay);
+                if (addGreater)
+                    text = `> ${text}`;
+                return text;
+            })
             .attr('x', wRect + offsetText)
             .attr('y', offsetText * offsetFactor);
     }
