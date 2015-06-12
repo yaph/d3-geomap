@@ -27,6 +27,7 @@ var worldmap = d3.geomap.choropleth()
     .geofile('../dist/topojson/world/countries.json')
     .colors(colorbrewer.YlOrRd[9])
     .column('Calculated Percentage')
+    .duration(500)
     .format(d3.format(',.02f'))
     .legend(true)
     .postUpdate(annotation);

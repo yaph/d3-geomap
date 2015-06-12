@@ -6,6 +6,7 @@ class Choropleth extends Geomap {
             colors: colorbrewer.OrRd[9],
             column: null,
             domain: null,
+            duration: null,
             format: d3.format(',.02f'),
             legend: false,
             valueScale: d3.scale.quantize
@@ -50,7 +51,10 @@ class Choropleth extends Geomap {
             if (unit.empty())
                 continue;
 
-            unit.style('fill', fill);
+            if (self.properties.duration)
+                unit.transition().duration(self.properties.duration).style('fill', fill);
+            else
+                unit.style('fill', fill);
 
             // New title with column and value.
             let text = self.properties.unitTitle(unit.datum());
