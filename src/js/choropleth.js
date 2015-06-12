@@ -83,8 +83,7 @@ class Choropleth extends Geomap {
             hBox;
 
         const wFactor = 10,
-            hFactor = 3,
-            offsetFactor = .15;
+            hFactor = 3;
 
         if (bounds === true) {
             wBox = self.properties.width / wFactor;
@@ -105,7 +104,8 @@ class Choropleth extends Geomap {
 
         // Reverse a copy to not alter colors array.
         const colors = self.properties.colors.slice().reverse(),
-            hRect = hLegend / steps;
+            hRect = hLegend / steps,
+            offsetYFactor = hFactor / hRect;
 
         let legend = self.svg.append('g')
             .attr('class', 'legend')
@@ -137,7 +137,6 @@ class Choropleth extends Geomap {
             .attr('fill', (d, i) => colors[i])
             .attr('width', wRect)
             .attr('height', hRect);
-
 
         // Determine display values for lower and upper thresholds. If the
         // minimum data value is lower than the first element in the domain
@@ -174,7 +173,7 @@ class Choropleth extends Geomap {
             })
             .attr('class', (d, i) => 'text-' + i)
             .attr('x', wRect + offsetText)
-            .attr('y', (d, i) => i * hRect + hRect + (wRect * offsetFactor));
+            .attr('y', (d, i) => i * hRect + (hRect + hRect * offsetYFactor));
 
         // Draw label for end of extent.
         sg.append('text')
@@ -185,7 +184,7 @@ class Choropleth extends Geomap {
                 return text;
             })
             .attr('x', wRect + offsetText)
-            .attr('y', offsetText * offsetFactor);
+            .attr('y', offsetText * offsetYFactor * 2);
     }
 }
 
