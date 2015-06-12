@@ -37,11 +37,11 @@ class Geomap {
             y = centroid[1];
             k = this.properties.zoomFactor;
             this._.centered = d;
-        } else {
+        } else
             this._.centered = null;
-        }
+
         this.svg.selectAll('path.unit')
-           .classed('active', this._.centered && ((d) => d === this._.centered));
+           .classed('active', this._.centered && ((_) => _ === this._.centered));
 
         this.svg.selectAll('g.zoom')
             .transition()

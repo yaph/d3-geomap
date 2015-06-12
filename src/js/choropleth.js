@@ -28,7 +28,7 @@ class Choropleth extends Geomap {
 
     update() {
         let self = this;
-        self.extent = d3.extent(self.data, self.columnVal.bind(self));
+        self.extent = self.properties.domain || d3.extent(self.data, self.columnVal.bind(self));
         self.colorScale = self.properties.valueScale()
             .domain(self.extent)
             .range(self.properties.colors);
