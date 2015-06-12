@@ -42,16 +42,20 @@ d3.select('#map-select').on('change', function() {
 });
 
 function annotation() {
-    rh = 60;
+    var anno_height = 60;
+
+    // Remove possibly existing annotation, when map is updated.
+    worldmap.svg.selectAll('g.annotation').remove();
 
     fg = worldmap.svg.append('g')
+        .attr('class', 'annotation')
         .attr('width', '100%')
-        .attr('height', rh)
-        .attr('transform', 'translate(0,' + (worldmap.height() - rh) + ')')
+        .attr('height', anno_height)
+        .attr('transform', 'translate(0,' + (worldmap.height() - anno_height) + ')')
 
     fg.append('rect')
         .attr('width', worldmap.width())
-        .attr('height', rh)
+        .attr('height', anno_height)
         .style('fill-opacity', .8)
         .style('fill', '#fff');
 
