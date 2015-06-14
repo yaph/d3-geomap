@@ -12,9 +12,9 @@ class Choropleth extends Geomap {
             valueScale: d3.scale.quantize
         };
 
-        for (let prop of d3.entries(properties)) {
-            this.properties[prop.key] = prop.value;
-            addAccessor(this, prop.key, prop.value);
+        for (let key in properties) {
+            this.properties[key] = properties[key];
+            addAccessor(this, key, properties[key]);
         }
     }
 

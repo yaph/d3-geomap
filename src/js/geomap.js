@@ -17,8 +17,8 @@ class Geomap {
         };
 
         // Setup methods to access properties.
-        for (let prop of d3.entries(this.properties))
-            addAccessor(this, prop.key, prop.value);
+        for (let key in this.properties)
+            addAccessor(this, key, this.properties[key]);
 
         // Store internal properties.
         this._ = {};
