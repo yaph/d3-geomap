@@ -45,7 +45,7 @@ class Choropleth extends Geomap {
 
             // selectAll must be called and not just select, otherwise the data
             // attribute of the selected path object is overwritten with self.data.
-            let unit = self.svg.selectAll(`.${uid}`);
+            let unit = self.svg.selectAll(`.${self.properties.unitId}-${uid}`);
 
             // Data can contain values for non existing units.
             if (unit.empty())

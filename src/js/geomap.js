@@ -94,11 +94,12 @@ class Geomap {
 
         // Load and render geo data.
         d3.json(self.properties.geofile, (error, geo) => {
+            self.geo = geo;
             self.svg.append('g').attr('class', 'units zoom')
                 .selectAll('path')
                 .data(topojson.feature(geo, geo.objects[self.properties.units]).features)
                 .enter().append('path')
-                    .attr('class', (d) => `unit ${d.id}`)
+                    .attr('class', (d) => `unit ${self.properties.unitId}-${d.id}`)
                     .attr('d', self.path)
                     .on('click', self.clicked.bind(self))
                     .append('title')
