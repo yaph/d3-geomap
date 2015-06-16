@@ -19,7 +19,7 @@
 var map = d3.geomap.choropleth()
     .geofile('../dist/topojson/countries/USA.json')
     .projection(d3.geo.albersUsa)
-    .column('2012')
+    .column('2000')
     .unitId('fips')
     .scale(1000)
     .legend(true);

@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-    coffee = require('gulp-coffee'),
+    babel = require('gulp-babel'),
     concat = require('gulp-concat'),
     connect = require('gulp-connect'),
     sass = require('gulp-ruby-sass'),
@@ -11,10 +11,10 @@ var gulp = require('gulp'),
 
 var paths = {
     scripts: [
-        'src/coffee/utils.coffee',
-        'src/coffee/colorbrewer.coffee',
-        'src/coffee/geomap.coffee',
-        'src/coffee/choropleth.coffee'
+        'src/js/utils.js',
+        'src/js/colorbrewer.js',
+        'src/js/geomap.js',
+        'src/js/choropleth.js'
     ],
     styles: ['src/**/*.sass'],
     data: ['src/**/*.json'],
@@ -22,7 +22,7 @@ var paths = {
         'node_modules/d3/d3.min.js',
         'node_modules/d3-geo-projection/d3.geo.projection.min.js',
         'node_modules/topojson/topojson.min.js'
-    ],
+    ]
 };
 
 // Bundle resources in dist so they can be downloaded.
@@ -59,17 +59,17 @@ gulp.task('data', function() {
 });
 
 // Minify scripts and styles.
-gulp.task('minify', ['scripts'], function() {
+gulp.task('minify', ['babel'], function() {
     gulp.src('dist/js/d3.geomap.js')
         .pipe(uglify())
         .pipe(concat('d3.geomap.min.js'))
         .pipe(gulp.dest('dist/js'));
 });
 
-// Minify and copy scripts.
-gulp.task('scripts', function() {
+// Compile and concat scripts.
+gulp.task('babel', function() {
     return gulp.src(paths.scripts)
-        .pipe(coffee())
+        .pipe(babel())
         .pipe(concat('d3.geomap.js'))
         .pipe(gulp.dest('dist/js'));
 });
@@ -91,12 +91,12 @@ gulp.task('vendor', function() {
 
 // Rerun task when a file changes.
 gulp.task('watch', function() {
-    gulp.watch(paths.scripts, ['scripts']);
+    gulp.watch(paths.scripts, ['babel']);
     gulp.watch(paths.styles, ['styles']);
 });
 
 // Build files needed for distribution.
-gulp.task('dist', ['clean', 'data', 'scripts', 'styles', 'minify', 'vendor']);
+gulp.task('dist', ['data', 'babel', 'styles', 'minify', 'vendor']);
 
 // The default task (called when you run `gulp` from cli).
 gulp.task('default', ['dist', 'connect', 'watch']);

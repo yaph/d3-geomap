@@ -13,8 +13,6 @@
         <select class="form-control" id="map-select">
           <option value="Calculated Percentage">Percentage of slaves by inhabitants</option>
           <option value="Calculated Number of Enslaved">Total number of slaves</option>
-          <option value="Estimated Enslaved (Lower Range)">Estimated number of slaves (lower range)</option>
-          <option value="Estimate Enslaved (Upper Range)">Estimated number of slaves (upper range)</option>
         </select>
     </div>
     <div id="map"></div>
@@ -25,59 +23,60 @@
 <script src="../node_modules/topojson/topojson.js"></script>
 <script src="../dist/js/d3.geomap.js"></script>
 <script>
-var width = 1200,
-    height = 780;
-
 var worldmap = d3.geomap.choropleth()
     .geofile('../dist/topojson/world/countries.json')
-    .width(width)
-    .height(height)
     .colors(colorbrewer.YlOrRd[9])
     .column('Calculated Percentage')
+    .duration(500)
     .format(d3.format(',.02f'))
-    .scale([width / 5.8])
-    .translate([width / 2, height / 2])
-    .legend(true);
+    .legend(true)
+    .postUpdate(annotation);
 
 d3.csv('globalslaveryindex.csv', function(error, data) {
     d3.select("#map")
         .datum(data)
         .call(worldmap.draw, worldmap);
+});
 
-    rh = 60;
+d3.select('#map-select').on('change', function() {
+    worldmap.column(this.value).update()
+});
 
-    fg = worldmap.svg().append('g')
+function annotation() {
+    var anno_height = 60;
+
+    // Remove possibly existing annotation, when map is updated.
+    worldmap.svg.selectAll('g.annotation').remove();
+
+    fg = worldmap.svg.append('g')
+        .attr('class', 'annotation')
         .attr('width', '100%')
-        .attr('height', rh)
-        .attr('transform', 'translate(0,' + (height - rh) + ')')
+        .attr('height', anno_height)
+        .attr('transform', 'translate(0,' + (worldmap.height() - anno_height) + ')')
 
     fg.append('rect')
-        .attr('x', 120)
-        .attr('width', width - 120)
-        .attr('height', rh)
+        .attr('x', '10%')
+        .attr('width', '76%')
+        .attr('height', anno_height)
         .style('fill-opacity', .8)
         .style('fill', '#fff');
 
     fg.append('text')
-        .attr('x', 120)
+        .attr('x', '12%')
         .attr('y', 22)
         .style('color', '#444')
         .style('font-size', '18px')
         .text('World Wide Prevalence of Slavery in 2013')
 
     fg.append('text')
-        .attr('width', '80%')
-        .attr('x', '10%')
+        .attr('width', '76%')
+        .attr('x', '12%')
         .attr('y', 45)
         .style('color', '#444')
         .style('font-size', '12px')
         .text('Data source: globalslaveryindex.org | Author: Ramiro Gómez - ramiro.org')
+}
 
-});
-
-d3.select('#map-select').on('change', function() {
-    worldmap.column(this.value).update()
-});
 </script>
 </body>
 </html>
