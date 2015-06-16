@@ -21,3 +21,9 @@ Start the development server
 
 Open `http://localhost:8000/examples/` in a browser and choose to view one of
 the example maps.
+
+## Map Showcase
+
+![World Cup 2014 Players' Birth Countries](http://i.imgur.com/RJbkFEH.png)
+
+The map above, showing [birth countries of Football World Cup 2014 players](http://maps.ramiro.org/world-cup-2014-players-birth-countries/), was created with d3.geomap. For more examples see the [map showcase](http://maps.ramiro.org/).
