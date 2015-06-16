@@ -38,7 +38,7 @@ class Choropleth extends Geomap {
         self.svg.selectAll('path.unit').style('fill', null);
 
         // Add new fill styles based on data values.
-        for (let d of self.data) {
+        self.data.forEach((d) => {
             let uid = d[self.properties.unitId],
                 val = d[self.properties.column],
                 fill = self.colorScale(val);
@@ -48,19 +48,18 @@ class Choropleth extends Geomap {
             let unit = self.svg.selectAll(`.${self.properties.unitPrefix}${uid}`);
 
             // Data can contain values for non existing units.
-            if (unit.empty())
-                continue;
+            if (!unit.empty()) {
+                if (self.properties.duration)
+                    unit.transition().duration(self.properties.duration).style('fill', fill);
+                else
+                    unit.style('fill', fill);
 
-            if (self.properties.duration)
-                unit.transition().duration(self.properties.duration).style('fill', fill);
-            else
-                unit.style('fill', fill);
-
-            // New title with column and value.
-            let text = self.properties.unitTitle(unit.datum());
-            val = self.properties.format(val);
-            unit.select('title').text(`${text}\n\n${self.properties.column}: ${val}`);
-        }
+                // New title with column and value.
+                let text = self.properties.unitTitle(unit.datum());
+                val = self.properties.format(val);
+                unit.select('title').text(`${text}\n\n${self.properties.column}: ${val}`);
+            }
+        });
 
         if (self.properties.legend)
             self.drawLegend(self.properties.legend);
