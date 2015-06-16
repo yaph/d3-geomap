@@ -10,6 +10,7 @@ class Geomap {
             scale: null,
             translate: null,
             unitId: 'iso3',
+            unitPrefix: 'unit-',
             units: 'units',
             unitTitle: (d) => d.properties.name,
             width: null,
@@ -99,7 +100,7 @@ class Geomap {
                 .selectAll('path')
                 .data(topojson.feature(geo, geo.objects[self.properties.units]).features)
                 .enter().append('path')
-                    .attr('class', (d) => `unit ${self.properties.unitId}-${d.id}`)
+                    .attr('class', (d) => `unit ${self.properties.unitPrefix}${d.id}`)
                     .attr('d', self.path)
                     .on('click', self.clicked.bind(self))
                     .append('title')

@@ -38,7 +38,6 @@ gulp.task('bundle', function() {
         .pipe(gulp.dest('bundle'));
 });
 
-
 gulp.task('clean', function() {
     del(['dist']);
 });
