@@ -27,6 +27,10 @@ class Choropleth extends Geomap {
         super.draw(selection, self);
     }
 
+    defined(val) {
+        return !(isNaN(val) || 'undefined' === typeof val || '' === val);
+    }
+
     update() {
         let self = this;
         self.extent = d3.extent(self.data, self.columnVal.bind(self));
@@ -39,23 +43,24 @@ class Choropleth extends Geomap {
 
         // Add new fill styles based on data values.
         self.data.forEach((d) => {
-            let uid = d[self.properties.unitId],
-                val = d[self.properties.column],
-                fill = self.colorScale(val);
+            let uid = d[self.properties.unitId].trim(),
+                val = d[self.properties.column].trim();
 
             // selectAll must be called and not just select, otherwise the data
             // attribute of the selected path object is overwritten with self.data.
             let unit = self.svg.selectAll(`.${self.properties.unitPrefix}${uid}`);
 
-            // Data can contain values for non existing units.
-            if (!unit.empty()) {
+            // Data can contain values for non existing units and values can be empty or NaN.
+            if (!unit.empty() && self.defined(val)) {
+                let fill = self.colorScale(val),
+                    text = self.properties.unitTitle(unit.datum());
+
                 if (self.properties.duration)
                     unit.transition().duration(self.properties.duration).style('fill', fill);
                 else
                     unit.style('fill', fill);
 
                 // New title with column and value.
-                let text = self.properties.unitTitle(unit.datum());
                 val = self.properties.format(val);
                 unit.select('title').text(`${text}\n\n${self.properties.column}: ${val}`);
             }
