@@ -16,12 +16,12 @@ var paths = {
         'src/js/geomap.js',
         'src/js/choropleth.js'
     ],
-    styles: ['src/**/*.sass'],
-    data: ['src/**/*.json'],
+    styles: 'src/**/*.sass',
+    data: 'src/**/*.json',
     vendor: [
-        'node_modules/d3/d3.min.js',
-        'node_modules/d3-geo-projection/d3.geo.projection.min.js',
-        'node_modules/topojson/build/topojson.min.js'
+        'node_modules/d3/build/d3.min.js',
+        'node_modules/d3-geo-projection/build/d3.geo.projection.min.js',
+        'node_modules/topojson/dist/topojson.min.js'
     ]
 };
 
@@ -60,7 +60,7 @@ gulp.task('data', function() {
 // Minify scripts and styles.
 gulp.task('minify', ['babel'], function() {
     gulp.src('dist/js/d3.geomap.js')
-        .pipe(uglify())
+//        .pipe(uglify())
         .pipe(concat('d3.geomap.min.js'))
         .pipe(gulp.dest('dist/js'));
 });
@@ -75,8 +75,7 @@ gulp.task('babel', function() {
 
 // Compile and copy sass.
 gulp.task('styles', function () {
-    return gulp.src(paths.styles)
-        .pipe(sass())
+    return sass(paths.styles)
         .pipe(concat('d3.geomap.css'))
         .pipe(gulp.dest('dist/css'));
 });

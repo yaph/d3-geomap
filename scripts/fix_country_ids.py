@@ -6,7 +6,7 @@ import json
 import os
 
 file_dest = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '../shp/countries.json'))
+    os.path.join(os.path.dirname(__file__), '../data/countries.json'))
 
 replacements = {
     'KOS': 'XKX',  # Kosovo
@@ -21,8 +21,8 @@ with open(file_dest, 'r') as f:
 
 countries = topo['objects']['units']['geometries']
 for country in countries:
-    if country['id'] in replacements:
-        country['id'] = replacements[country['id']]
+    cid = country['properties']['id']
+    country['properties']['id'] = replacements.get(cid, cid)
 
 with open(file_dest, 'w') as f:
     json.dump(topo, f, separators=(',', ':'))  # save bytes to keep file small
