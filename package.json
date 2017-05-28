@@ -28,10 +28,9 @@
     "eslint": "^3.19.0",
     "gulp-babel": "^6.1.2",
     "gulp-babili": "^0.1.2",
-    "gulp-concat": "*",
+    "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.0.0",
     "gulp-ruby-sass": "^2.1.1",
-    "gulp-uglify": "^3.0.0",
     "gulp-zip": "^4.0.0"
   }
 }
