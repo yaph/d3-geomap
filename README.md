@@ -26,4 +26,4 @@ the example maps.
 
 ![World Cup 2014 Players' Birth Countries](http://i.imgur.com/RJbkFEH.png)
 
-The map above, showing [birth countries of Football World Cup 2014 players](http://maps.ramiro.org/world-cup-2014-players-birth-countries/), was created with d3.geomap. For more examples see the [map showcase](http://maps.ramiro.org/).
+The map above, showing [birth countries of Football World Cup 2014 players](http://maps.ramiro.org/world-cup-2014-players-birth-countries/), was created with d3.geomap. You can find more [example maps here](http://ramiro.org/maps/).

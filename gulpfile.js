@@ -3,11 +3,10 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     connect = require('gulp-connect'),
     sass = require('gulp-ruby-sass'),
-    uglify = require('gulp-uglify'),
+    babili = require('gulp-babili'),
     zip = require('gulp-zip'),
     del = require('del'),
     pkg = require('./package.json');
-
 
 var paths = {
     scripts: [
@@ -60,7 +59,7 @@ gulp.task('data', function() {
 // Minify scripts and styles.
 gulp.task('minify', ['babel'], function() {
     gulp.src('dist/js/d3.geomap.js')
-//        .pipe(uglify())
+        .pipe(babili())
         .pipe(concat('d3.geomap.min.js'))
         .pipe(gulp.dest('dist/js'));
 });
