@@ -30,6 +30,7 @@ var worldmap = d3.geomap.choropleth()
     .duration(500)
     .format(d3.format(',.02f'))
     .legend(true)
+    .unitId('iso3')
     .postUpdate(annotation);
 
 d3.csv('globalslaveryindex.csv', function(error, data) {

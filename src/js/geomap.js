@@ -100,7 +100,7 @@ class Geomap {
                 .selectAll('path')
                 .data(topojson.feature(geo, geo.objects[self.properties.units]).features)
                 .enter().append('path')
-                    .attr('class', (d) => `unit ${self.properties.unitPrefix}${d.properties.id}`)
+                    .attr('class', (d) => `unit ${self.properties.unitPrefix}${d.properties[self.properties.unitId]}`)
                     .attr('d', self.path)
                     .on('click', self.clicked.bind(self))
                     .append('title')

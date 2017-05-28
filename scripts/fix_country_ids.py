@@ -21,8 +21,8 @@ with open(file_dest, 'r') as f:
 
 countries = topo['objects']['units']['geometries']
 for country in countries:
-    cid = country['properties']['id']
-    country['properties']['id'] = replacements.get(cid, cid)
+    cid = country['properties']['iso3']
+    country['properties']['iso3'] = replacements.get(cid, cid)
 
 with open(file_dest, 'w') as f:
     json.dump(topo, f, separators=(',', ':'))  # save bytes to keep file small
