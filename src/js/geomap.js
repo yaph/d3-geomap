@@ -5,7 +5,7 @@ class Geomap {
             geofile: null,
             height: null,
             postUpdate: null,
-            projection: d3.geo.naturalEarth,
+            projection: d3.geoNaturalEarth,
             rotate: [0, 0, 0],
             scale: null,
             translate: null,
@@ -91,7 +91,7 @@ class Geomap {
         if (proj.hasOwnProperty('rotate') && self.properties.rotate)
             proj.rotate(self.properties.rotate);
 
-        self.path = d3.geo.path().projection(proj);
+        self.path = d3.geoPath().projection(proj);
 
         // Load and render geo data.
         d3.json(self.properties.geofile, (error, geo) => {
@@ -100,7 +100,7 @@ class Geomap {
                 .selectAll('path')
                 .data(topojson.feature(geo, geo.objects[self.properties.units]).features)
                 .enter().append('path')
-                    .attr('class', (d) => `unit ${self.properties.unitPrefix}${d.id}`)
+                    .attr('class', (d) => `unit ${self.properties.unitPrefix}${d.properties.id}`)
                     .attr('d', self.path)
                     .on('click', self.clicked.bind(self))
                     .append('title')

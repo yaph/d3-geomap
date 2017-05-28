@@ -20,7 +20,7 @@ var paths = {
     data: 'src/**/*.json',
     vendor: [
         'node_modules/d3/build/d3.min.js',
-        'node_modules/d3-geo-projection/build/d3.geo.projection.min.js',
+        'node_modules/d3-geo-projection/build/d3-geo-projection.min.js',
         'node_modules/topojson/dist/topojson.min.js'
     ]
 };

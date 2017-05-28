@@ -9,7 +9,7 @@ class Choropleth extends Geomap {
             duration: null,
             format: d3.format(',.02f'),
             legend: false,
-            valueScale: d3.scale.quantize
+            valueScale: d3.scaleQuantize
         };
 
         for (let key in properties) {
@@ -49,12 +49,10 @@ class Choropleth extends Geomap {
             // selectAll must be called and not just select, otherwise the data
             // attribute of the selected path object is overwritten with self.data.
             let unit = self.svg.selectAll(`.${self.properties.unitPrefix}${uid}`);
-
             // Data can contain values for non existing units and values can be empty or NaN.
             if (!unit.empty() && self.defined(val)) {
                 let fill = self.colorScale(val),
                     text = self.properties.unitTitle(unit.datum());
-
                 if (self.properties.duration)
                     unit.transition().duration(self.properties.duration).style('fill', fill);
                 else

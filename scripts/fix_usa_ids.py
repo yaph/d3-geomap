@@ -14,7 +14,7 @@ with open(file_dest, 'r') as f:
 
 for unit in topo['objects']['units']['geometries']:
     if unit['properties']['name'] == 'Minnesota':
-        unit['id'] = 'US27'
+        unit['properties']['id'] = 'US27'
 
 with open(file_dest, 'w') as f:
     json.dump(topo, f, separators=(',', ':'))  # save bytes to keep file small
