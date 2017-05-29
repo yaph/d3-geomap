@@ -38,8 +38,9 @@ class Geomap {
             y = centroid[1];
             k = this.properties.zoomFactor;
             this._.centered = d;
-        } else
+        } else {
             this._.centered = null;
+        }
 
         this.svg.selectAll('path.unit')
            .classed('active', this._.centered && ((_) => _ === this._.centered));
@@ -58,7 +59,10 @@ class Geomap {
      * selection container element so they are responsive. Properties set before
      * will be kept.
      */
-    draw(selection, self) {
+    draw(selection) {
+        let self = this;
+        self.data = selection.datum();
+
         if (!self.properties.width)
             self.properties.width = selection.node().getBoundingClientRect().width;
 

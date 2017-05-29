@@ -11,8 +11,8 @@
     <h1>US States Venture Capital 1$ / 1000$ GDP</h1>
     <div id="map"></div>
 </div>
-<script src="../node_modules/d3/build/d3.min.js"></script>
-<script src="../node_modules/d3-geo-projection/build/d3-geo-projection.min.js"></script>
+<script src="../node_modules/d3/build/d3.js"></script>
+<script src="../node_modules/d3-geo-projection/build/d3-geo-projection.js"></script>
 <script src="../node_modules/topojson/dist/topojson.js"></script>
 <script src="../dist/js/d3.geomap.js"></script>
 <script>
@@ -25,9 +25,7 @@ var map = d3.geomap.choropleth()
     .legend(true);
 
 d3.csv('venture-capital.csv', function(error, data) {
-    d3.select("#map")
-        .datum(data)
-        .call(map.draw, map);
+    map.draw(d3.select("#map").datum(data));
 });
 </script>
 </body>

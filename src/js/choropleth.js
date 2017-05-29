@@ -22,11 +22,6 @@ class Choropleth extends Geomap {
         return +d[this.properties.column];
     }
 
-    draw(selection, self) {
-        self.data = selection.datum();
-        super.draw(selection, self);
-    }
-
     defined(val) {
         return !(isNaN(val) || 'undefined' === typeof val || '' === val);
     }
