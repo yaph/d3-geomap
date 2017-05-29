@@ -1,1 +1,1 @@
-{"type":"Topology","arcs":[],"objects":{"units":{"type":"GeometryCollection","geometries":[{"type":null,"properties":{"name":"Saint Barthélemy","fips":""}}]}}}
+{"type":"Topology","arcs":[[[49,0],[-31,13],[-18,56],[11,9],[75,-19],[-37,-59]]],"transform":{"scale":[0.0008720930232558469,0.0005384615384615588],"translate":[-62.867000000000004,17.882999999999996]},"objects":{"units":{"type":"GeometryCollection","geometries":[{"arcs":[[0]],"type":"Polygon","properties":{"name":"Saint Barthélemy","fips":""}}]}}}

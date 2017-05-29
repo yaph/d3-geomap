@@ -1,1 +1,1 @@
-{"type":"Topology","arcs":[],"objects":{"units":{"type":"GeometryCollection","geometries":[{"type":null,"properties":{"name":"Pitcairn Islands","fips":""}}]}}}
+{"type":"Topology","arcs":[[[69,30],[-12,-30],[-24,24],[-24,53],[-9,58],[23,31],[30,-20],[15,-57],[1,-59]]],"transform":{"scale":[0.0008695652173913373,0.0005421686746988157],"translate":[-128.35,-24.414]},"objects":{"units":{"type":"GeometryCollection","geometries":[{"arcs":[[0]],"type":"Polygon","properties":{"name":"Pitcairn Islands","fips":""}}]}}}

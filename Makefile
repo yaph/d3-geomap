@@ -24,7 +24,7 @@ topo-world:
 topo-countries:
 	mapshaper -i ~/data/geo/naturalearthdata.com/ne_10m_admin_1_states_provinces_lakes/ne_10m_admin_1_states_provinces_lakes.shp \
 		-rename-layers units \
-		-simplify resolution=1920x1080 \
+		-simplify resolution=24000x16000 \
 		-o format=topojson \
 		precision=0.001 \
 		data/states-provinces.json

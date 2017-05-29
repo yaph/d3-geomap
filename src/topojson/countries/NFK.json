@@ -1,1 +1,1 @@
-{"type":"Topology","arcs":[],"objects":{"units":{"type":"GeometryCollection","geometries":[{"type":null,"properties":{"name":"Norfolk Island","fips":""}}]}}}
+{"type":"Topology","arcs":[[[32,126],[57,-47],[-13,-61],[-17,-18],[-22,22],[-28,-16],[-9,55],[14,31],[-4,41],[22,-7]]],"transform":{"scale":[0.0008764044943817363,0.0005413533834586137],"translate":[167.918,-29.068999999999996]},"objects":{"units":{"type":"GeometryCollection","geometries":[{"arcs":[[0]],"type":"Polygon","properties":{"name":"Norfolk Island","fips":""}}]}}}
