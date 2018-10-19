@@ -38,8 +38,8 @@ class Choropleth extends Geomap {
 
         // Add new fill styles based on data values.
         self.data.forEach((d) => {
-            let uid = d[self.properties.unitId].trim(),
-                val = d[self.properties.column].trim();
+            let uid = d[self.properties.unitId].toString().trim(),
+                val = d[self.properties.column].toString().trim();
 
             // selectAll must be called and not just select, otherwise the data
             // attribute of the selected path object is overwritten with self.data.
