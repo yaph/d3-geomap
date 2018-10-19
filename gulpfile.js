@@ -2,7 +2,7 @@ var gulp = require('gulp'),
     babel = require('gulp-babel'),
     concat = require('gulp-concat'),
     connect = require('gulp-connect'),
-    sass = require('gulp-ruby-sass'),
+    sass = require('gulp-sass'),
     babili = require('gulp-babili'),
     zip = require('gulp-zip'),
     del = require('del'),
@@ -19,7 +19,7 @@ var paths = {
     data: 'src/**/*.json',
     vendor: [
         'node_modules/d3/build/d3.min.js',
-        'node_modules/d3-geo-projection/build/d3-geo-projection.min.js',
+        'node_modules/d3-geo-projection/dist/d3-geo-projection.min.js',
         'node_modules/topojson/dist/topojson.min.js'
     ]
 };
