@@ -97,8 +97,7 @@ class Geomap {
 
         self.path = d3.geoPath().projection(proj);
 
-        // Load and render geo data.
-        d3.json(self.properties.geofile, (error, geo) => {
+        d3.json(self.properties.geofile).then(geo => {
             self.geo = geo;
             self.svg.append('g').attr('class', 'units zoom')
                 .selectAll('path')

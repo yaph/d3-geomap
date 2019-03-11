@@ -1,7 +1,7 @@
 {
   "name": "d3-geomap",
   "version": "2.0.0",
-  "description": "A reusuable geomap for d3.js",
+  "description": "A reusable geomap for d3.js",
   "keywords": [
     "d3",
     "visualization",
@@ -18,20 +18,20 @@
     "url": "https://github.com/yaph/d3-geomap.git"
   },
   "dependencies": {
-    "d3": "^4.9.1",
-    "d3-geo-projection": "^2.1.2",
-    "gulp": "^3.9.1",
-    "gulp-sass": "^4.0.2",
-    "topojson": "^3.0.0"
+    "d3": "^5.9.1",
+    "d3-geo-projection": "^2.6.0",
+    "nodemon": "^1.18.10",
+    "topojson": "^3.0.2"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "del": "^2.2.2",
-    "eslint": "^3.19.0",
-    "gulp-babel": "^6.1.2",
-    "gulp-babili": "^0.1.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-connect": "^5.0.0",
-    "gulp-zip": "^4.0.0"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "babel-preset-minify": "^0.5.0",
+    "node-sass": "^4.11.0"
+  },
+  "scripts": {
+    "build:scripts": "babel src/js/utils.js src/js/colorbrewer.js src/js/geomap.js src/js/choropleth.js --out-file dist/js/d3.geomap.min.js",
+    "watch:scripts": "nodemon -e js -w src/js -x 'npm run build:scripts'"
   }
 }
