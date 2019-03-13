@@ -2,6 +2,22 @@ help:
 	@echo "topo-world - create topojson files for world"
 	@echo "topo-countries - create topojson files for countries"
 
+
+vendor:
+	npm up
+	paste -sd'\n' node_modules/d3/dist/d3.min.js \
+		node_modules/d3-geo-projection/dist/d3-geo-projection.min.js \
+		node_modules/topojson/dist/topojson.min.js \
+	> dist/vendor/d3.geomap.dependencies.min.js
+
+
+bundle:
+	rsync -avz --delete src/topojson/ dist/topojson/
+	cp LICENSE dist/
+	cp node_modules/d3/LICENSE dist/vendor/
+	zip -r bundle/d3.geomap.zip dist/
+
+
 clean:
 	rm -f data/*.json
 	rm -f src/topojson/countries/*.json

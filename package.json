@@ -1,7 +1,7 @@
 {
   "name": "d3-geomap",
-  "version": "2.0.0",
-  "description": "A reusable geomap for d3.js",
+  "version": "3.0.0dev",
+  "description": "A library for creating geographical maps based on D3.js",
   "keywords": [
     "d3",
     "visualization",
@@ -20,7 +20,6 @@
   "dependencies": {
     "d3": "^5.9.1",
     "d3-geo-projection": "^2.6.0",
-    "nodemon": "^1.18.10",
     "topojson": "^3.0.2"
   },
   "devDependencies": {
@@ -28,10 +27,16 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "babel-preset-minify": "^0.5.0",
-    "node-sass": "^4.11.0"
+    "nodemon": "^1.18.10",
+    "node-sass": "^4.11.0",
+    "npm-run-all": "^4.1.5"
   },
   "scripts": {
     "build:scripts": "babel src/js/utils.js src/js/colorbrewer.js src/js/geomap.js src/js/choropleth.js --out-file dist/js/d3.geomap.min.js",
-    "watch:scripts": "nodemon -e js -w src/js -x 'npm run build:scripts'"
+    "build:styles": "node-sass src/sass/*.sass dist/css/d3.geomap.css",
+    "watch:scripts": "nodemon -e js -w src/js -x 'npm run build:scripts'",
+    "watch:styles": "npm run build:styles -- --watch",
+    "build": "run-p build:*",
+    "watch": "run-p watch:*"
   }
 }
