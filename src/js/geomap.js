@@ -1,4 +1,7 @@
-class Geomap {
+import * as d3 from 'd3';
+
+
+export default class Geomap {
     constructor() {
         // Set default properties optimized for naturalEarth projection.
         this.properties = {
@@ -117,5 +120,3 @@ class Geomap {
             this.properties.postUpdate();
     }
 }
-
-d3.geomap = () => new Geomap();

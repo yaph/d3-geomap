@@ -1,4 +1,7 @@
-class Choropleth extends Geomap {
+import * as d3 from 'd3';
+
+
+export default class Choropleth extends Geomap {
     constructor() {
         super();
 
@@ -184,5 +187,3 @@ class Choropleth extends Geomap {
             .attr('y', offsetText * offsetYFactor * 2);
     }
 }
-
-d3.geomap.choropleth = () => new Choropleth();
