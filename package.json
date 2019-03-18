@@ -37,7 +37,7 @@
     "webpack-dev-server": "^3.2.1"
   },
   "scripts": {
-    "build:scripts": "babel src/js/utils.js src/js/colorbrewer.js src/js/geomap.js src/js/choropleth.js --out-file dist/js/d3.geomap.min.js",
+    "build:scripts": "webpack",
     "build:styles": "node-sass src/sass/*.sass dist/css/d3.geomap.css",
     "watch:scripts": "nodemon -e js -w src/js -x 'npm run build:scripts'",
     "watch:styles": "npm run build:styles -- --watch",
