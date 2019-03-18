@@ -1,7 +1,12 @@
 import * as d3 from 'd3';
 
 
-export default class Choropleth extends Geomap {
+import {addAccessor} from './utils';
+import {colorbrewer} from './colorbrewer';
+import {Geomap} from './geomap';
+
+
+export class Choropleth extends Geomap {
     constructor() {
         super();
 

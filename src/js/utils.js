@@ -1,4 +1,4 @@
-function addAccessor(obj, name, value) {
+export function addAccessor(obj, name, value) {
     obj[name] = (_) => {
         if (typeof _ === 'undefined')
             return obj.properties[name] || value;

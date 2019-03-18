@@ -1,7 +1,12 @@
-import * as d3 from 'd3';
+import * as topojson from 'topojson';
+import * as d3Base from 'd3';
+import {geoNaturalEarth} from 'd3-geo-projection';
+import {addAccessor} from './utils';
+
+const d3 = Object.assign(d3Base, {geoNaturalEarth});
 
 
-export default class Geomap {
+export class Geomap {
     constructor() {
         // Set default properties optimized for naturalEarth projection.
         this.properties = {
