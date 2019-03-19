@@ -3,7 +3,7 @@ import { Choropleth } from "./js/choropleth.js";
 export { colorbrewer } from "./js/colorbrewer.js";
 
 
-const geomap = () => new Geomap();
-geomap.choropleth = () => new Choropleth();
+const basemap = () => new Geomap();
+const choropleth = () => new Choropleth();
 
-export {geomap};
+export {basemap, choropleth};
