@@ -9,7 +9,8 @@ module.exports = {
         filename: 'd3.geomap.js',
         libraryTarget: 'umd'
     },
-    externals: ['d3', 'topojson'],
+    externals: ['d3', 'topojson', 'geoNaturalEarth'],
+    //externals: {d3: 'd3', geoNaturalEarth: 'd3-geo-projection', topojson: 'topojson'},
     module: {
         rules: [
             {

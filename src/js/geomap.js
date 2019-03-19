@@ -60,7 +60,6 @@ export class Geomap {
             .attr('transform', `translate(${x0}, ${y0})scale(${k})translate(-${x}, -${y})`);
     }
 
-
     /**
      * Load geo data once here and draw map. Call update at the end.
      *
