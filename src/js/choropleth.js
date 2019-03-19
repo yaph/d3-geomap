@@ -1,7 +1,3 @@
-import { extent } from 'd3-array';
-import { format } from 'd3-format';
-import { scaleQuantize } from 'd3-scale';
-
 import { addAccessor } from './utils';
 import { colorbrewer } from './colorbrewer';
 import { Geomap } from './geomap';
@@ -16,9 +12,9 @@ export class Choropleth extends Geomap {
             column: null,
             domain: null,
             duration: null,
-            format: format(',.02f'),
+            format: d3.format(',.02f'),
             legend: false,
-            valueScale: scaleQuantize
+            valueScale: d3.scaleQuantize
         };
 
         for (let key in properties) {
@@ -37,7 +33,7 @@ export class Choropleth extends Geomap {
 
     update() {
         let self = this;
-        self.extent = extent(self.data, self.columnVal.bind(self));
+        self.extent = d3.extent(self.data, self.columnVal.bind(self));
         self.colorScale = self.properties.valueScale()
             .domain(self.properties.domain || self.extent)
             .range(self.properties.colors);

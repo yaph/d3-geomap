@@ -1,9 +1,3 @@
-import { geoPath } from 'd3-geo';
-import { geoNaturalEarth } from 'd3-geo-projection';
-import { json } from 'd3-fetch';
-
-import * as topojson from 'topojson';
-
 import { addAccessor } from './utils';
 
 
@@ -14,7 +8,7 @@ export class Geomap {
             geofile: null,
             height: null,
             postUpdate: null,
-            projection: geoNaturalEarth,
+            projection: d3.geoNaturalEarth,
             rotate: [0, 0, 0],
             scale: null,
             translate: null,
@@ -103,9 +97,9 @@ export class Geomap {
         if (proj.hasOwnProperty('rotate') && self.properties.rotate)
             proj.rotate(self.properties.rotate);
 
-        self.path = geoPath().projection(proj);
+        self.path = d3.geoPath().projection(proj);
 
-        json(self.properties.geofile).then(geo => {
+        d3.json(self.properties.geofile).then(geo => {
             self.geo = geo;
             self.svg.append('g').attr('class', 'units zoom')
                 .selectAll('path')

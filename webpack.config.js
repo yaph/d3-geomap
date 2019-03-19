@@ -7,41 +7,9 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'd3.geomap.js',
-        library: 'geomap',
-        libraryTarget: 'umd'
+        library: 'geomap'
     },
-    //externals: ['d3', 'topojson', 'geoNaturalEarth'],
-    //externals: {d3: 'd3', geoNaturalEarth: 'd3-geo-projection', topojson: 'topojson'},
-    // externals: [
-    //     /^d3.*$/,
-    //     /^topojson\/.+$/,
-    //     'geoNaturalEarth'
-    // ],
-    // externals: [
-    //     'd3',
-    //     'd3-array',
-    //     'd3-collection',
-    //     'd3-color',
-    //     'd3-dispatch',
-    //     'd3-dsv',
-    //     'd3-force',
-    //     'd3-format',
-    //     'd3-geo',
-    //     'd3-geo-projection',
-    //     'd3-hierarchy',
-    //     'd3-interpolate',
-    //     'd3-path',
-    //     'd3-quadtree',
-    //     'd3-queue',
-    //     'd3-scale',
-    //     'd3-scale-chromatic',
-    //     'd3-shape',
-    //     'd3-time',
-    //     'd3-time-format',
-    //     'd3-timer',
-    //     'd3-voronoi',
-    //     'topojson'
-    // ],
+    externals: ['d3', 'd3-geo-projection', 'topojson'],
     module: {
         rules: [
             {
