@@ -1,48 +1,55 @@
 {
   "name": "d3-geomap",
-  "version": "3.0.0dev",
+  "version": "3.0.0",
   "description": "A library for creating geographical maps based on D3.js",
   "keywords": [
     "d3",
+    "d3-module",
     "visualization",
     "map",
     "svg"
   ],
+  "homepage": "https://d3-geomap.github.io",
   "author": {
     "name": "Ramiro Gómez",
     "url": "http://ramiro.org"
   },
   "license": "MIT",
-  "main": "dist/d3.geomap.js",
+  "main": "dist/d3-geomap.js",
+  "unpkg": "dist/d3-geomap.min.js",
+  "jsdelivr": "dist/d3-geomap.min.js",
+  "module": "src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/yaph/d3-geomap.git"
   },
+  "files": [
+    "src/**/*",
+    "dist/**/*"
+  ],
   "dependencies": {
-    "d3": "^5.9.1",
-    "d3-geo-projection": "^2.6.0",
+    "d3-array": "2",
+    "d3-fetch": "1",
+    "d3-format": "1",
+    "d3-geo": "1",
+    "d3-scale": "3",
+    "d3-selection": "1",
+    "d3-transition": "1",
     "topojson": "^3.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
-    "babel-loader": "^8.0.5",
-    "babel-preset-minify": "^0.5.0",
-    "node-sass": "^4.11.0",
-    "nodemon": "^1.18.10",
-    "npm-run-all": "^4.1.5",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.1"
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "node-sass": "^4.12.0",
+    "rollup": "^1.10.1",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-terser": "^4.0.4"
   },
   "scripts": {
-    "build:scripts": "webpack",
-    "build:styles": "node-sass src/sass/*.sass dist/css/d3.geomap.css",
-    "watch:scripts": "nodemon -e js -w src/js -x 'npm run build:scripts'",
-    "watch:styles": "npm run build:styles -- --watch",
-    "build": "run-p build:*",
-    "watch": "run-p watch:*",
-    "dev": "webpack-dev-server --mode development --open"
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "serve": "rollup -c rollup-serve.config.js -w"
   }
 }
