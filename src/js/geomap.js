@@ -1,3 +1,10 @@
+import 'd3-selection'; // selections are passed into draw
+import 'd3-transition'; // selections are transitioned
+
+import { feature as topoFeature } from 'topojson';
+import { json as d3JSONFetch } from 'd3-fetch';
+import { geoPath, geoNaturalEarth1 } from 'd3-geo';
+
 import { addAccessor } from './utils';
 
 
@@ -8,7 +15,7 @@ export class Geomap {
             geofile: null,
             height: null,
             postUpdate: null,
-            projection: d3.geoNaturalEarth,
+            projection: geoNaturalEarth1,
             rotate: [0, 0, 0],
             scale: null,
             translate: null,
@@ -97,13 +104,13 @@ export class Geomap {
         if (proj.hasOwnProperty('rotate') && self.properties.rotate)
             proj.rotate(self.properties.rotate);
 
-        self.path = d3.geoPath().projection(proj);
+        self.path = geoPath().projection(proj);
 
-        d3.json(self.properties.geofile).then(geo => {
+        d3JSONFetch(self.properties.geofile).then(geo => {
             self.geo = geo;
             self.svg.append('g').attr('class', 'units zoom')
                 .selectAll('path')
-                .data(topojson.feature(geo, geo.objects[self.properties.units]).features)
+                .data(topoFeature(geo, geo.objects[self.properties.units]).features)
                 .enter().append('path')
                     .attr('class', (d) => `unit ${self.properties.unitPrefix}${d.properties[self.properties.unitId]}`)
                     .attr('d', self.path)

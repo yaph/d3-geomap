@@ -5,6 +5,6 @@
       "strict": [2, "never"],
       "no-undef": [0],
       "curly": [1, "multi", "consistent"],
-      "yoda": [0],
+      "yoda": [0]
   }
 }
