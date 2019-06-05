@@ -5,7 +5,7 @@ import { format as d3Format } from 'd3-format';
 import { addAccessor } from './utils';
 import { Geomap } from './geomap';
 
-const D3_CHROMATIC_SCHEME_Ord9 = [
+const D3_CHROMATIC_SCHEME_OrRd9 = [
   '#fff7ec','#fee8c8','#fdd49e','#fdbb84','#fc8d59','#ef6548','#d7301f','#b30000','#7f0000',
 ];
 
@@ -196,4 +196,4 @@ export class Choropleth extends Geomap {
     }
 }
 
-Choropleth.DEFAULT_COLORS = D3_CHROMATIC_SCHEME_Ord9;
+Choropleth.DEFAULT_COLORS = D3_CHROMATIC_SCHEME_OrRd9;
