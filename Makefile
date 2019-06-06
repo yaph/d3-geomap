@@ -44,7 +44,6 @@ topo-countries:
 
 	mkdir -p dist/topojson/countries
 	python scripts/topo_countries.py
-	#python scripts/fix_usa_ids.py
 
 
 topo: clean topo-world topo-countries

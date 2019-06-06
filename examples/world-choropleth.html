@@ -45,7 +45,7 @@
 
 <script>
 var worldmap = d3.choropleth()
-    .geofile('../src/topojson/world/countries.json')
+    .geofile('../dist/topojson/world/countries.json')
     .colors(d3.schemeYlOrRd[9])
     .column('Calculated Percentage')
     .duration(500)

@@ -31,7 +31,7 @@
 <script src="../dist/d3-geomap.js"></script>
 <script>
 var map = d3.choropleth()
-    .geofile('../src/topojson/world/countries.json')
+    .geofile('../dist/topojson/world/countries.json')
     .column('Requests')
     .unitId('iso3');
 
