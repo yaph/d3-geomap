@@ -12,9 +12,6 @@ file_dest = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '../data/countries.json'))
 
 replacements = {
-    'KOS': 'XKX',  # Kosovo
-    'PN1': 'PNG',  # Papua New Guniea
-    'PR1': 'PRT',  # Portugal
     'SDS': 'SSD',  # S. Sudan
     'SAH': 'ESH',  # W. Sahara
 }

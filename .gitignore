@@ -1,6 +1,6 @@
-dist
-bundle
-node_modules
-shp
+data/
+dist/
+bundle/
+node_modules/
 .sass-cache
 npm-debug.log
