@@ -1,6 +1,5 @@
 import { Geomap } from "./js/geomap.js";
 import { Choropleth } from "./js/choropleth.js";
-import { colorbrewer } from "./js/colorbrewer.js";
 
 
 function geomap() {
@@ -10,4 +9,4 @@ function choropleth() {
     return new Choropleth();
 }
 
-export { geomap, choropleth, colorbrewer };
+export { geomap, choropleth };

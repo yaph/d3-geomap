@@ -41,10 +41,12 @@
 <script src="../node_modules/topojson/dist/topojson.js"></script>
 <script src="../dist/d3-geomap.js"></script>
 
+<script src="../node_modules/d3-scale-chromatic/dist/d3-scale-chromatic.js"></script>
+
 <script>
 var worldmap = d3.choropleth()
     .geofile('../src/topojson/world/countries.json')
-    .colors(d3.colorbrewer.YlOrRd[9])
+    .colors(d3.schemeYlOrRd[9])
     .column('Calculated Percentage')
     .duration(500)
     .format(d3.format(',.02f'))
