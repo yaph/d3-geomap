@@ -7,7 +7,7 @@ help:
 
 
 bundle:
-	rsync -avz --delete src/topojson/ dist/topojson/
+	npm run build
 	cp LICENSE dist/
 	zip -r bundle/d3.geomap.zip dist/
 
