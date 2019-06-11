@@ -9,7 +9,7 @@ help:
 bundle:
 	npm run build
 	cp LICENSE dist/
-	zip -r bundle/d3.geomap.zip dist/
+	zip -r bundle/d3-geomap.zip dist/
 
 
 clean:
