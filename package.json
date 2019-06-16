@@ -5,14 +5,16 @@
   "keywords": [
     "d3",
     "d3-module",
-    "visualization",
+    "geo",
+    "geography",
     "map",
-    "svg"
+    "svg",
+    "visualization"
   ],
   "homepage": "https://d3-geomap.github.io",
   "author": {
     "name": "Ramiro Gómez",
-    "url": "http://ramiro.org"
+    "url": "https://ramiro.org"
   },
   "license": "MIT",
   "main": "dist/d3-geomap.js",
@@ -42,7 +44,7 @@
     "@babel/preset-env": "^7.4.5",
     "d3-scale-chromatic": "1",
     "node-sass": "^4.12.0",
-    "rollup": "^1.15.1",
+    "rollup": "^1.15.6",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-serve": "^1.0.1",
