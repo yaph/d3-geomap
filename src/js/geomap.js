@@ -21,7 +21,7 @@ export class Geomap {
             /**
              * Contents of TopoJSON file. If specified, geofile is ignored.
              *
-             * @type {object|null}
+             * @type {Promise<object>|object|null}
              */
             geoData: null,
             height: null,
@@ -131,11 +131,12 @@ export class Geomap {
             self.update();
         };
 
-        if (self.properties.geoData) {
-            drawGeoData(self.properties.geoData);
-        } else {
-            d3JSONFetch(self.properties.geofile).then(geo => drawGeoData(geo));
-        }
+        Promise.resolve(() => {
+            if (self.properties.geoData) {
+                return self.properties.geoData;
+            }
+            return d3JSONFetch(self.properties.geofile);
+        }).then(geo => drawGeoData(geo));
     }
 
     update() {
