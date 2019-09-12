@@ -131,12 +131,14 @@ export class Geomap {
             self.update();
         };
 
-        Promise.resolve(() => {
-            if (self.properties.geoData) {
-                return self.properties.geoData;
-            }
-            return d3JSONFetch(self.properties.geofile);
-        }).then(geo => drawGeoData(geo));
+        Promise.resolve()
+            .then(() => {
+                if (self.properties.geoData) {
+                    return self.properties.geoData;
+                }
+                return d3JSONFetch(self.properties.geofile);
+            })
+            .then(geo => drawGeoData(geo));
     }
 
     update() {
