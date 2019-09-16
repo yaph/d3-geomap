@@ -12,7 +12,18 @@ export class Geomap {
     constructor() {
         // Set default properties optimized for naturalEarth projection.
         this.properties = {
+            /**
+             * URL to TopoJSON file to load when geomap is drawn. Ignored if geoData is specified.
+             *
+             * @type {string|null}
+             */
             geofile: null,
+            /**
+             * Contents of TopoJSON file. If specified, geofile is ignored.
+             *
+             * @type {Promise<object>|object|null}
+             */
+            geoData: null,
             height: null,
             postUpdate: null,
             projection: geoNaturalEarth1,
@@ -106,7 +117,7 @@ export class Geomap {
 
         self.path = geoPath().projection(proj);
 
-        d3JSONFetch(self.properties.geofile).then(geo => {
+        const drawGeoData = geo => {
             self.geo = geo;
             self.svg.append('g').attr('class', 'units zoom')
                 .selectAll('path')
@@ -118,7 +129,16 @@ export class Geomap {
                     .append('title')
                         .text(self.properties.unitTitle);
             self.update();
-        });
+        };
+
+        Promise.resolve()
+            .then(() => {
+                if (self.properties.geoData) {
+                    return self.properties.geoData;
+                }
+                return d3JSONFetch(self.properties.geofile);
+            })
+            .then(geo => drawGeoData(geo));
     }
 
     update() {
