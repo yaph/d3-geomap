@@ -90,7 +90,7 @@ export class Geomap {
             self.properties.height = self.properties.width / 1.92;
 
         if (!self.properties.scale)
-            self.properties.scale = self.properties.width / 5.8;
+            self.properties.scale = self.properties.width / 5.4;
 
         if (!self.properties.translate)
             self.properties.translate = [self.properties.width / 2, self.properties.height / 2];
