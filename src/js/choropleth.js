@@ -49,7 +49,7 @@ export class Choropleth extends Geomap {
 
         // Add new fill styles based on data values.
         self.data.forEach((d) => {
-            let uid = d[self.properties.unitId].toString().trim().replace(/\s/g,''),
+            let uid = d[self.properties.unitId].toString().trim().replace(/ /g,'_'),
                 val = d[self.properties.column].toString().trim();
 
             // selectAll must be called and not just select, otherwise the data
