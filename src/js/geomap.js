@@ -123,7 +123,7 @@ export class Geomap {
                 .selectAll('path')
                 .data(topoFeature(geo, geo.objects[self.properties.units]).features)
                 .enter().append('path')
-                    .attr('class', (d) => `unit ${self.properties.unitPrefix}${d.properties[self.properties.unitId].replace(/ /g,'_')}`)
+                    .attr('class', (d) => `unit ${self.properties.unitPrefix}${d.properties[self.properties.unitId].replace(/\s/g,'_')}`)
                     .attr('d', self.path)
                     .on('click', self.clicked.bind(self))
                     .append('title')
