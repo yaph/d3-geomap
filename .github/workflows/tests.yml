@@ -12,7 +12,6 @@ jobs:
       with:
         node-version: 12.x
     - name: Run example map tests
-      run: |
-        npm install
-        npm run serve &
-        npm run test
+    - run: npm install
+    - run: npm run serve
+    - run: npm run test
