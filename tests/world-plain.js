@@ -1,5 +1,5 @@
 module.exports = {
-    'world-plain.html test' : function (browser) {
+    'world-plain test': browser => {
         browser
             .url('http://localhost:8000/examples/world-plain.html')
             .waitForElementVisible('#map svg')
