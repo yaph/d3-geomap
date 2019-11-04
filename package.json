@@ -43,6 +43,8 @@
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "d3-scale-chromatic": "1",
+    "geckodriver": "^1.19.1",
+    "nightwatch": "^1.2.4",
     "node-sass": "^4.12.0",
     "rollup": "^1.15.6",
     "rollup-plugin-babel": "^4.3.2",
@@ -53,6 +55,7 @@
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "serve": "rollup -c rollup-serve.config.js -w"
+    "serve": "rollup -c rollup-serve.config.js -w",
+    "test": "nightwatch tests/*.js"
   }
 }
