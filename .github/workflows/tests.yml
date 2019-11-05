@@ -11,7 +11,9 @@ jobs:
       uses: actions/setup-node@master
       with:
         node-version: 12.x
+    - name: npm install
+      run: npm install
+    - name: Run server
+      run: npm run serve
     - name: Run example map tests
-    - run: npm install
-    - run: npm run serve
-    - run: npm run test
+      run: npm run test
