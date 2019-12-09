@@ -29,6 +29,10 @@
 
 <script src="../node_modules/topojson/dist/topojson.js"></script>
 <script src="../dist/d3-geomap.js"></script>
+<style>
+/* Override style here for use in test */
+.d3-geomap .unit {fill:rgb(0, 0, 0);}
+</style>
 <script>
 var map = d3.choropleth()
     .geofile('missing-unitid.json')
