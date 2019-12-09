@@ -123,7 +123,7 @@ export class Geomap {
                 .selectAll('path')
                 .data(topoFeature(geo, geo.objects[self.properties.units]).features)
                 .enter().append('path')
-                    .attr('class', (d) => `unit ${self.properties.unitPrefix}${d.properties[self.properties.unitId].replace(/\s/g,'_')}`)
+                    .attr('class', d => 'unit ' + this.properties.unitPrefix + self.unitName(d.properties))
                     .attr('d', self.path)
                     .on('click', self.clicked.bind(self))
                     .append('title')
@@ -139,6 +139,14 @@ export class Geomap {
                 return d3JSONFetch(self.properties.geofile);
             })
             .then(geo => drawGeoData(geo));
+    }
+
+    unitName(record) {
+        let name = record[this.properties.unitId];
+        if ('undefined' !== typeof name) {
+            return name.toString().trim().replace(/\s/g,'_');
+        }
+        return '';
     }
 
     update() {
