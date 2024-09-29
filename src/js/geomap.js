@@ -54,7 +54,7 @@ export class Geomap {
             y = y0;
 
         if (d && d.hasOwnProperty('geometry') && this._.centered !== d) {
-            let centroid = this.path.centroid(d);
+            const centroid = this.path.centroid(d);
             x = centroid[0];
             y = centroid[1];
             k = this.properties.zoomFactor;
@@ -80,7 +80,7 @@ export class Geomap {
      * will be kept.
      */
     draw(selection) {
-        let self = this;
+        const self = this;
         self.data = selection.datum();
 
         if (!self.properties.width)
@@ -106,7 +106,7 @@ export class Geomap {
             .on('click', self.clicked.bind(self));
 
         // Set map projection and path.
-        let proj = self.properties.projection()
+        const proj = self.properties.projection()
             .scale(self.properties.scale)
             .translate(self.properties.translate)
             .precision(.1);
@@ -142,7 +142,7 @@ export class Geomap {
     }
 
     unitName(record) {
-        let name = record[this.properties.unitId];
+        const name = record[this.properties.unitId];
         if ('undefined' !== typeof name) {
             return name.toString().trim().replace(/\s/g,'_');
         }
