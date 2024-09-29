@@ -41,19 +41,19 @@
 let countries = d3.geomap()
     .geofile('../dist/topojson/world/countries.json')
     .postUpdate(drawCountries);
-let container = d3.select('#main');
+const container = d3.select('#main');
 
 countries.draw(container);
 container.selectAll('*').remove();
 
 function drawCountries() {
     for (let geometry of countries.geo.objects.units.geometries) {
-        let map_container = container.append('div')
+        const map_container = container.append('div')
             .attr('id', geometry.properties.iso3)
             .attr('class', 'country');
         map_container.append('h2').text(geometry.properties.name);
 
-        let country = d3.geomap()
+        const country = d3.geomap()
             .geofile(`../dist/topojson/countries/${geometry.properties.iso3}.json`)
             .postUpdate(_ => map_container.select('path').dispatch('click'));
 

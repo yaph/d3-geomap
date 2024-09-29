@@ -2,7 +2,7 @@ import postcss from 'rollup-plugin-postcss';
 import babel from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
 
-import meta from './package.json' assert { type: "json" };
+import meta from './package.json' assert { type: 'json' };
 
 
 function makeCssConfig({ minimize = false } = {}) {
