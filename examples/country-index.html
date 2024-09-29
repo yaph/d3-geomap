@@ -38,27 +38,26 @@
 <script src="../dist/d3-geomap.js"></script>
 
 <script>
-let countries = d3.geomap()
-    .geofile('../dist/topojson/world/countries.json')
-    .postUpdate(drawCountries);
 const container = d3.select('#main');
 
-countries.draw(container);
-container.selectAll('*').remove();
+fetch('../dist/meta-countries.json').then(resp => {
+    if (resp.ok) return resp.text();
+    throw new Error(`HTTP error! Status: ${resp.status}`);
+}).then(text => {
+    drawCountries(JSON.parse(text));
+});
 
-function drawCountries() {
-    for (let geometry of countries.geo.objects.units.geometries) {
+function drawCountries(countries) {
+    countries.forEach(country => {
         const map_container = container.append('div')
-            .attr('id', geometry.properties.iso3)
+            .attr('id', country.iso3)
             .attr('class', 'country');
-        map_container.append('h2').text(geometry.properties.name);
+        map_container.append('h2').text(country.name);
 
-        const country = d3.geomap()
-            .geofile(`../dist/topojson/countries/${geometry.properties.iso3}.json`)
-            .postUpdate(_ => map_container.select('path').dispatch('click'));
-
-        country.draw(map_container);
-    }
+        const country_map = d3.geomap()
+            .geofile(`../dist/topojson/countries/${country.iso3}.json`);
+        country_map.draw(map_container);
+    });
 }
 </script>
 </body>

@@ -4,7 +4,7 @@
 # ne_10m_admin_1_states_provinces_lakes.shp seems ok though.
 #
 # Not all the ADM0_A3 IDs match those used in the ISO_A3 standard. This script replaces non-matching IDs
-# with corresponding ISO_A3 values. For more details seeissue #12 https://github.com/yaph/d3-geomap/issues/12.
+# with corresponding ISO_A3 values. For more details see issue #12 https://github.com/yaph/d3-geomap/issues/12.
 import json
 import os
 
