@@ -2,20 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Country Index</title>
+<title>Country Map</title>
 <link href="../dist/d3-geomap.css" rel="stylesheet">
-<style>
-.country {
-    width: 23%;
-    margin-right: 2%;
-    float: left;
-}
-</style>
 </head>
 <body>
-<div class="container d3-geomap" id="main"></div>
-<script src="https://unpkg.com/d3-zoom"></script>
-<script src="https://unpkg.com/d3-drag"></script>
+<div class="d3-geomap" id="main"></div>
 
 <script src="../node_modules/d3-array/dist/d3-array.js"></script>
 <script src="../node_modules/d3-geo/dist/d3-geo.js"></script>
@@ -40,28 +31,18 @@
 <script src="../dist/d3-geomap.js"></script>
 
 <script>
-const container = d3.select('#main');
+const iso3 = 'ESP';
+const name = 'Spain';
 
-fetch('../dist/meta-countries.json').then(resp => {
-    if (resp.ok) return resp.text();
-    throw new Error(`HTTP error! Status: ${resp.status}`);
-}).then(text => {
-    drawCountries(JSON.parse(text).sort((a, b) => a.name.localeCompare(b.name)));
-});
+const container = d3.select('#main').append('div')
+    .attr('id', iso3)
+    .attr('class', 'country');
+container.append('h2').text(name);
 
-function drawCountries(countries) {
-    countries.forEach(country => {
-        const map_container = container.append('div')
-            .attr('id', country.iso3)
-            .attr('class', 'country');
-        map_container.append('h2').text(country.name);
-
-        const country_map = d3.geomap()
-            .geofile(`../dist/topojson/countries/${country.iso3}.json`)
-            .projection(d3.geoMercator)
-        country_map.draw(map_container);
-    });
-}
+d3.geomap()
+    .geofile(`../dist/topojson/countries/${iso3}.json`)
+    .unitId('fips')
+    .draw(container);
 </script>
 </body>
 </html>
