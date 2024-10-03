@@ -90,12 +90,6 @@ export class Geomap {
         if (!self.properties.height)
             self.properties.height = self.properties.width / 1.92;
 
-        if (!self.properties.scale)
-            self.properties.scale = self.properties.width / 5.4;
-
-        if (!self.properties.translate)
-            self.properties.translate = [self.properties.width / 2, self.properties.height / 2];
-
         self.svg = selection.append('svg')
             .attr('width', self.properties.width)
             .attr('height', self.properties.height);
@@ -108,20 +102,25 @@ export class Geomap {
 
         // Set map projection and path.
         const proj = self.properties.projection()
-            .scale(self.properties.scale)
-            .translate(self.properties.translate)
             .precision(.1);
+
+        // Apply optional user settings to projection.
+        if (self.properties.scale) proj.scale(self.properties.scale);
+        if (self.properties.translate) proj.scale(self.properties.translate);
 
         // Not every projection supports rotation, e. g. albersUsa does not.
         if (proj.hasOwnProperty('rotate') && self.properties.rotate)
             proj.rotate(self.properties.rotate);
 
         self.path = geoPath().projection(proj);
-
         const drawGeoData = geo => {
             self.geo = geo;
             self.geoFeature = topoFeature(geo, geo.objects[self.properties.units]);
-            proj.fitSize([self.properties.width, self.properties.height], self.geoFeature);
+
+            // Auto fit size if scale and translate are not set.
+            if (self.properties.scale === null && self.properties.translate === null) {
+                proj.fitSize([self.properties.width, self.properties.height], self.geoFeature);
+            }
 
             self.svg.append('g').attr('class', 'units zoom')
                 .selectAll('path')
