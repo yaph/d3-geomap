@@ -12,9 +12,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Add CHANGELOG and make task to create it. ([6a1dd19](https://github.com/yaph/d3-geomap/commit/6a1dd19886bb34685a89422b012081e1390312b8) by Ramiro Gómez).
 - Add CHANGELOG.md. Add make task to create CHANGELOG.md ([fed2f2f](https://github.com/yaph/d3-geomap/commit/fed2f2f791517402759d806e0f3530ca7233c2f5) by Ramiro Gómez).
 - Add and update example maps. ([499bcae](https://github.com/yaph/d3-geomap/commit/499bcae20ed35e9255e1cf0612de057e03edc9a0) by Ramiro Gómez).
 - Add github funding info ([f759820](https://github.com/yaph/d3-geomap/commit/f7598208cba92408b80d2df0ef193bcf5dfac57c) by Ramiro Gómez).
+
+### Removed
+
+- Remove geo property from Geomap object (breaking change). ([051a491](https://github.com/yaph/d3-geomap/commit/051a491a984d2e35bf7b99729797ff1b0c1b92bb) by Ramiro Gómez).
 
 ## [3.3.0](https://github.com/yaph/d3-geomap/releases/tag/3.3.0) - 2019-12-11
 
