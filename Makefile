@@ -19,7 +19,7 @@ clean:
 
 
 changelog:
-	git-changelog -o CHANGELOG.md
+	git-changelog -o CHANGELOG.md --bump=auto
 
 
 topo-world:
