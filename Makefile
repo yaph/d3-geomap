@@ -18,6 +18,10 @@ clean:
 	rm -rf dist/*
 
 
+changelog:
+	git-changelog -o CHANGELOG.md
+
+
 topo-world:
 	mapshaper -i ~/data/geo/naturalearthdata.com/ne_10m_admin_0_countries_lakes/ne_10m_admin_0_countries_lakes.shp \
 		-rename-fields name=NAME,iso3=ADM0_A3 \

@@ -59,6 +59,10 @@ function drawCountries(countries) {
         const country_map = d3.geomap()
             .geofile(`../dist/topojson/countries/${country.iso3}.json`)
             .projection(d3.geoMercator)
+            .postUpdate(() => {
+                console.log(country_map);
+                debugger;
+            });
         country_map.draw(map_container);
     });
 }
