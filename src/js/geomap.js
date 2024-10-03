@@ -114,7 +114,6 @@ export class Geomap {
 
         self.path = geoPath().projection(proj);
         const drawGeoData = geo => {
-            self.geo = geo;
             self.geoFeature = topoFeature(geo, geo.objects[self.properties.units]);
 
             // Auto fit size if scale and translate are not set.
