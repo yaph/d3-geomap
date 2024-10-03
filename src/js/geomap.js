@@ -1,6 +1,4 @@
-import 'd3-selection'; // selections are passed into draw
-import 'd3-transition'; // selections are transitioned
-
+import { select as d3Select } from 'd3-selection';
 import { feature as topoFeature } from 'topojson';
 import { json as d3JSONFetch } from 'd3-fetch';
 import { geoPath, geoNaturalEarth1 } from 'd3-geo';
@@ -47,26 +45,29 @@ export class Geomap {
     }
 
     clicked(d) {
+        const self = this;
         let k = 1,
-            x0 = this.properties.width / 2,
-            y0 = this.properties.height / 2,
+            x0 = self.properties.width / 2,
+            y0 = self.properties.height / 2,
             x = x0,
             y = y0;
+        if (!d.target) return;
 
-        if (d && d.hasOwnProperty('geometry') && this._.centered !== d) {
-            const centroid = this.path.centroid(d);
+        const feature = d3Select(d.target).datum();
+        if (self._.centered !== feature) {
+            const centroid = self.path.centroid(feature);
             x = centroid[0];
             y = centroid[1];
-            k = this.properties.zoomFactor;
-            this._.centered = d;
+            k = self.properties.zoomFactor;
+            self._.centered = feature;
         } else {
-            this._.centered = null;
+            self._.centered = null;
         }
 
-        this.svg.selectAll('path.unit')
-           .classed('active', this._.centered && ((_) => _ === this._.centered));
+        self.svg.selectAll('path.unit')
+            .classed('active', unit => unit === self._.centered);
 
-        this.svg.selectAll('g.zoom')
+        self.svg.selectAll('g.zoom')
             .transition()
             .duration(750)
             .attr('transform', `translate(${x0}, ${y0})scale(${k})translate(-${x}, -${y})`);
@@ -119,11 +120,14 @@ export class Geomap {
 
         const drawGeoData = geo => {
             self.geo = geo;
+            self.geoFeature = topoFeature(geo, geo.objects[self.properties.units]);
+            proj.fitSize([self.properties.width, self.properties.height], self.geoFeature);
+
             self.svg.append('g').attr('class', 'units zoom')
                 .selectAll('path')
-                .data(topoFeature(geo, geo.objects[self.properties.units]).features)
+                .data(self.geoFeature.features)
                 .enter().append('path')
-                    .attr('class', d => 'unit ' + this.properties.unitPrefix + self.unitName(d.properties))
+                    .attr('class', d => 'unit ' + self.properties.unitPrefix + self.unitName(d.properties))
                     .attr('d', self.path)
                     .on('click', self.clicked.bind(self))
                     .append('title')
