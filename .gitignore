@@ -3,7 +3,6 @@ favicon.ico
 data/
 dist/
 bundle/
-tests_output/
 
 # Logs
 logs
@@ -109,3 +108,9 @@ dist
 
 # TernJS port file
 .tern-port
+tests-examples/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+*.js-snapshots

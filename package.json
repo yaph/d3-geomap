@@ -42,15 +42,15 @@
     "topojson": "^3.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.4",
+    "@babel/core": "^7.25.7",
+    "@babel/preset-env": "^7.25.7",
+    "@playwright/test": "^1.47.2",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-terser": "^0.4.4",
-    "geckodriver": "^4.5.0",
-    "nightwatch": "^3.8.0",
+    "@types/node": "^22.7.4",
     "node-sass": "^9.0.0",
     "postcss": "^8.4.47",
-    "rollup": "^4.22.5",
+    "rollup": "^4.24.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-serve": "^1.1.1"
   },
@@ -58,6 +58,6 @@
     "build": "rollup -c --bundleConfigAsCjs",
     "watch": "rollup -c -w",
     "serve": "rollup -c rollup-serve.config.js -w",
-    "test": "nightwatch tests/*.js"
+    "test": "playwright test"
   }
 }
