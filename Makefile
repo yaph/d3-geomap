@@ -51,3 +51,10 @@ topo-countries:
 
 
 topo: clean topo-world topo-countries
+
+
+# Call example: make release version=4.0.0
+release:
+	git tag -a $(version) -m 'Create version $(version)'
+	git push --tags
+	npm publish
