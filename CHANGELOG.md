@@ -6,12 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## [4.0.0](https://github.com/yaph/d3-geomap/releases/tag/4.0.0) - 2024-10-03
+## [4.0.0](https://github.com/yaph/d3-geomap/releases/tag/4.0.0) - 2024-10-22
 
 <small>[Compare with 3.3.0](https://github.com/yaph/d3-geomap/compare/3.3.0...4.0.0)</small>
 
 ### Added
 
+- Add d3-color v3.1 as dev dependency, load it in examples when necessary. Closes #61 ([c3334dd](https://github.com/yaph/d3-geomap/commit/c3334dd4fbad3f32ea2b70422cd35b3ac363ef73) by Ramiro Gómez).
+- Add modified playwright config. Use url to examples dir in webserver config. ([fd7c2e3](https://github.com/yaph/d3-geomap/commit/fd7c2e3198f2309bc60f8163fe8f5eed0b38577e) by Ramiro Gómez).
+- Add host to config. ([b6978ba](https://github.com/yaph/d3-geomap/commit/b6978ba742729a04b60020bcd1677f289b28104f) by Ramiro Gómez).
+- Add and use playwright for testing. Add several tests using example maps. Remove nightwatch and old tests. ([764ddab](https://github.com/yaph/d3-geomap/commit/764ddab7ba277003bd1e8d63a843107641e5486a) by Ramiro Gómez).
 - Add CHANGELOG and make task to create it. ([6a1dd19](https://github.com/yaph/d3-geomap/commit/6a1dd19886bb34685a89422b012081e1390312b8) by Ramiro Gómez).
 - Add CHANGELOG.md. Add make task to create CHANGELOG.md ([fed2f2f](https://github.com/yaph/d3-geomap/commit/fed2f2f791517402759d806e0f3530ca7233c2f5) by Ramiro Gómez).
 - Add and update example maps. ([499bcae](https://github.com/yaph/d3-geomap/commit/499bcae20ed35e9255e1cf0612de057e03edc9a0) by Ramiro Gómez).
@@ -19,6 +23,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 
+- Remove action as long as it doesn't work. ([862cac9](https://github.com/yaph/d3-geomap/commit/862cac9997acbc14d7d76de9fe6a155716de6509) by Ramiro Gómez).
+- Remove tests workflow. Don't use clean install in workflow. ([2c7d5df](https://github.com/yaph/d3-geomap/commit/2c7d5dfb4738b9f34135df12d04f103ba9851680) by Ramiro Gómez).
 - Remove geo property from Geomap object (breaking change). ([051a491](https://github.com/yaph/d3-geomap/commit/051a491a984d2e35bf7b99729797ff1b0c1b92bb) by Ramiro Gómez).
 
 ## [3.3.0](https://github.com/yaph/d3-geomap/releases/tag/3.3.0) - 2019-12-11
