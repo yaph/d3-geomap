@@ -48,6 +48,7 @@
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-terser": "^0.4.4",
     "@types/node": "^22.7.4",
+    "d3-color": "^3.1.0",
     "node-sass": "^9.0.0",
     "postcss": "^8.4.47",
     "rollup": "^4.24.0",
